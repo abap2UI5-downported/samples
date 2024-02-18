@@ -167,7 +167,7 @@ CLASS Z2UI5_CL_DEMO_APP_080 IMPLEMENTATION.
         READ TABLE ls_client-t_event_arg INDEX 1 INTO temp4.
         sy-tabix = temp5.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         client->message_toast_display( |Event AppSelected with appointment {  temp4 }| ).
       WHEN 'BACK'.

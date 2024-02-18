@@ -166,7 +166,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
         READ TABLE lt_item INDEX 1 INTO temp4.
         sy-tabix = temp5.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         DELETE mt_filter WHERE key = temp4.
         client->popup_model_update( ).

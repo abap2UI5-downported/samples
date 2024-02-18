@@ -119,7 +119,7 @@ CLASS Z2UI5_CL_DEMO_APP_099 IMPLEMENTATION.
           READ TABLE lt_arg INDEX 1 INTO temp1.
           sy-tabix = temp2.
           IF sy-subrc <> 0.
-            RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+            ASSERT 1 = 0.
           ENDIF.
           sort_field = temp1.
 
@@ -147,7 +147,7 @@ CLASS Z2UI5_CL_DEMO_APP_099 IMPLEMENTATION.
           READ TABLE lt_arg INDEX 1 INTO temp3.
           sy-tabix = temp4.
           IF sy-subrc <> 0.
-            RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+            ASSERT 1 = 0.
           ENDIF.
           filter_string = temp3.
           
@@ -189,7 +189,7 @@ CLASS Z2UI5_CL_DEMO_APP_099 IMPLEMENTATION.
           READ TABLE lt_arg INDEX 1 INTO temp5.
           sy-tabix = temp6.
           IF sy-subrc <> 0.
-            RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+            ASSERT 1 = 0.
           ENDIF.
           group_field = temp5.
 

@@ -87,7 +87,7 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
     READ TABLE t_tab INDEX 1 INTO temp2.
     sy-tabix = temp3.
     IF sy-subrc <> 0.
-      RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+      ASSERT 1 = 0.
     ENDIF.
     page->input( value = client->_bind_edit( val = temp2-title tab = t_tab tab_index = 1 ) ).
     
@@ -96,7 +96,7 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
     READ TABLE t_tab INDEX 1 INTO temp4.
     sy-tabix = temp5.
     IF sy-subrc <> 0.
-      RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+      ASSERT 1 = 0.
     ENDIF.
     page->input( value = client->_bind_edit( val = temp4-value tab = t_tab tab_index = 1 ) ).
     
@@ -105,7 +105,7 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
     READ TABLE t_tab INDEX 2 INTO temp6.
     sy-tabix = temp7.
     IF sy-subrc <> 0.
-      RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+      ASSERT 1 = 0.
     ENDIF.
     page->input( value = client->_bind_edit( val = temp6-title tab = t_tab tab_index = 2 ) ).
     
@@ -114,7 +114,7 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
     READ TABLE t_tab INDEX 2 INTO temp8.
     sy-tabix = temp9.
     IF sy-subrc <> 0.
-      RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+      ASSERT 1 = 0.
     ENDIF.
     page->input( value = client->_bind_edit( val = temp8-value tab = t_tab tab_index = 2 ) ).
 

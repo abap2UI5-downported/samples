@@ -219,7 +219,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
           READ TABLE mt_employees_sel INDEX 1 INTO temp3.
           sy-tabix = temp4.
           IF sy-subrc <> 0.
-            RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+            ASSERT 1 = 0.
           ENDIF.
           screen-name = temp3-name.
           
@@ -228,7 +228,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
           READ TABLE mt_employees_sel INDEX 1 INTO temp5.
           sy-tabix = temp6.
           IF sy-subrc <> 0.
-            RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+            ASSERT 1 = 0.
           ENDIF.
           screen-lastname = temp5-lastname.
           client->message_toast_display( 'f4 value selected' ).
@@ -244,7 +244,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
           READ TABLE mt_suggestion_sel INDEX 1 INTO temp7.
           sy-tabix = temp8.
           IF sy-subrc <> 0.
-            RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+            ASSERT 1 = 0.
           ENDIF.
           screen-color_02 = temp7-value.
           client->message_toast_display( 'f4 value selected' ).

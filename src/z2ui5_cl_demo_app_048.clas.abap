@@ -109,7 +109,7 @@ CLASS Z2UI5_CL_DEMO_APP_048 IMPLEMENTATION.
         READ TABLE lt_arg INDEX 1 INTO temp7.
         sy-tabix = temp8.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         lv_row_title = temp7.
         client->message_box_display( `EDIT - ` && lv_row_title ).
@@ -123,7 +123,7 @@ CLASS Z2UI5_CL_DEMO_APP_048 IMPLEMENTATION.
         READ TABLE lt_sel INDEX 1 INTO temp3.
         sy-tabix = temp4.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         client->message_box_display( `SELECTION_CHANGED -` && temp3-title ).
       WHEN 'BACK'.

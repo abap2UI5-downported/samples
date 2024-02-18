@@ -165,7 +165,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
         READ TABLE mt_scroll WITH KEY id = 'id_page' INTO temp1.
         sy-tabix = temp2.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         temp4 = temp1-scrollto.
         
@@ -180,7 +180,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
         READ TABLE mt_scroll WITH KEY id = 'id_page' ASSIGNING <temp5>.
         sy-tabix = temp6.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         
         temp5 = lv_pos.
@@ -196,7 +196,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
         READ TABLE mt_scroll WITH KEY id = 'id_page' INTO temp7.
         sy-tabix = temp8.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         lv_pos = temp7-scrollto.
         lv_pos = lv_pos + 500.
@@ -209,7 +209,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
         READ TABLE mt_scroll WITH KEY id = 'id_page' ASSIGNING <temp9>.
         sy-tabix = temp10.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         
         temp9 = lv_pos.

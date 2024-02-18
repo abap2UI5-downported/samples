@@ -840,7 +840,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       READ TABLE mt_mapping WITH KEY n = lr_filter->option INTO temp2.
       sy-tabix = temp3.
       IF sy-subrc <> 0.
-        RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+        ASSERT 1 = 0.
       ENDIF.
       lv_value = temp2-v.
       REPLACE `{LOW}`  IN lv_value WITH lr_filter->low.
@@ -930,7 +930,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
         READ TABLE lt_item INDEX 1 INTO temp28.
         sy-tabix = temp29.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         DELETE mt_filter WHERE key = temp28.
 

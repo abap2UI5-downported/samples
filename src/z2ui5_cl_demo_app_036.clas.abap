@@ -64,7 +64,7 @@ CLASS Z2UI5_CL_DEMO_APP_036 IMPLEMENTATION.
         READ TABLE app-get-t_event_arg INDEX 1 INTO temp1.
         sy-tabix = temp2.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         client->message_toast_display( temp1 ).
 

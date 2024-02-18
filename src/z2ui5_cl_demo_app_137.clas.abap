@@ -140,7 +140,7 @@ CLASS Z2UI5_CL_DEMO_APP_137 IMPLEMENTATION.
         READ TABLE lt_sel INDEX 1 INTO temp1.
         sy-tabix = temp2.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         ls_sel = temp1.
         
@@ -149,7 +149,7 @@ CLASS Z2UI5_CL_DEMO_APP_137 IMPLEMENTATION.
         READ TABLE mt_picture INDEX ls_sel-id INTO temp4.
         sy-tabix = temp5.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         mv_pic_display = temp4-data.
         view_display( client ).

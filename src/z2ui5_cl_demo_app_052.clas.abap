@@ -156,7 +156,7 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
         READ TABLE lt_arg INDEX 1 INTO temp1.
         sy-tabix = temp2.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         lv_open_by_id = temp1.
         mv_check_popover = abap_true.
@@ -166,7 +166,7 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
         READ TABLE lt_arg INDEX 2 INTO temp3.
         sy-tabix = temp4.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         mv_product = temp3.
         z2ui5_display_popover( lv_open_by_id ).

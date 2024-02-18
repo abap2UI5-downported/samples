@@ -231,7 +231,7 @@ CLASS Z2UI5_CL_DEMO_APP_069 IMPLEMENTATION.
         READ TABLE lt_arg INDEX 1 INTO temp5.
         sy-tabix = temp6.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         CASE temp5.
           WHEN 'App_001'.

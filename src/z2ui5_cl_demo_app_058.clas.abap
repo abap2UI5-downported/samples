@@ -140,7 +140,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
         READ TABLE mt_db_layout WITH KEY selkz = abap_true INTO temp2.
         sy-tabix = temp3.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         ls_layout2 = temp2.
         z2ui5_cl_util=>xml_parse(

@@ -54,7 +54,7 @@ CLASS z2ui5_cl_demo_app_102 IMPLEMENTATION.
         READ TABLE mt_barcode WITH KEY sym = ms_barcode-sym INTO temp1.
         sy-tabix = temp2.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         ms_barcode = temp1.
         client->view_model_update( ).
@@ -76,7 +76,7 @@ CLASS z2ui5_cl_demo_app_102 IMPLEMENTATION.
         READ TABLE mt_barcode INDEX 1 INTO temp3.
         sy-tabix = temp4.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         ms_barcode = temp3.
 

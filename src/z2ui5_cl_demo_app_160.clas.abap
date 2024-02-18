@@ -107,7 +107,7 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
         READ TABLE lt_event_arguments INDEX 1 INTO temp1.
         sy-tabix = temp2.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         lv_id_event = temp1.
 
@@ -118,7 +118,7 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
         READ TABLE lt_event_arguments INDEX 2 INTO temp3.
         sy-tabix = temp4.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         lv_tab_index = temp3.
         
@@ -128,7 +128,7 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
         READ TABLE mt_output INDEX lv_tab_index INTO temp5.
         sy-tabix = temp6.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         ls_row_submit = temp5.
 
@@ -139,7 +139,7 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
         READ TABLE lt_event_arguments INDEX 3 INTO temp7.
         sy-tabix = temp8.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         lv_id_parent = temp7.
 

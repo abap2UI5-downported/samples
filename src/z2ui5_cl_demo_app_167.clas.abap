@@ -104,7 +104,7 @@ CLASS z2ui5_cl_demo_app_167 IMPLEMENTATION.
         READ TABLE lt_arg INDEX 1 INTO temp11.
         sy-tabix = temp12.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         client->message_box_display( `backend event :` && temp11 ).
 

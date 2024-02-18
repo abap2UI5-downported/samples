@@ -454,7 +454,7 @@ CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
         READ TABLE lt_arg INDEX 1 INTO temp7.
         sy-tabix = temp8.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         READ TABLE mt_table_supplier WITH KEY suppliername = temp7 INTO ls_detail_supplier.
         
@@ -463,7 +463,7 @@ CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
         READ TABLE lt_arg INDEX 1 INTO temp9.
         sy-tabix = temp10.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         client->message_toast_display( |Event Press Supplier List Name: { temp9 } | ).
         CREATE OBJECT lo_app_next TYPE Z2UI5_CL_DEMO_APP_086.
@@ -477,7 +477,7 @@ CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
         READ TABLE lt_arg INDEX 1 INTO temp11.
         sy-tabix = temp12.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         client->message_toast_display( |Event Press Master - Product Id { temp11 } | ).
         
@@ -486,7 +486,7 @@ CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
         READ TABLE lt_arg INDEX 1 INTO temp13.
         sy-tabix = temp14.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         READ TABLE mt_table WITH KEY key = temp13 INTO ls_detail.
         READ TABLE mt_table_supplier WITH KEY suppliername = ls_detail-suppliername INTO ls_detail_supplier.
@@ -841,7 +841,7 @@ CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
     READ TABLE mt_table INDEX 1 INTO temp19.
     sy-tabix = temp20.
     IF sy-subrc <> 0.
-      RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+      ASSERT 1 = 0.
     ENDIF.
     ls_detail = temp19.
   ENDMETHOD.

@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_124 IMPLEMENTATION.
         READ TABLE lt_arg INDEX 1 INTO temp1.
         sy-tabix = temp2.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         mv_scan_input = temp1.
         
@@ -49,7 +49,7 @@ CLASS z2ui5_cl_demo_app_124 IMPLEMENTATION.
         READ TABLE lt_arg INDEX 2 INTO temp3.
         sy-tabix = temp4.
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE cx_sy_itab_line_not_found.
+          ASSERT 1 = 0.
         ENDIF.
         mv_scan_type  = temp3.
         client->view_model_update( ).
