@@ -912,11 +912,11 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     ).
 
 
-  panel = page->panel(
-               expandable = abap_false
-               expanded   = abap_true
-               headertext = `RTTI - Data Typing with S-RTTI`
-          ).
+    panel = page->panel(
+                 expandable = abap_false
+                 expanded   = abap_true
+                 headertext = `RTTI - Data Typing with S-RTTI`
+            ).
 
 
     panel->generic_tile(
@@ -958,6 +958,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     panel->generic_tile(
      header    = 'Speed Test'
    press     =  client->_event( 'Z2UI5_CL_DEMO_APP_082' )
+   mode      = 'LineMode'
+   class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
+
+    panel->generic_tile(
+     header    = 'Templating'
+   press     =  client->_event( 'Z2UI5_CL_DEMO_APP_173' )
    mode      = 'LineMode'
    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
 ).

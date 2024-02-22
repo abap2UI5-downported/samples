@@ -58,6 +58,7 @@ CLASS z2ui5_cl_demo_app_084 DEFINITION
     DATA:
       t_msg TYPE STANDARD TABLE OF ty_msg WITH DEFAULT KEY .
     DATA check_initialized TYPE abap_bool .
+    DATA mt_messaging TYPE z2ui5_cl_cc_messaging=>ty_t_items.
 
     METHODS z2ui5_display_view .
     METHODS z2ui5_display_popup .
@@ -142,7 +143,7 @@ CLASS Z2UI5_CL_DEMO_APP_084 IMPLEMENTATION.
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory( ).
-
+    view->_z2ui5( )->message_manager( client->_bind_edit( mt_messaging ) ).
     
     page = view->shell(
         )->page( class = `sapUiContentPadding `
@@ -241,15 +242,25 @@ CLASS Z2UI5_CL_DEMO_APP_084 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA view TYPE REF TO z2ui5_cl_xml_view.
 
     me->client = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      z2ui5_display_view( ).
+
+      
+      view = z2ui5_cl_xml_view=>factory( ).
+      client->view_display(
+        view->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_message_manager=>get_js( )
+            )->_z2ui5( )->timer( client->_event( `ON_CC_LOADED` )
+            )->stringify( ) ).
+
     ENDIF.
 
     CASE client->get( )-event.
+      WHEN 'ON_CC_LOADED'.
+        z2ui5_display_view( ).
       WHEN 'POPUP'.
         z2ui5_display_popup( ).
       WHEN 'POPOVER'.
