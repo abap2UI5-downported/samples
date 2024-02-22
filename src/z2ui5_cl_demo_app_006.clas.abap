@@ -1,24 +1,25 @@
-CLASS Z2UI5_CL_DEMO_APP_006 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_006 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_row,
-        count    TYPE i,
-        value    TYPE string,
-        descr    TYPE string,
-        icon     TYPE string,
-        info     TYPE string,
-        checkbox TYPE abap_bool,
+        count         TYPE i,
+        value         TYPE string,
+        descr         TYPE string,
+        icon          TYPE string,
+        info          TYPE string,
+        checkbox      TYPE abap_bool,
         percentage(5) TYPE p DECIMALS 2,
-        valueColor TYPE string,
+        valuecolor    TYPE string,
       END OF ty_row.
 
-    TYPES temp1_34fadc8960 TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY.
-DATA t_tab TYPE temp1_34fadc8960.
+    TYPES temp1_9d87ec7b26 TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY.
+DATA t_tab TYPE temp1_9d87ec7b26.
     DATA check_initialized TYPE abap_bool.
+    DATA check_ui5 TYPE abap_bool.
     DATA mv_key TYPE string.
     METHODS refresh_data.
 
@@ -27,53 +28,60 @@ DATA t_tab TYPE temp1_34fadc8960.
 ENDCLASS.
 
 
-
-CLASS Z2UI5_CL_DEMO_APP_006 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
 
 
   METHOD refresh_data.
-      DATA temp1 TYPE ty_row.
-      DATA temp2 TYPE z2ui5_cl_demo_app_006=>ty_row-info.
-      DATA temp3 TYPE z2ui5_cl_demo_app_006=>ty_row-percentage.
-      DATA ls_row LIKE temp1.
+      DATA ls_row TYPE ty_row.
 
     DO 5000 TIMES.
       
-      CLEAR temp1.
-      temp1-count = sy-index.
-      temp1-value = 'red'.
-      
-      IF sy-index < 50.
-        temp2 = 'completed'.
-      ELSE.
-        temp2 = 'uncompleted'.
-      ENDIF.
-      temp1-info = temp2.
-      temp1-descr = 'this is a description'.
-      temp1-checkbox = abap_true.
-      
-      IF sy-index <= 100.
-        temp3 = sy-index.
-      ELSE.
-        temp3 = '100'.
-      ENDIF.
-      temp1-percentage = temp3.
-      temp1-valuecolor = `Good`.
-      
-      ls_row = temp1.
+      ls_row-count = sy-index.
+      ls_row-value = 'red'.
+*        info = COND #( WHEN sy-index < 50 THEN 'completed' ELSE 'uncompleted' )
+      ls_row-descr = 'this is a description'.
+      ls_row-checkbox = abap_true.
+*        percentage = COND #( WHEN sy-index <= 100 THEN sy-index ELSE '100' )
+      ls_row-valuecolor = `Good`.
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
+    DATA lo_app2 TYPE REF TO z2ui5_if_app.
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA temp1 TYPE xsdboolean.
     DATA tab TYPE REF TO z2ui5_cl_xml_view.
-
+    lo_app2 = client->get_app( client->get( )-s_draft-id_prev_app_stack ) .
     IF check_initialized = abap_false.
+
+      IF check_ui5 = abap_false.
+        check_ui5 = abap_true.
+        client->nav_app_call( z2ui5_cl_popup_js_loader=>factory_check_open_ui5( ) ).
+        RETURN.
+      ENDIF.
+
+      IF client->get( )-check_on_navigated = abap_true.
+*        TRY.
+*            DATA(lo_app5) = client->get_app( client->get( )-s_draft-id_prev_app ).
+*            DATA lo_app TYPE REF TO z2ui5_cl_popup_js_loader.
+*            lo_app  ?=  lo_app5.
+*            IF lo_app->mv_is_open_ui5 = abap_true.
+*              DATA(lo_app3) = z2ui5_cl_popup_to_inform=>factory( `Sample not supported with OpenUI5, switch bootstrapping first to see this demo` ).
+*              client->nav_app_call( lo_app3 ).
+*              RETURN.
+*            ENDIF.
+*          CATCH cx_root.
+*            DATA(lo_app4) = client->get_app( client->get( )-s_draft-id_prev_app ).
+*            CAST z2ui5_cl_popup_to_inform( lo_app4 ).
+*            client->nav_app_leave( ).
+*            RETURN.
+*        ENDTRY.
+      ENDIF.
+
       check_initialized = abap_true.
       refresh_data( ).
     ENDIF.
@@ -94,14 +102,14 @@ CLASS Z2UI5_CL_DEMO_APP_006 IMPLEMENTATION.
       WHEN 'MENU_DEFAULT'.
         client->message_box_display( 'menu default pressed' ).
 
-           WHEN 'MENU_01'.
+      WHEN 'MENU_01'.
         client->message_box_display( 'menu 01 pressed' ).
 
-           WHEN 'MENU_02'.
+      WHEN 'MENU_02'.
         client->message_box_display( 'menu 02 pressed' ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
 
     ENDCASE.
 
@@ -115,11 +123,7 @@ CLASS Z2UI5_CL_DEMO_APP_006 IMPLEMENTATION.
             title          = 'abap2UI5 - Scroll Container with Table and Toolbar'
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton = temp1
-            )->header_content(
-                )->link(
-                    text = 'Source_Code'  target = '_blank'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-        )->get_parent( ).
+        ).
 
     
     tab = page->scroll_container( height = '70%' vertical = abap_true
@@ -175,7 +179,7 @@ CLASS Z2UI5_CL_DEMO_APP_006 IMPLEMENTATION.
         tooltip       = `Export`
         defaultaction = client->_event( 'MENU_DEFAULT' )
         icon = `sap-icon://share`
-         buttonMode  = `Split`
+         buttonmode  = `Split`
      )->_generic( `menu` )->_generic( `Menu`
         )->menu_item(
             press  = client->_event( 'MENU_01' )
@@ -207,7 +211,7 @@ CLASS Z2UI5_CL_DEMO_APP_006 IMPLEMENTATION.
        )->text( '{DESCR}'
        )->checkbox( selected = '{CHECKBOX}' enabled = abap_false
        )->text( '{COUNT}'
-       )->radial_micro_chart( size = `Responsive` height = `35px` percentage = `{PERCENTAGE}` valueColor = `{VALUECOLOR}` ).
+       )->radial_micro_chart( size = `Responsive` height = `35px` percentage = `{PERCENTAGE}` valuecolor = `{VALUECOLOR}` ).
 
     client->view_display( view->stringify( ) ).
 

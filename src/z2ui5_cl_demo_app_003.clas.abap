@@ -15,7 +15,8 @@ CLASS Z2UI5_CL_DEMO_APP_003 DEFINITION PUBLIC.
         checkbox TYPE abap_bool,
       END OF ty_row.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY.
+    TYPES temp1_6fb236e7f3 TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY.
+DATA t_tab TYPE temp1_6fb236e7f3.
     DATA check_initialized TYPE abap_bool.
 
   PROTECTED SECTION.
@@ -32,6 +33,7 @@ CLASS Z2UI5_CL_DEMO_APP_003 IMPLEMENTATION.
       DATA temp2 LIKE LINE OF temp1.
       DATA view TYPE REF TO z2ui5_cl_xml_view.
       DATA page TYPE REF TO z2ui5_cl_xml_view.
+      DATA temp5 TYPE xsdboolean.
         DATA lt_sel LIKE t_tab.
         DATA temp3 LIKE LINE OF lt_sel.
         DATA temp4 LIKE sy-tabix.
@@ -77,16 +79,13 @@ CLASS Z2UI5_CL_DEMO_APP_003 IMPLEMENTATION.
       
       view = z2ui5_cl_xml_view=>factory( ).
       
+      
+      temp5 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
       page = view->shell(
           )->page(
               title          = 'abap2UI5 - List'
               navbuttonpress = client->_event( 'BACK' )
-                shownavbutton = abap_true
-              )->header_content(
-                  )->link(
-                      text = 'Source_Code'  target = '_blank'
-                      href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-              )->get_parent( ).
+                shownavbutton = temp5 ).
 
       page->list(
           headertext      = 'List Ouput'
@@ -123,7 +122,7 @@ CLASS Z2UI5_CL_DEMO_APP_003 IMPLEMENTATION.
         client->message_box_display( `go to details for item ` && temp3-title ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
     ENDCASE.
 
   ENDMETHOD.

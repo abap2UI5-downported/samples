@@ -24,7 +24,8 @@ CLASS z2ui5_cl_demo_app_002 DEFINITION PUBLIC.
         value TYPE string,
         descr TYPE string,
       END OF s_suggestion_items.
-    DATA mt_suggestion TYPE STANDARD TABLE OF s_suggestion_items WITH DEFAULT KEY.
+    TYPES temp1_1f6edbe174 TYPE STANDARD TABLE OF s_suggestion_items WITH DEFAULT KEY.
+DATA mt_suggestion TYPE temp1_1f6edbe174.
 
     TYPES:
       BEGIN OF s_combobox,
@@ -79,7 +80,7 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
         CLEAR screen.
         client->message_toast_display( 'View initialized' ).
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
 
     ENDCASE.
 
@@ -131,6 +132,7 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA temp1 TYPE xsdboolean.
+    DATA temp2 TYPE xsdboolean.
     DATA grid TYPE REF TO z2ui5_cl_xml_view.
     DATA form TYPE REF TO z2ui5_cl_xml_view.
     DATA lv_test TYPE REF TO z2ui5_cl_xml_view.
@@ -143,17 +145,16 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
     
     
     temp1 = boolc( abap_false = client->get( )-check_launchpad_active ).
+    
+    temp2 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = view->shell(
          )->page(
           showheader       = temp1
             title          = 'abap2UI5 - Selection-Screen Example'
             navbuttonpress = client->_event( 'BACK' )
-              shownavbutton = abap_true ).
+            shownavbutton = temp2
+            ).
 
-      page->header_content(
-               )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1628701535222865922`
-               )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-           )->get_parent( ).
     
     grid = page->grid( 'L6 M12 S12'
         )->content( 'layout' ).

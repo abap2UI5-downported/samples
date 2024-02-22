@@ -1,10 +1,10 @@
-CLASS Z2UI5_CL_DEMO_APP_084 DEFINITION
+CLASS z2ui5_cl_demo_app_084 DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app .
+    INTERFACES z2ui5_if_app .
 
     "string - constraints
     DATA: mv_maxlength_string            TYPE string,
@@ -54,18 +54,19 @@ CLASS Z2UI5_CL_DEMO_APP_084 DEFINITION
         group       TYPE string,
       END OF ty_msg .
 
+    DATA mv_input_master TYPE string.
     DATA:
       t_msg TYPE STANDARD TABLE OF ty_msg WITH DEFAULT KEY .
     DATA check_initialized TYPE abap_bool .
 
-    METHODS Z2UI5_display_view .
-    METHODS Z2UI5_display_popup .
-    METHODS Z2UI5_display_popover
+    METHODS z2ui5_display_view .
+    METHODS z2ui5_display_popup .
+    METHODS z2ui5_display_popover
       IMPORTING
         !id TYPE string .
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO Z2UI5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -75,10 +76,10 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_084 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_display_popover.
+  METHOD z2ui5_display_popover.
 
     DATA popup TYPE REF TO z2ui5_cl_xml_view.
-    popup = Z2UI5_cl_xml_view=>factory_popup( ).
+    popup = z2ui5_cl_xml_view=>factory_popup( ).
 
     popup = popup->popover(
               placement = `Top`
@@ -101,10 +102,10 @@ CLASS Z2UI5_CL_DEMO_APP_084 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_display_popup.
+  METHOD z2ui5_display_popup.
 
     DATA popup TYPE REF TO z2ui5_cl_xml_view.
-    popup = Z2UI5_cl_xml_view=>factory_popup( ).
+    popup = z2ui5_cl_xml_view=>factory_popup( ).
 
     popup = popup->dialog(
           title = `Messages`
@@ -136,7 +137,7 @@ CLASS Z2UI5_CL_DEMO_APP_084 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_display_view.
+  METHOD z2ui5_display_view.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
@@ -148,13 +149,6 @@ CLASS Z2UI5_CL_DEMO_APP_084 IMPLEMENTATION.
             title          = 'abap2UI5 - Input Validation'
             navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
               shownavbutton = abap_true
-            )->header_content(
-                )->link(
-                    text = 'Demo'  target = '_blank'
-                    href = `https://twitter.com/abap2UI5/status/1647246029828268032`
-                )->link(
-                    text = 'Source_Code'  target = '_blank'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
             )->get_parent( ).
 
     "string
@@ -166,8 +160,10 @@ CLASS Z2UI5_CL_DEMO_APP_084 IMPLEMENTATION.
              )->label( text = `maxLength (5)`
              )->input( id = `testINPUT` value = `{path:'` && client->_bind_edit( val = mv_maxlength_string path = abap_true ) && `',type: 'sap.ui.model.type.String', constraints:{ maxLength: 5 } }`
                        editable = abap_true
-                       class = `sapUiTinyMarginBeginEnd` )->get_parent(
-
+                       class = `sapUiTinyMarginBeginEnd`
+          )->input( id = `inputMain`
+     value = `{path:'` && client->_bind_edit( val = mv_input_master path = abap_true ) && `',type:'sap.ui.model.type.String', constraints: { maxLength: 3 } }`
+    )->get_parent(
            )->hbox( class = `sapUiTinyMarginTopBottom` alignitems = `Center`
              )->label( text = `minLength (3)`
              )->input( value = `{path:'` && client->_bind_edit( val = mv_minlength_string path = abap_true ) && `',type: 'sap.ui.model.type.String', constraints:{ minLength: 3 } }`
@@ -244,20 +240,20 @@ CLASS Z2UI5_CL_DEMO_APP_084 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      Z2UI5_display_view( ).
+      z2ui5_display_view( ).
     ENDIF.
 
     CASE client->get( )-event.
       WHEN 'POPUP'.
-        Z2UI5_display_popup( ).
+        z2ui5_display_popup( ).
       WHEN 'POPOVER'.
-        Z2UI5_display_popover( `test` ).
+        z2ui5_display_popover( `test` ).
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDCASE.
