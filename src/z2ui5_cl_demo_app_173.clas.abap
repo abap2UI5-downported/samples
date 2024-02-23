@@ -73,7 +73,7 @@ CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
 
     
     xml =
-`<mvc:View xmlns="sap.m " xmlns:core="sap.ui.core " xmlns:mvc="sap.ui.core.mvc " displayBlock="true " height="100% ">` &&
+`<mvc:View xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:template="http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1" displayBlock="true" height="100%" >` &&
 `  <Shell>` &&
 `    <Page>` &&
 `      <Table items="{/MT_DATA}">` &&
