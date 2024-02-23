@@ -16,10 +16,9 @@ CLASS z2ui5_cl_demo_app_174 DEFINITION PUBLIC.
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH DEFAULT KEY.
 
     DATA mt_table TYPE ty_t_table.
-
     DATA ms_layout  TYPE z2ui5_cl_popup_layout_v2=>ty_s_layout.
 
-PROTECTED SECTION.
+  PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
     DATA mv_check_initialized TYPE abap_bool.
     METHODS on_event.
@@ -40,9 +39,8 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
       WHEN OTHERS.
         on_event_layout( ).
     ENDCASE.
@@ -144,15 +142,12 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
     headder =  table->header_toolbar(
                )->overflow_toolbar(
                  )->title(   text =  'Table'
-                 )->toolbar_spacer(
-                 ).
+                 )->toolbar_spacer( ).
 
-    headder = z2ui5_cl_popup_layout_v2=>render_layout_function( xml    = headder
-                                                                client = client ).
+    headder = z2ui5_cl_popup_layout_v2=>render_layout_function( xml = headder client = client ).
 
     
     columns = table->columns( ).
-
 
     
     
@@ -161,11 +156,11 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
       lv_index = sy-tabix.
 
       columns->column(
-        visible         = client->_bind( val = layout->visible tab = ms_layout-t_layout tab_index = lv_index )
-        halign          = client->_bind( val = layout->halign tab = ms_layout-t_layout tab_index = lv_index )
+        visible         = client->_bind( val = layout->visible    tab = ms_layout-t_layout tab_index = lv_index )
+        halign          = client->_bind( val = layout->halign     tab = ms_layout-t_layout tab_index = lv_index )
         importance      = client->_bind( val = layout->importance tab = ms_layout-t_layout tab_index = lv_index )
-        mergeduplicates = client->_bind( val = layout->merge tab = ms_layout-t_layout tab_index = lv_index )
-        minscreenwidth  = client->_bind( val = layout->width tab = ms_layout-t_layout tab_index = lv_index )
+        mergeduplicates = client->_bind( val = layout->merge      tab = ms_layout-t_layout tab_index = lv_index )
+        minscreenwidth  = client->_bind( val = layout->width      tab = ms_layout-t_layout tab_index = lv_index )
                           )->text( layout->fname ).
 
     ENDLOOP.
@@ -176,16 +171,15 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
     INSERT `${ROW_ID}` INTO TABLE temp4.
     
     cells = columns->get_parent( )->items(
-                                       )->column_list_item( valign = 'Middle'
-                                                            type   = 'Navigation'
-                                                            press  = client->_event( val   = 'ROW_SELECT'
-                                                                                     t_arg = temp4 )
-                                       )->cells( ).
+           )->column_list_item( valign = 'Middle'
+                                type   = 'Navigation'
+                                press  = client->_event(
+                                    val   = 'ROW_SELECT'
+                                    t_arg = temp4 )
+           )->cells( ).
 
     LOOP AT ms_layout-t_layout REFERENCE INTO layout.
-
       cells->object_identifier( text = '{' && layout->fname && '}' ).
-
     ENDLOOP.
 
     client->view_display( view->stringify( ) ).
@@ -201,16 +195,15 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
       mv_check_initialized = abap_true.
 
       set_data( ).
-
       create_layout( ).
-
       view_display( ).
-
       RETURN.
-
     ENDIF.
 
-    on_after_layout( ).
+    IF client->get( )-check_on_navigated = abap_true.
+      on_after_layout( ).
+      RETURN.
+    ENDIF.
 
     IF client->get( )-event IS NOT INITIAL.
       on_event( ).
@@ -220,56 +213,54 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
 
   METHOD create_layout.
 
-    DATA: tab         TYPE REF TO data.
-    DATA: lr_tabdescr TYPE REF TO cl_abap_tabledescr.
-    FIELD-SYMBOLS: <fs_tab> TYPE ANY TABLE.
-    DATA class TYPE abap_abstypename.
-    DATA temp6 TYPE string.
-
-    lr_tabdescr ?= cl_abap_tabledescr=>describe_by_data( mt_table ).
-    CREATE DATA tab TYPE HANDLE lr_tabdescr.
-    ASSIGN tab->* TO <fs_tab>.
-    <fs_tab> = mt_table.
-
-    
-    class   = cl_abap_classdescr=>get_class_name( me ).
-
-    
-    temp6 = class.
-    ms_layout = z2ui5_cl_popup_layout_v2=>init_layout(
-      tab   = tab
-      classname = temp6 ).
+    DATA temp6 LIKE REF TO mt_table.
+    GET REFERENCE OF mt_table INTO temp6.
+ms_layout = z2ui5_cl_popup_layout_v2=>init_layout(
+      tab       = temp6
+      classname = z2ui5_cl_util=>rtti_get_classname_by_ref( me ) ).
 
   ENDMETHOD.
 
 
   METHOD on_after_layout.
-          DATA temp7 TYPE REF TO z2ui5_cl_popup_layout_v2.
-          DATA app LIKE temp7.
+        DATA temp7 TYPE REF TO z2ui5_cl_popup_layout_v2.
+        DATA app LIKE temp7.
 
-    IF client->get( )-check_on_navigated = abap_true.
+    TRY.
+        
+        temp7 ?= client->get_app( client->get( )-s_draft-id_prev_app ).
+        
+        app = temp7.
+        ms_layout = app->ms_layout.
+        view_display( ).
 
-      TRY.
-          
-          temp7 ?= client->get_app( client->get( )-s_draft-id_prev_app ).
-          
-          app = temp7.
-          ms_layout = app->ms_layout.
-          view_display( ).
-
-        CATCH cx_root.
-      ENDTRY.
-
-    ENDIF.
+      CATCH cx_root.
+    ENDTRY.
 
   ENDMETHOD.
 
 
   METHOD on_event_layout.
 
-    client = z2ui5_cl_popup_layout_v2=>on_event_layout(
-      client = client
-      layout = ms_layout ).
+
+    CASE client->get( )-event.
+
+      WHEN 'LAYOUT_OPEN'.
+        client->view_destroy( ).
+        client->nav_app_call( z2ui5_cl_popup_layout_v2=>factory( layout = ms_layout
+                                       open_layout = abap_true   ) ).
+
+      WHEN 'LAYOUT_EDIT'.
+        client->view_destroy( ).
+        client->nav_app_call( z2ui5_cl_popup_layout_v2=>factory( layout = ms_layout
+                                       extended_layout = abap_true   ) ).
+
+      WHEN 'LAYOUT_DELETE'.
+        client->view_destroy( ).
+        client->nav_app_call( z2ui5_cl_popup_layout_v2=>factory( layout = ms_layout
+                                       delete_layout = abap_true ) ).
+
+    ENDCASE.
 
   ENDMETHOD.
 
