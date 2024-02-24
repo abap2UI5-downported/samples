@@ -127,8 +127,7 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
     view = view->shell( )->page( id = `page_main`
              title          = 'abap2UI5 - Popup Layout'
              navbuttonpress = client->_event( 'BACK' )
-             shownavbutton = temp1
-         ).
+             shownavbutton = temp1 ).
 
     
     table = view->table(
@@ -144,7 +143,9 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
                  )->title(   text =  'Table'
                  )->toolbar_spacer( ).
 
-    headder = z2ui5_cl_popup_layout_v2=>render_layout_function( xml = headder client = client ).
+    headder->button( text =  'Layout'
+                         icon = 'sap-icon://action-settings'
+                         press = client->_event( val = 'LAYOUT_EDIT' ) ).
 
     
     columns = table->columns( ).
@@ -225,12 +226,18 @@ ms_layout = z2ui5_cl_popup_layout_v2=>init_layout(
   METHOD on_after_layout.
         DATA temp7 TYPE REF TO z2ui5_cl_popup_layout_v2.
         DATA app LIKE temp7.
+        DATA ls_result TYPE z2ui5_cl_popup_layout_v2=>ty_s_result.
 
     TRY.
         
         temp7 ?= client->get_app( client->get( )-s_draft-id_prev_app ).
         
         app = temp7.
+        
+        ls_result = app->result( ).
+        IF ls_result-check_cancel = abap_true.
+          RETURN.
+        ENDIF.
         ms_layout = app->ms_layout.
         view_display( ).
 
@@ -245,20 +252,9 @@ ms_layout = z2ui5_cl_popup_layout_v2=>init_layout(
 
     CASE client->get( )-event.
 
-      WHEN 'LAYOUT_OPEN'.
-        client->view_destroy( ).
-        client->nav_app_call( z2ui5_cl_popup_layout_v2=>factory( layout = ms_layout
-                                       open_layout = abap_true   ) ).
-
       WHEN 'LAYOUT_EDIT'.
-        client->view_destroy( ).
         client->nav_app_call( z2ui5_cl_popup_layout_v2=>factory( layout = ms_layout
                                        extended_layout = abap_true   ) ).
-
-      WHEN 'LAYOUT_DELETE'.
-        client->view_destroy( ).
-        client->nav_app_call( z2ui5_cl_popup_layout_v2=>factory( layout = ms_layout
-                                       delete_layout = abap_true ) ).
 
     ENDCASE.
 
