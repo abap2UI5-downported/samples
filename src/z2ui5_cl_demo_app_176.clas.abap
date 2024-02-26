@@ -36,15 +36,34 @@ CLASS z2ui5_cl_demo_app_176 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
 
-  METHOD z2ui5_if_app~main.
+CLASS Z2UI5_CL_DEMO_APP_176 IMPLEMENTATION.
 
-    main_view( client ).
 
-    nest_view( client ).
+  METHOD main_view.
+
+    DATA lo_view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    lo_view = z2ui5_cl_xml_view=>factory( ).
+
+    
+    page = lo_view->shell(
+        )->page(
+                title          = `Main View`
+                id             = `test`
+                navbuttonpress = i_client->_event( 'BACK' )
+                shownavbutton  = abap_true
+            )->header_content(
+                )->link(
+                    text   = 'Source_Code'
+                    target = '_blank'
+                    href   = z2ui5_cl_demo_utility=>factory( i_client )->app_get_url_source_code( )
+            )->get_parent( ).
+
+    i_client->view_display( lo_view->stringify( ) ).
 
   ENDMETHOD.
+
 
   METHOD nest_view.
     DATA temp1 TYPE z2ui5_cl_demo_app_176=>ty_t_data.
@@ -101,35 +120,18 @@ CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
           )->column_list_item(
             )->cells(
               )->template_repeat( list = `{meta>/MT_LAYOUT}` var = `LO2`
-                )->object_identifier( text = `{LO2>BINDING}` ).
-
+                )->object_identifier( text = `{= '{' + ${LO2>FNAME} + '}' }` ).
 
     i_client->nest_view_display( val = lo_view_nested->stringify( ) id = `test` method_insert = 'addContent' ).
 
   ENDMETHOD.
 
-  METHOD main_view.
 
-    DATA lo_view TYPE REF TO z2ui5_cl_xml_view.
-    DATA page TYPE REF TO z2ui5_cl_xml_view.
-    lo_view = z2ui5_cl_xml_view=>factory( ).
+  METHOD z2ui5_if_app~main.
 
-    
-    page = lo_view->shell(
-        )->page(
-                title          = `Main View`
-                id             = `test`
-                navbuttonpress = i_client->_event( 'BACK' )
-                shownavbutton  = abap_true
-            )->header_content(
-                )->link(
-                    text   = 'Source_Code'
-                    target = '_blank'
-                    href   = z2ui5_cl_demo_utility=>factory( i_client )->app_get_url_source_code( )
-            )->get_parent( ).
+    main_view( client ).
 
-    i_client->view_display( lo_view->stringify( ) ).
+    nest_view( client ).
 
   ENDMETHOD.
-
 ENDCLASS.
