@@ -19,6 +19,7 @@ CLASS z2ui5_cl_demo_app_173 DEFINITION
         FNAME      type string,
         merge      TYPE string,
         visible    TYPE string,
+        binding    type string,
       END OF ty_s_layout,
       ty_t_layout TYPE STANDARD TABLE OF ty_s_layout WITH DEFAULT KEY.
 
@@ -41,7 +42,6 @@ CLASS Z2UI5_CL_DEMO_APP_173 IMPLEMENTATION.
     DATA temp4 LIKE LINE OF temp3.
     DATA view TYPE REF TO z2ui5_cl_xml_view.
 
-*    client->_bind( mt_data ).
     client->_bind( mt_layout ).
 
     
@@ -63,46 +63,19 @@ CLASS Z2UI5_CL_DEMO_APP_173 IMPLEMENTATION.
     temp4-fname = 'NAME'.
     temp4-merge = 'false'.
     temp4-visible = 'true'.
+    temp4-binding = '{NAME}'.
     INSERT temp4 INTO TABLE temp3.
     temp4-fname = 'DATE'.
     temp4-merge = 'false'.
     temp4-visible = 'true'.
+    temp4-binding = '{DATE}'.
     INSERT temp4 INTO TABLE temp3.
     temp4-fname = 'AGE'.
     temp4-merge = 'false'.
     temp4-visible = 'false'.
+    temp4-binding = '{AGE}'.
     INSERT temp4 INTO TABLE temp3.
     mt_layout = temp3.
-
-*    DATA(xml) =
-*`<mvc:View xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" ` &&
-*  `xmlns:template="http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1" displayBlock="true" height="100%" >` &&
-*`  <Shell>` &&
-*`    <Page>` &&
-*`      <Table items="{/MT_DATA}">` &&
-*`        <columns>` &&
-*`          <template:repeat list="{meta>/MT_LAYOUT} " var="MT_LAYOUT">` &&
-*`            <Column` &&
-*`           mergeDuplicates="{MT_LAYOUT>MERGE}"` &&
-*`           visible="{MT_LAYOUT>VISIBLE}"/>` &&
-*`          </template:repeat>` &&
-*`        </columns>` &&
-*`        <items>` &&
-*`          <ColumnListItem>` &&
-*`            <cells>` &&
-*`              <template:repeat list="{meta>/MT_LAYOUT}" var="MT_LAYOUT">` &&
-*`                <ObjectIdentifier text="{MT_LAYOUT>FNAME}"/>` &&
-*`              </template:repeat>` &&
-*`            </cells>` &&
-*`          </ColumnListItem>` &&
-*`        </items>` &&
-*`      </Table>` &&
-*`    </Page>` &&
-*`  </Shell>` &&
-*`</mvc:View> `.
-*
-*    client->view_display( xml ).
-
 
     
     view = z2ui5_cl_xml_view=>factory( ).
@@ -117,7 +90,7 @@ CLASS Z2UI5_CL_DEMO_APP_173 IMPLEMENTATION.
           )->column_list_item(
             )->cells(
               )->template_repeat( list = `{meta>/MT_LAYOUT}` var = `LO2`
-                )->object_identifier( text = `{LO2>FNAME}` ).
+                )->object_identifier( text = `{LO2>BINDING}` ).
 
      client->view_display( view->stringify( ) ).
 
