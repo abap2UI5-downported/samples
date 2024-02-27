@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_001 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     DATA product  TYPE string.
     DATA quantity TYPE string.
@@ -14,12 +14,13 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_001 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
       DATA view TYPE REF TO z2ui5_cl_xml_view.
-      DATA temp1 TYPE xsdboolean.
+      DATA temp1 TYPE z2ui5_if_types=>ty_s_event_control.
+      DATA temp2 TYPE xsdboolean.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
@@ -28,20 +29,17 @@ CLASS Z2UI5_CL_DEMO_APP_001 IMPLEMENTATION.
       quantity = '500'.
 
       
-      view = Z2UI5_cl_xml_view=>factory( ).
+      view = z2ui5_cl_xml_view=>factory( ).
       
-      temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
+      CLEAR temp1.
+      temp1-check_view_destroy = abap_true.
+      
+      temp2 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
       client->view_display( view->shell(
             )->page(
                     title          = 'abap2UI5 - First Example'
-                    navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
-                    shownavbutton = temp1
-                )->header_content(
-                    )->link(
-                        text = 'Source_Code'
-                        href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-                        target = '_blank'
-                )->get_parent(
+                    navbuttonpress = client->_event( val = 'BACK' s_cnt = temp1 )
+                    shownavbutton = temp2
                 )->simple_form( title = 'Form Title' editable = abap_true
                     )->content( 'form'
                         )->title( 'Input'
@@ -59,7 +57,7 @@ CLASS Z2UI5_CL_DEMO_APP_001 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'BUTTON_POST'.
-      client->message_toast_display( |{ product } { quantity } - send to the server| ).
+        client->message_toast_display( |{ product } { quantity } - send to the server| ).
 
       WHEN 'BACK'.
         client->nav_app_leave( ).

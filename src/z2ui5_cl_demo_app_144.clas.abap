@@ -12,7 +12,8 @@ CLASS z2ui5_cl_demo_app_144 DEFINITION
         value TYPE string,
       END OF ty_row .
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY .
+    TYPES temp1_23c3e7b34e TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY.
+DATA t_tab TYPE temp1_23c3e7b34e .
     DATA check_initialized TYPE abap_bool.
     DATA client TYPE REF TO z2ui5_if_client.
     METHODS set_view.
@@ -30,6 +31,7 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp10 TYPE xsdboolean.
     DATA temp1 LIKE LINE OF t_tab.
     DATA lr_row LIKE REF TO temp1.
       DATA lv_tabix LIKE sy-tabix.
@@ -44,16 +46,14 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
     DATA temp9 LIKE sy-tabix.
     view = z2ui5_cl_xml_view=>factory( ).
     
+    
+    temp10 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = view->shell(
         )->page(
                 title          = 'abap2UI5 - Binding Cell Level'
                 navbuttonpress = client->_event( 'BACK' )
-                shownavbutton = abap_true
-            )->header_content(
-                )->link(
-                    text = 'Source_Code' target = '_blank'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-        )->get_parent( ).
+                shownavbutton = temp10
+        ).
 
 
     

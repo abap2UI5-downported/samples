@@ -6,14 +6,11 @@ CLASS z2ui5_cl_demo_app_175 DEFINITION
   PUBLIC SECTION.
 
     INTERFACES z2ui5_if_app.
-    DATA mv_check_initialized TYPE abap_bool.
 
   PROTECTED SECTION.
-
-    METHODS on_rendering
+    METHODS display_view
       IMPORTING
-        !ir_client TYPE REF TO z2ui5_if_client .
-
+        client TYPE REF TO z2ui5_if_client.
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -21,13 +18,21 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_175 IMPLEMENTATION.
 
 
-  METHOD on_rendering.
+  METHOD z2ui5_if_app~main.
+
+    display_view( client ).
+
+    CASE client->get( )-event.
+      WHEN 'BACK'.
+        client->nav_app_leave( ).
+    ENDCASE.
+
+  ENDMETHOD.
+
+  METHOD display_view.
 
     DATA lr_view TYPE REF TO z2ui5_cl_xml_view.
-    DATA lr_dyn_page TYPE REF TO z2ui5_cl_xml_view.
-    DATA lr_header_title TYPE REF TO z2ui5_cl_xml_view.
-    DATA lr_header TYPE REF TO z2ui5_cl_xml_view.
-    DATA lr_content TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE xsdboolean.
     DATA lr_wizard TYPE REF TO z2ui5_cl_xml_view.
     DATA lr_wiz_step1 TYPE REF TO z2ui5_cl_xml_view.
     DATA lr_wiz_step2 TYPE REF TO z2ui5_cl_xml_view.
@@ -36,18 +41,14 @@ CLASS z2ui5_cl_demo_app_175 IMPLEMENTATION.
     lr_view = z2ui5_cl_xml_view=>factory( ).
 
     
-    lr_dyn_page =  lr_view->dynamic_page(
-        showfooter = abap_false  ).
+    temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
+    lr_view = lr_view->shell( )->page( id = `page_main`
+             title          = 'abap2UI5 - Demo Wizard Control'
+             navbuttonpress = client->_event( 'BACK' )
+             shownavbutton = temp1 ).
 
     
-    lr_header_title = lr_dyn_page->title( ns = 'f' )->get( )->dynamic_page_title( ).
-    lr_header_title->heading( ns = 'f' )->title( `Demo - Wizard Control` ).
-    
-    lr_header = lr_dyn_page->header( ns = 'f' )->dynamic_page_header( pinnable = abap_true )->content( ns = 'f' ).
-    
-    lr_content = lr_dyn_page->content( ns = 'f' ).
-    
-    lr_wizard = lr_content->wizard( ).
+    lr_wizard = lr_view->wizard( ).
     
     lr_wiz_step1 = lr_wizard->wizard_step( title = 'Step1'  validated          = abap_true ).
     lr_wiz_step1->message_strip( text = 'STEP1' ).
@@ -67,14 +68,8 @@ CLASS z2ui5_cl_demo_app_175 IMPLEMENTATION.
 
     lr_wiz_step4->message_strip( text = 'STEP4' ).
 
-    ir_client->view_display( lr_view->stringify( ) ).
+    client->view_display( lr_view->stringify( ) ).
 
   ENDMETHOD.
 
-
-  METHOD z2ui5_if_app~main.
-
-    me->on_rendering( ir_client = client ).
-
-  ENDMETHOD.
 ENDCLASS.

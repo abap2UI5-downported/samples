@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_059 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_059 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_s_tab,
@@ -18,50 +18,50 @@ CLASS Z2UI5_CL_DEMO_APP_059 DEFINITION PUBLIC.
 
     DATA mv_search_value TYPE string.
     DATA mt_table TYPE ty_t_table.
-    data mv_key type string.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO Z2UI5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool.
 
-    METHODS Z2UI5_on_init.
-    METHODS Z2UI5_on_event.
-    METHODS Z2UI5_set_search.
-    METHODS Z2UI5_set_data.
-    methods Z2UI5_view_display.
+    METHODS z2ui5_on_event.
+    METHODS z2ui5_set_search.
+    METHODS z2ui5_set_data.
+    METHODS z2ui5_view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_059 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     me->client     = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      Z2UI5_on_init( ).
-      Z2UI5_view_display( ).
+      z2ui5_set_data( ).
+      z2ui5_view_display( ).
       RETURN.
     ENDIF.
 
-    Z2UI5_on_event( ).
+    z2ui5_on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_event.
+  METHOD z2ui5_on_event.
+
+    me->client = client.
 
     CASE client->get( )-event.
 
-      WHEN 'BUTTON_SEARCH' OR 'BUTTON_START'.
-        Z2UI5_set_data( ).
-        Z2UI5_set_search( ).
+      WHEN 'BUTTON_SEARCH'.
+        z2ui5_set_data( ).
+        z2ui5_set_search( ).
         client->view_model_update( mt_table ).
 
       WHEN 'BACK'.
@@ -72,14 +72,7 @@ CLASS Z2UI5_CL_DEMO_APP_059 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_init.
-
-     mv_key = 'VIEW_REFRESH'.
-
-  ENDMETHOD.
-
-
-  METHOD Z2UI5_set_data.
+  METHOD z2ui5_set_data.
 
     DATA temp1 TYPE z2ui5_cl_demo_app_059=>ty_t_table.
     DATA temp2 LIKE LINE OF temp1.
@@ -126,103 +119,89 @@ CLASS Z2UI5_CL_DEMO_APP_059 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_set_search.
-      DATA temp3 LIKE LINE OF mt_table.
-      DATA lr_row LIKE REF TO temp3.
-        DATA lv_row TYPE string.
-        DATA lv_index TYPE i.
-          FIELD-SYMBOLS <field> TYPE any.
+  METHOD z2ui5_set_search.
 
-    IF mv_search_value IS NOT INITIAL.
-
-      
-      
-      LOOP AT mt_table REFERENCE INTO lr_row.
-        
-        lv_row = ``.
-        
-        lv_index = 1.
-        DO.
-          
-          ASSIGN COMPONENT lv_index OF STRUCTURE lr_row->* TO <field>.
-          IF sy-subrc <> 0.
-            EXIT.
-          ENDIF.
-          lv_row = lv_row && <field>.
-          lv_index = lv_index + 1.
-        ENDDO.
-
-        IF lv_row NS mv_search_value.
-          DELETE mt_table.
-        ENDIF.
-      ENDLOOP.
+    DATA lt_args TYPE string_table.
+    DATA temp3 TYPE string.
+    DATA temp4 TYPE string.
+    DATA temp5 LIKE LINE OF mt_table.
+    DATA lr_row LIKE REF TO temp5.
+      DATA lv_row TYPE string.
+      DATA lv_index TYPE i.
+        FIELD-SYMBOLS <field> TYPE any.
+    lt_args = client->get( )-t_event_arg.
+    
+    CLEAR temp3.
+    
+    READ TABLE lt_args INTO temp4 INDEX 1.
+    IF sy-subrc = 0.
+      temp3 = temp4.
     ENDIF.
+    mv_search_value = temp3.
+    IF mv_search_value IS INITIAL.
+      RETURN.
+    ENDIF.
+
+    
+    
+    LOOP AT mt_table REFERENCE INTO lr_row.
+      
+      lv_row = ``.
+      
+      lv_index = 1.
+      DO.
+        
+        ASSIGN COMPONENT lv_index OF STRUCTURE lr_row->* TO <field>.
+        IF sy-subrc <> 0.
+          EXIT.
+        ENDIF.
+        lv_row = lv_row && <field>.
+        lv_index = lv_index + 1.
+      ENDDO.
+
+      IF lv_row NS mv_search_value.
+        DELETE mt_table.
+      ENDIF.
+    ENDLOOP.
 
   ENDMETHOD.
 
 
-method Z2UI5_view_display.
+  METHOD z2ui5_view_display.
 
- DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA page1 TYPE REF TO z2ui5_cl_xml_view.
     DATA temp1 TYPE xsdboolean.
-    DATA page TYPE REF TO z2ui5_cl_xml_view.
-    DATA header_title TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp6 TYPE string_table.
     DATA lo_box TYPE REF TO z2ui5_cl_xml_view.
-    DATA cont TYPE REF TO z2ui5_cl_xml_view.
     DATA tab TYPE REF TO z2ui5_cl_xml_view.
     DATA lo_columns TYPE REF TO z2ui5_cl_xml_view.
     DATA lo_cells TYPE REF TO z2ui5_cl_xml_view.
- view = z2ui5_cl_xml_view=>factory( ).
+    view = z2ui5_cl_xml_view=>factory( ).
 
     
     
     temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
-    page1 = view->page( id = `page_main`
-            title          = 'abap2UI5 - List Report Features'
+    page1 = view->shell( )->page( id = `page_main`
+            title          = 'abap2UI5 - Search Field with Backend Live Change'
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton = temp1 ).
 
-      page1->header_content(
-            )->link(
-                text = 'Demo' target = '_blank'
-                href = 'https://twitter.com/abap2UI5/status/1674437273943937025'
-            )->link(
-                text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-       ).
+    
+    CLEAR temp6.
+    INSERT `${$source>/value}` INTO TABLE temp6.
+    
+    lo_box =  page1->vbox( )->text( `Search` )->search_field(
+*         value  = client->_bind_edit( mv_search_value )
+         livechange = client->_event(
+            val = 'BUTTON_SEARCH'
+            t_arg = temp6
+*            s_cnt = VALUE #( check_hide_busy_display = abap_true )
+            )
+         width  = `17.5rem` ).
 
     
-    page = page1->dynamic_page( headerexpanded = abap_true headerpinned = abap_true ).
-
-    
-    header_title = page->title( ns = 'f'  )->get( )->dynamic_page_title( ).
-    header_title->heading( ns = 'f' )->hbox( )->title( `Search Field` ).
-    header_title->expanded_content( 'f' ).
-    header_title->snapped_content( ns = 'f' ).
-
-    
-    lo_box = page->header( )->dynamic_page_header( pinnable = abap_true
-         )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignItems = `Start` ).
-
-    lo_box->vbox( )->text( `Search` )->search_field(
-         value  = client->_bind_edit( mv_search_value )
-         search = client->_event( 'BUTTON_SEARCH' )
-         change = client->_event( 'BUTTON_SEARCH' )
-         livechange = client->_event( 'BUTTON_SEARCH' )
-         width  = `17.5rem`
-         id     = `SEARCH`
-         ).
-
-    lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
-        text = `Go`
-        press = client->_event( `BUTTON_START` )
-        type = `Emphasized` ).
-
-    
-    cont = page->content( ns = 'f' ).
-
-    
-    tab = cont->table( items = client->_bind( val = mt_table ) ).
+    tab = lo_box->table( client->_bind( mt_table ) ).
 
     
     lo_columns = tab->columns( ).
@@ -242,5 +221,6 @@ method Z2UI5_view_display.
 
     client->view_display( view->stringify( ) ).
 
-endmethod.
+  ENDMETHOD.
+
 ENDCLASS.

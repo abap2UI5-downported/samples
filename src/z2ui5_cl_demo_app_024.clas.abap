@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_024 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_024 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     DATA mv_input TYPE string.
     DATA mv_input2 TYPE string.
@@ -12,29 +12,28 @@ CLASS Z2UI5_CL_DEMO_APP_024 DEFINITION PUBLIC.
 
     METHODS display_view
       IMPORTING
-        client TYPE REF TO Z2UI5_if_client.
+        client TYPE REF TO z2ui5_if_client.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_024 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_024 IMPLEMENTATION.
 
 
   METHOD display_view.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE xsdboolean.
     view = z2ui5_cl_xml_view=>factory( ).
+    
+    temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     view->shell(
-        )->page( title = 'abap2UI5 - flow logic - APP 01' navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true ) shownavbutton = abap_true
-        )->header_content(
-            )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1640743794206228480`
-            )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-        )->get_parent(
-
+        )->page( title = 'abap2UI5 - flow logic - APP 01'
+        navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
+        shownavbutton = temp1
        )->grid( 'L6 M12 S12' )->content( 'layout'
-
        )->simple_form( 'Controller' )->content( 'form'
 
          )->label( 'Demo'
@@ -54,7 +53,7 @@ CLASS Z2UI5_CL_DEMO_APP_024 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
         DATA temp1 TYPE REF TO z2ui5_cl_demo_app_025.
         DATA lo_app TYPE REF TO Z2UI5_CL_DEMO_APP_025.
         DATA lo_app_next TYPE REF TO Z2UI5_CL_DEMO_APP_025.
@@ -70,23 +69,23 @@ CLASS Z2UI5_CL_DEMO_APP_024 IMPLEMENTATION.
 
       WHEN 'CALL_NEW_APP'.
         
-        CREATE OBJECT temp1 TYPE Z2UI5_CL_DEMO_APP_025.
+        CREATE OBJECT temp1 TYPE z2ui5_cl_demo_app_025.
         client->nav_app_call( temp1 ).
 
       WHEN 'CALL_NEW_APP_VIEW'.
         
-        CREATE OBJECT lo_app TYPE Z2UI5_CL_DEMO_APP_025.
+        CREATE OBJECT lo_app TYPE z2ui5_cl_demo_app_025.
         lo_app->mv_show_view = 'SECOND'.
         client->nav_app_call( lo_app ).
 
       WHEN 'CALL_NEW_APP_READ'.
         
-        CREATE OBJECT lo_app_next TYPE Z2UI5_CL_DEMO_APP_025.
+        CREATE OBJECT lo_app_next TYPE z2ui5_cl_demo_app_025.
         lo_app_next->mv_input_previous_set = mv_input.
         client->nav_app_call( lo_app_next ).
 
       WHEN 'CALL_NEW_APP_EVENT'.
-        CREATE OBJECT lo_app_next TYPE Z2UI5_CL_DEMO_APP_025.
+        CREATE OBJECT lo_app_next TYPE z2ui5_cl_demo_app_025.
         lo_app_next->mv_event_backend = 'NEW_APP_EVENT'.
         client->nav_app_call( lo_app_next  ).
 
@@ -103,7 +102,7 @@ CLASS Z2UI5_CL_DEMO_APP_024 IMPLEMENTATION.
             temp2 ?= client->get_app( client->get( )-s_draft-id_prev_app ).
             
             lo_called_app = temp2.
-            clear mv_backend_event.
+            CLEAR mv_backend_event.
             client->message_box_display( `Input made in the previous app:` && lo_called_app->mv_input ).
         ENDCASE.
 

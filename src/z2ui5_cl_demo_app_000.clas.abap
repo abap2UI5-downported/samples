@@ -35,8 +35,9 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         DATA temp2 LIKE LINE OF temp1.
             DATA lv_classname TYPE string.
             DATA li_app TYPE REF TO z2ui5_if_app.
+    DATA temp3 TYPE z2ui5_if_types=>ty_s_event_control.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
-    DATA temp3 TYPE xsdboolean.
+    DATA temp4 TYPE xsdboolean.
     DATA page2 LIKE page.
     DATA panel TYPE REF TO z2ui5_cl_xml_view.
     ls_get = client->get( ).
@@ -71,14 +72,17 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     ENDCASE.
 
     
+    CLEAR temp3.
+    temp3-check_view_destroy = abap_true.
     
-    temp3 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
+    
+    temp4 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = z2ui5_cl_xml_view=>factory(
         )->shell( )->page(
         id = `page`
         title = ` abap2UI5 - Samples`
-        navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
-        shownavbutton = temp3
+        navbuttonpress = client->_event( val = 'BACK' s_cnt = temp3 )
+        shownavbutton = temp4
         )->header_content(
             )->toolbar_spacer(
             )->link( text = 'SCN'     target = '_blank' href = 'https://community.sap.com/t5/technology-blogs-by-members/abap2ui5-1-introduction-developing-ui5-apps-purely-in-abap/ba-p/13567635'
@@ -336,14 +340,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
-
-    panel->generic_tile(
-     header    = 'Input with Filter'
-     subheader = 'Filter Table on the Server'
-     press     =  client->_event( 'Z2UI5_CL_DEMO_APP_059' )
-     mode      = 'LineMode'
-     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
- ).
 
     panel->generic_tile(
      header    = 'Input with Suggestion'
