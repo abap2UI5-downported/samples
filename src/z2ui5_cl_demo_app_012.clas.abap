@@ -75,7 +75,7 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
     temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = lo_main->page(
             title          = 'abap2UI5 - Popups'
-            navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
+            navbuttonpress = client->_event( val = 'BACK' )
             shownavbutton = temp1
             )->header_content(
                 )->link(

@@ -45,7 +45,7 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
     client->view_display( view->shell(
           )->page(
                   title          = 'abap2UI5 - DriverJs'
-                  navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
+                  navbuttonpress = client->_event( val = 'BACK' )
                   shownavbutton = temp1
               )->header_content(
                   )->link(

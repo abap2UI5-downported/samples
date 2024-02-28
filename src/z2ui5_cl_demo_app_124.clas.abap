@@ -73,7 +73,7 @@ CLASS z2ui5_cl_demo_app_124 IMPLEMENTATION.
           )->page(
                  showheader       = temp6
                   title          = 'abap2UI5'
-                  navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
+                  navbuttonpress = client->_event( val = 'BACK' )
                   shownavbutton = temp7
               )->headercontent(
                   )->link(

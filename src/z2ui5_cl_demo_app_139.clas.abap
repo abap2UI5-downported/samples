@@ -56,7 +56,7 @@ CLASS z2ui5_cl_demo_app_139 IMPLEMENTATION.
          )->shell(
          )->page(
                  title          = 'abap2UI5 - Change URL History'
-                 navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
+                 navbuttonpress = client->_event( val = 'BACK' )
                  shownavbutton = temp1
              )->header_content(
                  )->link(

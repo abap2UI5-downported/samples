@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
     page = view->shell(
         )->page(
             title          = 'abap2UI5 - Controller'
-            navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
+            navbuttonpress = client->_event( val = 'BACK' )
                shownavbutton = temp1
           ).
 

@@ -107,7 +107,7 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
     view->shell(
             )->page(
                     title          = 'abap2UI5 - Multi Combo Box'
-                    navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
+                    navbuttonpress = client->_event( val = 'BACK' )
                     shownavbutton = temp1
                 )->header_content(
                     )->link(

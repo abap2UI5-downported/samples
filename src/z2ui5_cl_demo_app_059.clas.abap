@@ -62,7 +62,7 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
       WHEN 'BUTTON_SEARCH'.
         z2ui5_set_data( ).
         z2ui5_set_search( ).
-        client->view_model_update( mt_table ).
+        client->view_model_update( ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
@@ -172,7 +172,9 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA page1 TYPE REF TO z2ui5_cl_xml_view.
     DATA temp1 TYPE xsdboolean.
-    DATA temp6 TYPE string_table.
+    DATA temp6 TYPE z2ui5_if_types=>ty_s_event_control.
+    DATA ls_cnt LIKE temp6.
+    DATA temp7 TYPE string_table.
     DATA lo_box TYPE REF TO z2ui5_cl_xml_view.
     DATA tab TYPE REF TO z2ui5_cl_xml_view.
     DATA lo_columns TYPE REF TO z2ui5_cl_xml_view.
@@ -189,14 +191,18 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
 
     
     CLEAR temp6.
-    INSERT `${$source>/value}` INTO TABLE temp6.
+    temp6-check_allow_multi_req = abap_true.
+    
+    ls_cnt = temp6.
+    
+    CLEAR temp7.
+    INSERT `${$source>/value}` INTO TABLE temp7.
     
     lo_box =  page1->vbox( )->text( `Search` )->search_field(
-*         value  = client->_bind_edit( mv_search_value )
          livechange = client->_event(
             val = 'BUTTON_SEARCH'
-            t_arg = temp6
-*            s_cnt = VALUE #( check_hide_busy_display = abap_true )
+            t_arg = temp7
+            s_cnt = ls_cnt
             )
          width  = `17.5rem` ).
 
@@ -222,5 +228,4 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
-
 ENDCLASS.

@@ -31,7 +31,7 @@ CLASS Z2UI5_CL_DEMO_APP_115 IMPLEMENTATION.
     client->view_display( view->shell(
           )->page(
                   title          = 'abap2UI5 - CL_DEMO_OUTPUT - TODO uncomment the source code'
-                  navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
+                  navbuttonpress = client->_event( val = 'BACK' )
                   shownavbutton = temp1
               )->header_content(
                   )->link(
