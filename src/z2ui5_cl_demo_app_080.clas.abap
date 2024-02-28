@@ -36,7 +36,7 @@ PUBLIC
       END OF ty_s_people .
 
     TYPES temp1_813550bafa TYPE STANDARD TABLE OF ty_s_people.
-DATA lt_people TYPE temp1_813550bafa.
+DATA mt_people TYPE temp1_813550bafa.
 
   PROTECTED SECTION.
 
@@ -56,6 +56,7 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
 
 
   METHOD z2ui5_display_view.
+
     DATA lv_s_date TYPE c LENGTH 19.
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA temp1 TYPE z2ui5_if_types=>ty_s_name_value.
@@ -98,7 +99,8 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
     
     lo_planningcalendar = lo_vbox->planning_calendar(
                                                           startdate = `{= Helper.DateCreateObject($` && client->_bind_local( lv_s_date ) && ') }'
-                                                          rows = `{path: '` && client->_bind_local( val = lt_people path = abap_true ) && `'}`
+                                                          rows = `{path: '` && client->_bind( val = mt_people path = abap_true ) && `'}`
+*                                                          rows = `{ path: '` && client->_bind( val = mt_people path = abap_true ) && `}`
                                                           appointmentselect = client->_event( val = 'AppSelected' t_arg = temp2 )
                                                           showweeknumbers = abap_true ).
 
@@ -178,7 +180,7 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
 
 
   METHOD z2ui5_set_data.
-    DATA temp6 LIKE lt_people.
+    DATA temp6 LIKE mt_people.
     DATA temp7 LIKE LINE OF temp6.
     DATA temp1 TYPE z2ui5_cl_demo_app_080=>ty_s_people-appointments.
     DATA temp2 LIKE LINE OF temp1.
@@ -286,6 +288,6 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
     INSERT temp10 INTO TABLE temp9.
     temp7-headers = temp9.
     INSERT temp7 INTO TABLE temp6.
-    lt_people = temp6 .
+    mt_people = temp6 .
   ENDMETHOD.
 ENDCLASS.
