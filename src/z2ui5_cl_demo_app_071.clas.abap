@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_066 DEFINITION
+CLASS z2ui5_cl_demo_app_071 DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC .
@@ -9,6 +9,7 @@ CLASS z2ui5_cl_demo_app_066 DEFINITION
 
     DATA mv_input_master TYPE string.
     DATA mv_input_detail TYPE string.
+    DATA mt_messaging TYPE z2ui5_cl_cc_messaging=>ty_t_items.
     TYPES:
       BEGIN OF ts_tree_row_base,
         object TYPE string,
@@ -57,7 +58,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_066 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_071 IMPLEMENTATION.
 
 
   METHOD view_display_detail.
@@ -104,6 +105,7 @@ CLASS z2ui5_cl_demo_app_066 IMPLEMENTATION.
     DATA lr_master TYPE REF TO z2ui5_cl_xml_view.
     DATA tab TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory( ).
+    view->_z2ui5( )->messaging( client->_bind_edit( mt_messaging ) ).
     
     page = view->shell(
         )->page(
@@ -153,15 +155,16 @@ CLASS z2ui5_cl_demo_app_066 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
-        DATA temp1 TYPE z2ui5_cl_demo_app_066=>tt_tree_level1.
+      DATA view TYPE REF TO z2ui5_cl_xml_view.
+        DATA temp1 TYPE z2ui5_cl_demo_app_071=>tt_tree_level1.
         DATA temp2 LIKE LINE OF temp1.
-        DATA temp3 TYPE z2ui5_cl_demo_app_066=>tt_tree_level2.
+        DATA temp3 TYPE z2ui5_cl_demo_app_071=>tt_tree_level2.
         DATA temp4 LIKE LINE OF temp3.
-        DATA temp9 TYPE z2ui5_cl_demo_app_066=>tt_tree_level3.
+        DATA temp9 TYPE z2ui5_cl_demo_app_071=>tt_tree_level3.
         DATA temp10 LIKE LINE OF temp9.
-        DATA temp5 TYPE z2ui5_cl_demo_app_066=>tt_tree_level2.
+        DATA temp5 TYPE z2ui5_cl_demo_app_071=>tt_tree_level2.
         DATA temp6 LIKE LINE OF temp5.
-        DATA temp7 TYPE z2ui5_cl_demo_app_066=>tt_tree_level2.
+        DATA temp7 TYPE z2ui5_cl_demo_app_071=>tt_tree_level2.
         DATA temp8 LIKE LINE OF temp7.
         DATA temp11 TYPE xsdboolean.
         DATA temp12 TYPE xsdboolean.
@@ -170,6 +173,19 @@ CLASS z2ui5_cl_demo_app_066 IMPLEMENTATION.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
+
+      
+      view = z2ui5_cl_xml_view=>factory( ).
+      client->view_display(
+        view->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_messaging=>get_js( )
+            )->_z2ui5( )->timer( client->_event( `ON_CC_LOADED` )
+            )->stringify( ) ).
+
+    ENDIF.
+
+    CASE client->get( )-event.
+
+      WHEN 'ON_CC_LOADED'.
 
         view_display_master(  ).
         view_display_detail(  ).
@@ -216,11 +232,6 @@ CLASS z2ui5_cl_demo_app_066 IMPLEMENTATION.
         temp2-categories = temp7.
         INSERT temp2 INTO TABLE temp1.
         mt_tree = temp1.
-
-    ENDIF.
-
-    CASE client->get( )-event.
-
 
       WHEN `UPDATE_DETAIL`.
         view_display_detail(  ).

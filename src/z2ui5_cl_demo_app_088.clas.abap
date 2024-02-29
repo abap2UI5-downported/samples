@@ -1,24 +1,18 @@
-CLASS Z2UI5_CL_DEMO_APP_088 DEFINITION
+CLASS z2ui5_cl_demo_app_088 DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
   PUBLIC SECTION.
 
-    INTERFACES if_serializable_object .
-    INTERFACES Z2UI5_if_app .
-
-
+    INTERFACES z2ui5_if_app.
     DATA mv_selected_key TYPE string.
-
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO Z2UI5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool.
-
-    METHODS Z2UI5_view_display.
-    METHODS Z2UI5_on_event.
-
+    METHODS z2ui5_view_display.
+    METHODS z2ui5_on_event.
 
   PRIVATE SECTION.
     DATA mv_page TYPE string.
@@ -27,115 +21,64 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_088 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     me->client     = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
       mv_page = `page1`.
-      Z2UI5_view_display( ).
+      z2ui5_view_display( ).
       RETURN.
     ENDIF.
 
-    Z2UI5_on_event( ).
+    z2ui5_on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_event.
-        DATA temp1 TYPE string_table.
+  METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
-      WHEN 'OnSelectIconTabBar' .
-        client->message_toast_display( |Event SelectedTabBar Key {  mv_selected_key } | ).
-
-        
-        CLEAR temp1.
-        INSERT `NavCon` INTO TABLE temp1.
-        INSERT mv_selected_key INTO TABLE temp1.
-        client->_event_client( val = 'NAV_TO' t_arg  = temp1 ).
-        Z2UI5_view_display( ).
-
       WHEN OTHERS.
         mv_page = client->get( )-event.
-        Z2UI5_view_display( ).
+        z2ui5_view_display( ).
 
     ENDCASE.
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_view_display.
+  METHOD z2ui5_view_display.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
-    DATA temp3 TYPE string_table.
-    DATA tool_page TYPE REF TO z2ui5_cl_xml_view.
+     DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE string_table.
     view = z2ui5_cl_xml_view=>factory( ).
-    
-    CLEAR temp3.
-    INSERT `NavCon` INTO TABLE temp3.
-    INSERT `${$parameters>/selectedKey}` INTO TABLE temp3.
-    
-    tool_page = view->shell( )->tool_page(
-                          )->header( ns = `tnt`
-                            )->tool_header(
-                            )->button( text = `Back` press = client->_event( 'BACK' )
-                            )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-                              )->image( src = `https://www.sap.com/dam/application/shared/logos/sap-logo-svg.svg`
-                                        height = `1.5rem`
-                                        class = `sapUiSmallMarginBegin`
+     
+     page = z2ui5_cl_xml_view=>factory( )->shell( )->page( `abap2UI5 - App Finder`
+    )->content( ).
 
-                              )->title( text  = `Nav Container I`
-                              )->title( text  = `Second Title`
-                              )->toolbar_spacer(
-                              )->overflow_Toolbar_Button( text = `Search`
-                                                          tooltip = `Search`
-                                                          icon = `sap-icon://search`
-                                                          type = `Transparent`
-                              )->overflow_toolbar_button( text = `Task`
-                                                          tooltip = `Task`
-                                                          icon = `sap-icon://circle-task`
-                                                          type = `Transparent`
-                              )->overflow_toolbar_button( text = `Notifications`
-                                                          tooltip = `Notifications`
-                                                          icon = `sap-icon://bell`
-                                                          type = `Transparent`
-*                              )->avatar( src = ``
-*                                         displaysize = `XS`
-                              )->overflow_toolbar_button( text = `Custom Action`
-                                                          tooltip = `Custom Action`
-                                                          icon = `sap-icon://grid`
-                                                          type = `Transparent`
-                              )->get_parent(
-                            )->get_parent( )->sub_header( ns = `tnt`
-                            )->tool_header(
-                              )->icon_tab_header( selectedkey = client->_bind_edit( mv_selected_key )
-*                                                  select = client->_event( `OnSelectIconTabBar` )
-*                                                  select = client->_event_client( action = 'NAV_TO' t_arg  = value #( ( `NavCon` ) ( `${$parameters}` ) ) )
-                                                  select = client->_event_client( val = client->cs_event-nav_container_to t_arg  = temp3 )
+    
+    CLEAR temp1.
+    INSERT `NavCon` INTO TABLE temp1.
+    INSERT `${$parameters>/selectedKey}` INTO TABLE temp1.
+    page->icon_tab_header( selectedkey = client->_bind_edit( mv_selected_key )
+                                                  select = client->_event_client( val = client->cs_event-nav_container_to t_arg  = temp1 )
                                                   mode = `Inline`
                                   )->items(
                                     )->icon_tab_filter( key = `page1` text = `Home` )->get_parent(
                                     )->icon_tab_filter( key = `page2` text = `Applications` )->get_parent(
-                                    )->icon_tab_filter( key = `page3` text = `Users and Groups`
-                                      )->items(
-                                         )->icon_tab_filter( key = `page11` text = `User 1` )->get_parent(
-                                         )->icon_tab_filter( key = `page32` text = `User 2` )->get_parent(
-                                         )->icon_tab_filter( key = `page33` text = `User 3`
-                                      )->get_parent( )->get_parent( )->get_parent( )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-                                )->main_contents(
-*                                )->button( text = `page1` press = client->_event_client( action = 'NAV_TO' t_arg  = VALUE #( ( `NavCon` ) ( `page1` ) ) )
-*                                )->button( text = `page2` press = client->_event_client( action = 'NAV_TO' t_arg  = VALUE #( ( `NavCon` ) ( `page2` ) ) )
-*                                )->button( text = `page3` press = client->_event_client( action = 'NAV_TO' t_arg  = VALUE #( ( `NavCon` ) ( `page3` ) ) )
-                                  )->nav_container( id = `NavCon` initialpage = `page1` defaulttransitionname = `flip`
+                                    )->icon_tab_filter( key = `page3` text = `Users and Groups` ).
+
+       page->nav_container( id = `NavCon` initialpage = `page1` defaulttransitionname = `flip`
                                      )->pages(
                                      )->page(
                                        title          = 'first page'
@@ -151,7 +94,7 @@ CLASS Z2UI5_CL_DEMO_APP_088 IMPLEMENTATION.
                                 ).
 
 
-    client->view_display( tool_page->stringify( ) ).
+    client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.
