@@ -37,8 +37,7 @@ CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
     
     content = dialog->button( text = `Open 2nd popup` press = client->_event( 'GOTO_2ND' ) ).
 
-    dialog->get_parent( )->footer( )->overflow_toolbar(
-                  )->toolbar_spacer(
+    dialog->get_parent( )->buttons(
                   )->button(
                       text  = 'OK'
                       press = client->_event( 'BTN_OK_1ND' )
@@ -64,8 +63,7 @@ CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
     
     content = dialog->label( text = 'this is a second popup' ).
 
-    dialog->get_parent( )->footer( )->overflow_toolbar(
-                  )->toolbar_spacer(
+    dialog->get_parent( )->buttons(
                   )->button(
                       text  = 'GOTO 1ST POPUP'
                       press = client->_event( 'BTN_OK_2ND' )

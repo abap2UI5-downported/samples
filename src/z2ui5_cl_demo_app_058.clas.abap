@@ -96,8 +96,6 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
     me->client     = client.
     app-get        = client->get( ).
     app-view_popup = ``.
-*    app-next-title = `Filter`.
-
 
     IF app-check_initialized = abap_false.
       app-check_initialized = abap_true.
@@ -109,10 +107,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_render( ).
-
-*    client->set_next( app-next ).
     CLEAR app-get.
-*    CLEAR app-next.
 
   ENDMETHOD.
 
@@ -147,8 +142,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
           EXPORTING
             xml  = ls_layout2-data
           IMPORTING
-             any = ms_layout
-        ).
+             any = ms_layout ).
         app-view_popup = `POPUP_SAVE`.
 
       WHEN `BUTTON_SAVE_LAYOUT`.
@@ -172,6 +166,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
     DATA temp2 LIKE ms_layout-t_cols.
     DATA temp3 LIKE LINE OF temp2.
 
+    z2ui5_set_data( ).
     app-view_main = `MAIN`.
 
     ms_layout-title = `data`.
@@ -224,10 +219,6 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA temp1 TYPE xsdboolean.
-    DATA page TYPE REF TO z2ui5_cl_xml_view.
-    DATA header_title TYPE REF TO z2ui5_cl_xml_view.
-    DATA lo_box TYPE REF TO z2ui5_cl_xml_view.
-    DATA cont TYPE REF TO z2ui5_cl_xml_view.
     DATA tab TYPE REF TO z2ui5_cl_xml_view.
     DATA temp4 TYPE string.
     DATA lv_width TYPE i.
@@ -241,60 +232,50 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
     view = z2ui5_cl_xml_view=>factory( ).
     
     temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
-    view = view->page( id = `page_main`
-             title          = 'abap2UI5 - List Report Features'
+    view = view->shell( )->page( id = `page_main`
+             title          = 'abap2UI5 - Table Layout Sample'
              navbuttonpress = client->_event( 'BACK' )
              shownavbutton = temp1
-         )->header_content(
-             )->link(
-                 text = 'Demo' target = '_blank'
-                 href = 'https://twitter.com/abap2UI5/status/1662821284873396225'
-             )->link(
-                 text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-        )->get_parent( ).
+              ).
+*
+*    DATA(page) = view->dynamic_page(
+*            headerexpanded = abap_true
+*            headerpinned   = abap_true
+*            ).
+*
+*    DATA(header_title) = page->title( ns = 'f'
+*            )->get( )->dynamic_page_title( ).
+*
+*    header_title->heading( ns = 'f' )->hbox(
+*        )->title( `Layout` ).
+*
+*    header_title->expanded_content( 'f' ).
+*
+*    header_title->snapped_content( ns = 'f' ).
+*
+*    DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
+*         )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignitems = `Start` ).
+*
+*    lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
+*        text = `Go` press = client->_event( `BUTTON_START` ) type = `Emphasized`
+*        ).
+
+*    DATA(cont) = view->content( ).
 
     
-    page = view->dynamic_page(
-            headerexpanded = abap_true
-            headerpinned   = abap_true
-            ).
-
-    
-    header_title = page->title( ns = 'f'
-            )->get( )->dynamic_page_title( ).
-
-    header_title->heading( ns = 'f' )->hbox(
-        )->title( `Layout` ).
-
-    header_title->expanded_content( 'f' ).
-
-    header_title->snapped_content( ns = 'f' ).
-
-    
-    lo_box = page->header( )->dynamic_page_header( pinnable = abap_true
-         )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignitems = `Start` ).
-
-    lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
-        text = `Go` press = client->_event( `BUTTON_START` ) type = `Emphasized`
-        ).
-
-    
-    cont = page->content( ns = 'f' ).
-
-    
-    tab = cont->table(
+    tab = view->table(
         headertext = ms_layout-title
         items = client->_bind( mt_table )
         alternaterowcolors = ms_layout-check_zebra
         sticky = ms_layout-sticky_header
-        autopopinmode = abap_true
+*        autopopinmode = abap_true
         mode = ms_layout-selmode ).
 
     
     temp4 = lines( mt_table ).
     tab->header_toolbar(
           )->toolbar(
-              )->title( text = ms_layout-title && ` (` && shift_right( temp4 ) && `)` level = `H2`
+              )->title( text = ms_layout-title && ` (` && shift_right( temp4 ) && `)`
 
       )->toolbar_spacer(
               )->button(
@@ -342,7 +323,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
       ENDIF.
     ENDLOOP.
 
-    client->view_display( page->get_root( )->xml_get( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
@@ -424,9 +405,14 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
                     text     = 'Sort'
                     selected = client->_bind( mv_check_sort ) ).
 
-    ro_popup->footer( )->overflow_toolbar(
-          )->toolbar_spacer(
-          )->button(
+*    ro_popup->footer( )->overflow_toolbar(
+*          )->toolbar_spacer(
+*          )->button(
+*              text  = 'continue'
+*              press = client->_event( 'POPUP_FILTER_CONTINUE' )
+*              type  = 'Emphasized' ).
+
+    ro_popup->end_button( )->button(
               text  = 'continue'
               press = client->_event( 'POPUP_FILTER_CONTINUE' )
               type  = 'Emphasized' ).

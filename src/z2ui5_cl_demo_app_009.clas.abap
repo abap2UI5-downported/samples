@@ -22,15 +22,18 @@ CLASS Z2UI5_CL_DEMO_APP_009 DEFINITION PUBLIC.
         value TYPE string,
         descr TYPE string,
       END OF s_suggestion_items.
-    DATA mt_suggestion TYPE STANDARD TABLE OF s_suggestion_items WITH DEFAULT KEY.
-    DATA mt_suggestion_sel TYPE STANDARD TABLE OF s_suggestion_items WITH DEFAULT KEY.
+    TYPES temp1_6d1f103a38 TYPE STANDARD TABLE OF s_suggestion_items WITH DEFAULT KEY.
+DATA mt_suggestion TYPE temp1_6d1f103a38.
+    TYPES temp2_6d1f103a38 TYPE STANDARD TABLE OF s_suggestion_items WITH DEFAULT KEY.
+DATA mt_suggestion_sel TYPE temp2_6d1f103a38.
 
     TYPES:
       BEGIN OF s_suggestion_items_city,
         value TYPE string,
         descr TYPE string,
       END OF s_suggestion_items_city.
-    DATA mt_suggestion_city TYPE STANDARD TABLE OF s_suggestion_items_city WITH DEFAULT KEY.
+    TYPES temp3_6d1f103a38 TYPE STANDARD TABLE OF s_suggestion_items_city WITH DEFAULT KEY.
+DATA mt_suggestion_city TYPE temp3_6d1f103a38.
 
     TYPES:
       BEGIN OF s_employee,
@@ -40,8 +43,10 @@ CLASS Z2UI5_CL_DEMO_APP_009 DEFINITION PUBLIC.
         name     TYPE string,
         lastname TYPE string,
       END OF s_employee.
-    DATA mt_employees_sel TYPE STANDARD TABLE OF s_employee WITH DEFAULT KEY.
-    DATA mt_employees TYPE STANDARD TABLE OF s_employee WITH DEFAULT KEY.
+    TYPES temp4_6d1f103a38 TYPE STANDARD TABLE OF s_employee WITH DEFAULT KEY.
+DATA mt_employees_sel TYPE temp4_6d1f103a38.
+    TYPES temp5_6d1f103a38 TYPE STANDARD TABLE OF s_employee WITH DEFAULT KEY.
+DATA mt_employees TYPE temp5_6d1f103a38.
     DATA check_initialized TYPE abap_bool.
 
 
@@ -93,9 +98,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
                     )->text( '{VALUE}'
                     )->text( '{DESCR}'
     )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-    )->footer(
-        )->overflow_toolbar(
-            )->toolbar_spacer(
+    )->buttons(
             )->button(
                 text  = 'continue'
                 press = client->_event( 'POPUP_TABLE_F4_CONTINUE' )
@@ -151,9 +154,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
             )->text( '{NAME}'
             )->text( '{LASTNAME}' ).
 
-    popup2->footer(
-        )->overflow_toolbar(
-            )->toolbar_spacer(
+    popup2->buttons(
                 )->button(
                     text  = 'continue'
                     press = client->_event( 'POPUP_TABLE_F4_CUSTOM_CONTINUE' )
@@ -585,22 +586,18 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE xsdboolean.
     DATA form TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory( ).
     
+    
+    temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = view->shell(
         )->page(
             title          = 'abap2UI5 - Value Help Examples'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = abap_true
-            )->header_content(
-                )->link(
-                    text = 'Demo'  target = '_blank'
-                    href = 'https://twitter.com/abap2UI5/status/1637470531136921600'
-                )->link(
-                    text = 'Source_Code' target = '_blank'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-        )->get_parent( ).
+            shownavbutton  = temp1
+        ).
 
     
     form = page->grid( 'L7 M7 S7'
