@@ -37,13 +37,16 @@ CLASS z2ui5_cl_demo_app_047 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
       DATA temp1 LIKE mt_tab.
       DATA temp2 LIKE LINE OF temp1.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA temp3 TYPE xsdboolean.
+    DATA tab TYPE REF TO z2ui5_cl_xml_view.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
       date = sy-datum.
       time = sy-uzeit.
-      dec1 = -1 / 3.
+      dec1 = - 1 / 3.
+      dec2 = 2 / 3.
 
       
       CLEAR temp1.
@@ -65,36 +68,52 @@ CLASS z2ui5_cl_demo_app_047 IMPLEMENTATION.
     ENDCASE.
 
     
+    
     temp3 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
-    client->view_display( z2ui5_cl_xml_view=>factory( )->shell(
+    page =  z2ui5_cl_xml_view=>factory( )->shell(
         )->page(
                 title          = 'abap2UI5 - Integer and Decimals'
                 navbuttonpress = client->_event( 'BACK' )
-                shownavbutton = temp3
-            )->header_content(
-                )->link(
-                    text = 'Source_Code'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-                    target = '_blank'
-            )->get_parent(
-            )->simple_form( title = 'Integer and Decimals' editable = abap_true
-                )->content( 'form'
-                    )->title( 'Input'
-                    )->label( 'integer'
-                    )->input( value = client->_bind_edit( int1 )
-                    )->input( value = client->_bind_edit( int2 )
-                    )->input( enabled = abap_false value = client->_bind_edit( int_sum )
-                    )->button( text  = 'calc sum' press = client->_event( 'BUTTON_INT' )
-                    )->label( 'decimals'
-                    )->input( client->_bind_edit( dec1 )
-                    )->input( client->_bind_edit( dec2 )
-                    )->input( enabled = abap_false value = client->_bind_edit( dec_sum )
-                    )->button( text  = 'calc sum' press = client->_event( 'BUTTON_DEC' )
-                    )->label( 'date'
-                    )->input( client->_bind_edit( date )
-                    )->label( 'time'
-                    )->input( client->_bind_edit( time )
-               )->stringify( ) ).
+                shownavbutton = temp3 ).
+    page->simple_form( title = 'Integer and Decimals' editable = abap_true
+             )->content( 'form'
+                 )->title( 'Input'
+                 )->label( 'integer'
+                 )->input( value = client->_bind_edit( int1 )
+                 )->input( value = client->_bind_edit( int2 )
+                 )->input( enabled = abap_false value = client->_bind_edit( int_sum )
+                 )->button( text  = 'calc sum' press = client->_event( 'BUTTON_INT' )
+                 )->label( 'decimals'
+                 )->input( client->_bind_edit( dec1 )
+                 )->input( client->_bind_edit( dec2 )
+                 )->input( enabled = abap_false value = client->_bind_edit( dec_sum )
+                 )->button( text  = 'calc sum' press = client->_event( 'BUTTON_DEC' )
+                 )->label( 'date'
+                 )->input( client->_bind_edit( date )
+                 )->label( 'time'
+                 )->input( client->_bind_edit( time )
+    ).
+
+    
+    tab = page->scroll_container( height = '70%' vertical = abap_true
+        )->table(
+            growing             = abap_true
+            growingthreshold    = '20'
+            growingscrolltoload = abap_true
+            items               = client->_bind_edit( mt_tab )
+            sticky              = 'ColumnHeaders,HeaderToolbar' ).
+
+    tab->columns(
+        )->column(
+            )->text( 'Date' )->get_parent(
+        )->column(
+            )->text( 'Time' )->get_parent( ).
+
+    tab->items( )->column_list_item( )->cells(
+       )->text( '{DATE}'
+       )->text( '{TIME}' ).
+
+    client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

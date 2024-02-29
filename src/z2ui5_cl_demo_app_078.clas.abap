@@ -51,11 +51,7 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
                title          = 'abap2UI5 - Select-Options'
                navbuttonpress = client->_event( 'BACK' )
                shownavbutton = temp2
-           )->header_content(
-               )->link(
-                   text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-          )->get_parent( ).
-
+        ).
 
       view->_z2ui5( )->multiinput_ext(
                             addedtokens      = client->_bind_edit( mt_tokens_added )
