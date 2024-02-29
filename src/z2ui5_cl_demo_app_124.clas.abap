@@ -69,29 +69,29 @@ CLASS z2ui5_cl_demo_app_124 IMPLEMENTATION.
     temp6 = boolc( abap_false = client->get( )-check_launchpad_active ).
     
     temp7 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
-    client->view_display( z2ui5_cl_ui5=>_factory( )->_ns_m( )->shell(
+    client->view_display( z2ui5_cl_xml_view=>factory( )->shell(
           )->page(
                  showheader       = temp6
                   title          = 'abap2UI5'
                   navbuttonpress = client->_event( val = 'BACK' )
                   shownavbutton = temp7
-              )->headercontent(
+              )->header_content(
                   )->link(
                       text = 'Source_Code'
                       href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code(  )
                       target = '_blank'
-              )->_go_up( )->_ns_ui(
-              )->simpleform( title = 'Information' editable = abap_true
-                  )->content( )->_ns_m(
+              )->get_parent(
+              )->simple_form( title = 'Information' editable = abap_true
+                  )->content( 'form'
                       )->label( 'mv_scan_input'
                       )->input( client->_bind_edit( mv_scan_input )
                       )->label( `mv_scan_type`
                       )->input( client->_bind_edit( mv_scan_type )
-                      )->label( `scanner` )->_ns_ndc(
-                      )->barcodescannerbutton(
+                      )->label( `scanner`
+                      )->barcode_scanner_button(
                         scansuccess     = client->_event( val = 'ON_SCAN_SUCCESS' t_arg = temp5 )
                         dialogtitle     = `Barcode Scanner`
-           )->_stringify( ) ).
+           )->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

@@ -22,38 +22,30 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
   METHOD view_display.
 
-    DATA view TYPE REF TO z2ui5_cl_ui5_m.
-    DATA page TYPE REF TO z2ui5_cl_ui5.
-    DATA temp7 TYPE xsdboolean.
-    DATA grid TYPE REF TO z2ui5_cl_ui5_ui.
-   DATA temp TYPE REF TO z2ui5_cl_ui5_m.
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp6 TYPE xsdboolean.
+   DATA temp TYPE REF TO z2ui5_cl_xml_view.
      DATA temp1 TYPE z2ui5_if_types=>ty_t_name_value.
      DATA lt_types LIKE temp1.
-    DATA temp4 TYPE z2ui5_if_types=>ty_t_name_value.
-    DATA temp6 TYPE string_table.
-    DATA row LIKE LINE OF temp6.
-      DATA temp5 LIKE LINE OF temp4.
-    DATA temp3 TYPE REF TO z2ui5_cl_ui5_m.
-     DATA temp2 TYPE REF TO z2ui5_cl_ui5.
-    DATA temp8 TYPE xsdboolean.
-    view = z2ui5_cl_ui5=>_factory( )->_ns_m( ).
+    DATA temp2 TYPE z2ui5_if_types=>ty_t_name_value.
+    DATA temp5 TYPE string_table.
+    DATA row LIKE LINE OF temp5.
+      DATA temp4 LIKE LINE OF temp2.
+    DATA temp3 TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp7 TYPE xsdboolean.
+    view = z2ui5_cl_xml_view=>factory( ).
 
     
     
-    temp7 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
+    temp6 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = view->shell( )->page( title          = 'abap2UI5 - File Editor'
                                        navbuttonpress = client->_event( 'BACK' )
-                                       shownavbutton = temp7
-            )->headercontent(
-                )->link( text = 'Demo'        target = '_blank' href = 'https://twitter.com/abap2UI5/status/1631562906570575875'
-                )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-        )->_go_up( ).
-
-    
-    grid = page->_ns_ui( )->grid( 'L7 M12 S12' )->content( `sap.ui.layout` ).
+                                       shownavbutton = temp6
+        ).
 
    
-   temp = grid->simpleform( title = 'File' editable = abap_true )->content( )->_ns_m(
+   temp = page->simple_form( title = 'File' editable = abap_true )->content( `form`
          )->label( 'path'
          )->input( client->_bind_edit( mv_path )
          )->label( 'Option' ).
@@ -63,45 +55,41 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
      
      lt_types = temp1.
     
-    CLEAR temp4.
+    CLEAR temp2.
     
-    temp6 = z2ui5_cl_util=>source_get_file_types( ).
+    temp5 = z2ui5_cl_util=>source_get_file_types( ).
     
-    LOOP AT temp6 INTO row.
+    LOOP AT temp5 INTO row.
       
-      temp5-n = shift_right( shift_left( row ) ).
-      temp5-v = shift_right( shift_left( row ) ).
-      INSERT temp5 INTO TABLE temp4.
+      temp4-n = shift_right( shift_left( row ) ).
+      temp4-v = shift_right( shift_left( row ) ).
+      INSERT temp4 INTO TABLE temp2.
     ENDLOOP.
-    lt_types = temp4.
+    lt_types = temp2.
 
     
     temp3 = temp->input( value = client->_bind_edit( mv_type )
-                   suggestionitems = client->_bind_local( lt_types ) ).
-     
-     temp2 =  temp3->_go_new( ).
+                   suggestionitems = client->_bind_local( lt_types )
+                    )->get( ).
 
-          temp2->_ns_m(
-            )->suggestionitems( )->_ns_ui(
-                )->listitem( text = '{NAME}' additionaltext = '{VALUE}'
-         )->_go_up( )->_go_up( )->_ns_m(
-         )->button( text  = 'Download'
+       temp3->suggestion_items(
+                )->list_item( text = '{N}' additionaltext = '{V}' ).
+
+    temp->label( '' )->button( text  = 'Download'
                     press = client->_event( 'DB_LOAD' )
                     icon  = 'sap-icon://download-from-cloud' ).
 
-    grid = page->_ns_ui( )->grid( 'L12 M12 S12' )->content( `sap.ui.layout` ).
-
-    page->_ns_ui( )->codeeditor( type     = mv_type
+    page->code_editor( type     = mv_type
                        editable = mv_check_editable
                        value    = client->_bind( mv_editor ) ).
 
     
-    temp8 = boolc( mv_editor IS NOT INITIAL ).
-    page->_ns_m( )->footer( )->overflowtoolbar(
+    temp7 = boolc( mv_editor IS NOT INITIAL ).
+    page->footer( )->overflow_toolbar(
         )->button( text  = 'Clear'
                    press = client->_event( 'CLEAR' )
                    icon  = 'sap-icon://delete'
-        )->toolbarspacer(
+        )->toolbar_spacer(
         )->button( text  = 'Edit'
                    press = client->_event( 'EDIT' )
                    icon  = 'sap-icon://edit'
@@ -109,14 +97,14 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
                    press   = client->_event( 'DB_SAVE' )
                    type    = 'Emphasized'
                    icon    = 'sap-icon://upload-to-cloud'
-                   enabled = temp8 ).
+                   enabled = temp7 ).
 
-    client->view_display( page->_stringify( ) ).
+    client->view_display( page->stringify( ) ).
   ENDMETHOD.
 
   METHOD Z2UI5_if_app~main.
-        DATA temp6 TYPE string.
-        DATA temp9 TYPE xsdboolean.
+        DATA temp5 TYPE string.
+        DATA temp8 TYPE xsdboolean.
     me->client = client.
 
     IF check_initialized = abap_false.
@@ -132,19 +120,19 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
 
         
         IF mv_path CS 'abap'.
-          temp6 = lcl_file_api=>read_abap( ).
+          temp5 = lcl_file_api=>read_abap( ).
         ELSEIF mv_path CS 'json'.
-          temp6 = lcl_file_api=>read_json( ).
+          temp5 = lcl_file_api=>read_json( ).
         ELSEIF mv_path CS 'yaml'.
-          temp6 = lcl_file_api=>read_yaml( ).
+          temp5 = lcl_file_api=>read_yaml( ).
         ELSEIF mv_path CS 'text'.
-          temp6 = lcl_file_api=>read_text( ).
+          temp5 = lcl_file_api=>read_text( ).
         ELSEIF mv_path CS 'js'.
-          temp6 = lcl_file_api=>read_js( ).
+          temp5 = lcl_file_api=>read_js( ).
         ELSE.
-          CLEAR temp6.
+          CLEAR temp5.
         ENDIF.
-        mv_editor = temp6.
+        mv_editor = temp5.
 
         client->message_toast_display( 'Download successfull' ).
 
@@ -154,8 +142,8 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
         client->message_box_display( text = 'Upload successfull. File saved!' type = 'success' ).
       WHEN 'EDIT'.
         
-        temp9 = boolc( mv_check_editable = abap_false ).
-        mv_check_editable = temp9.
+        temp8 = boolc( mv_check_editable = abap_false ).
+        mv_check_editable = temp8.
       WHEN 'CLEAR'.
         mv_editor = ``.
       WHEN 'BACK'.

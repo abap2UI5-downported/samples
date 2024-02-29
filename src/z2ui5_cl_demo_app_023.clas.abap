@@ -140,19 +140,19 @@ CLASS z2ui5_cl_demo_app_023 IMPLEMENTATION.
         
         
         temp15 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
-        lv_view_normal_xml = z2ui5_cl_ui5=>_factory( )->_ns_m(
+        lv_view_normal_xml = z2ui5_cl_xml_view=>factory(
             )->page(
                     title          = 'abap2UI5 - NORMAL NORMAL NORMAL'
                     navbuttonpress = client->_event( 'BACK' )
                     shownavbutton = temp15
-                )->headercontent(
+                )->header_content(
                     )->link(
                         text = 'Source_Code'
                         href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code(  )
                         target = '_blank'
-                )->_go_up( )->_ns_ui(
-                )->simpleform( 'Form Title'
-                    )->content( )->_ns_m(
+                )->get_parent(
+                )->simple_form( 'Form Title'
+                    )->content( `form`
                         )->title( 'Input'
                         )->label( 'quantity'
                         )->input( client->_bind( quantity )
@@ -165,7 +165,7 @@ CLASS z2ui5_cl_demo_app_023 IMPLEMENTATION.
                         )->button(
                             text  = 'XML'
                             press = client->_event( 'XML' )
-                 )->_stringify( ).
+                 )->stringify( ).
 
         client->view_display( lv_view_normal_xml ).
 
