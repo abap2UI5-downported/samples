@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_051 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_022 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -6,9 +6,7 @@ CLASS z2ui5_cl_demo_app_051 DEFINITION PUBLIC.
 
     DATA:
       BEGIN OF screen,
-        input1 TYPE string,
-        input2 TYPE string,
-        input3 TYPE string,
+        progress_value    TYPE string VALUE '3',
       END OF screen.
 
     DATA check_initialized TYPE abap_bool.
@@ -18,6 +16,7 @@ CLASS z2ui5_cl_demo_app_051 DEFINITION PUBLIC.
     METHODS display_view
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
+
     METHODS on_event
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
@@ -27,7 +26,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_051 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_022 IMPLEMENTATION.
 
 
   METHOD display_view.
@@ -38,21 +37,18 @@ CLASS Z2UI5_CL_DEMO_APP_051 IMPLEMENTATION.
     temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
-            title          = 'abap2UI5 - Label Example'
+            title          = 'abap2UI5 - Progress Indicator Example'
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton  = temp1 ).
 
     
-    layout = page->vertical_layout( class  = `sapUiContentPadding` width = `100%` ).
-    layout->label( text = 'Input mandantory' labelfor = `input1` ).
-    layout->input( id = `input1` required = abap_true ).
-
-
-    layout->label( text = 'Input bold' labelfor = `input2` design = `Bold` ).
-    layout->input( id = `input2` value = client->_bind_edit( screen-input2 ) ).
-
-    layout->label( text = 'Input normal' labelfor = `input3` ).
-    layout->input( id = `input3` value = client->_bind_edit( screen-input2 ) ).
+    layout = page->vertical_layout( class = `sapUiContentPadding` width = `100%` ).
+    layout->label( 'ProgressIndicator'
+        )->progress_indicator(
+            percentvalue    = screen-progress_value
+            displayvalue    = '0,44GB of 32GB used'
+            showvalue       = abap_true
+            state           = 'Success' ).
 
     client->view_display( page->stringify( ) ).
 
@@ -62,8 +58,10 @@ CLASS Z2UI5_CL_DEMO_APP_051 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
+
       WHEN 'BACK'.
         client->nav_app_leave( ).
+
     ENDCASE.
 
   ENDMETHOD.
