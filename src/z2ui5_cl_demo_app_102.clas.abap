@@ -106,7 +106,7 @@ CLASS z2ui5_cl_demo_app_102 IMPLEMENTATION.
                navbuttonpress = client->_event( 'BACK' )
                shownavbutton = temp2
               )->header_content(
-                  )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+                  )->link( text = 'Source_Code' target = '_blank'
           )->get_parent(
           )->simple_form( title    = 'bwip-js // Barcode Writer in Pure Javascript' editable = abap_true
               )->content( ns = `form`

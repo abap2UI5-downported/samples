@@ -56,7 +56,7 @@ CLASS Z2UI5_CL_DEMO_APP_137 IMPLEMENTATION.
                navbuttonpress = client->_event( 'BACK' )
                shownavbutton = temp3
               )->header_content(
-                  )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+                  )->link( text = 'Source_Code' target = '_blank'
           )->get_parent( ).
 
     page->_z2ui5( )->camera_picture(

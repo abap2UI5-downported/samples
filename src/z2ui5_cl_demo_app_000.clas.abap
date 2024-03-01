@@ -83,7 +83,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         )->shell( )->page(
         id = `page`
         title = ` abap2UI5 - Samples`
-        navbuttonpress = client->_event( val = 'BACK' s_cnt = temp3 )
+        navbuttonpress = client->_event( val = 'BACK' s_ctrl = temp3 )
         shownavbutton = temp4
         )->header_content(
             )->toolbar_spacer(

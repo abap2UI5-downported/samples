@@ -9,10 +9,8 @@ CLASS z2ui5_cl_demo_app_061 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
-
-*    DATA t_tab2 TYPE REF TO data.
-
     METHODS set_view.
+
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -26,6 +24,7 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     FIELD-SYMBOLS <tab> TYPE table.
+    DATA temp1 TYPE z2ui5_if_types=>ty_s_event_control.
     DATA tab TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory( ).
     
@@ -40,13 +39,16 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
                     href = 'https://twitter.com/abap2UI5/status/1676522756781817857'
                 )->link(
                     text = 'Source_Code' target = '_blank'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+
         )->get_parent( ).
 
 
     
     ASSIGN  t_tab->* TO <tab>.
 
+    
+    CLEAR temp1.
+    temp1-check_view_destroy = abap_true.
     
     tab = page->table(
             items = client->_bind_edit( <tab> )
@@ -57,7 +59,7 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
                 )->toolbar_spacer(
                 )->button(
                     text  = `server <-> client`
-                    press = client->_event( val = 'SEND' check_view_destroy = abap_true )
+                    press = client->_event( val = 'SEND' s_ctrl = temp1 )
         )->get_parent( )->get_parent( ).
 
     tab->columns(
@@ -81,9 +83,9 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
       FIELD-SYMBOLS <tab> TYPE table.
-      DATA temp1 TYPE z2ui5_t_core_01.
       DATA temp2 TYPE z2ui5_t_core_01.
       DATA temp3 TYPE z2ui5_t_core_01.
+      DATA temp4 TYPE z2ui5_t_core_01.
 
     me->client = client.
 
@@ -95,26 +97,26 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
       ASSIGN t_tab->* TO <tab>.
 
       
-      CLEAR temp1.
-      temp1-id = 'this is an uuid'.
-      temp1-timestampl = '2023234243'.
-      temp1-id_prev = 'previous'.
-      INSERT temp1
-        INTO TABLE <tab>.
-
-      
       CLEAR temp2.
       temp2-id = 'this is an uuid'.
       temp2-timestampl = '2023234243'.
       temp2-id_prev = 'previous'.
       INSERT temp2
-          INTO TABLE <tab>.
+        INTO TABLE <tab>.
+
       
       CLEAR temp3.
       temp3-id = 'this is an uuid'.
       temp3-timestampl = '2023234243'.
       temp3-id_prev = 'previous'.
       INSERT temp3
+          INTO TABLE <tab>.
+      
+      CLEAR temp4.
+      temp4-id = 'this is an uuid'.
+      temp4-timestampl = '2023234243'.
+      temp4-id_prev = 'previous'.
+      INSERT temp4
           INTO TABLE <tab>.
 
 
