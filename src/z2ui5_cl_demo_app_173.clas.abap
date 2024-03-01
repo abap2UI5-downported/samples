@@ -19,7 +19,6 @@ CLASS z2ui5_cl_demo_app_173 DEFINITION
         fname   TYPE string,
         merge   TYPE string,
         visible TYPE string,
-        binding TYPE string,
       END OF ty_s_layout,
       ty_t_layout TYPE STANDARD TABLE OF ty_s_layout WITH DEFAULT KEY.
 
@@ -70,17 +69,14 @@ CLASS Z2UI5_CL_DEMO_APP_173 IMPLEMENTATION.
     temp4-fname = 'NAME'.
     temp4-merge = 'false'.
     temp4-visible = 'true'.
-    temp4-binding = '{NAME}'.
     INSERT temp4 INTO TABLE temp3.
     temp4-fname = 'DATE'.
     temp4-merge = 'false'.
     temp4-visible = 'true'.
-    temp4-binding = '{DATE}'.
     INSERT temp4 INTO TABLE temp3.
     temp4-fname = 'AGE'.
     temp4-merge = 'false'.
     temp4-visible = 'false'.
-    temp4-binding = '{AGE}'.
     INSERT temp4 INTO TABLE temp3.
     mt_layout = temp3.
 
@@ -97,14 +93,14 @@ CLASS Z2UI5_CL_DEMO_APP_173 IMPLEMENTATION.
 
     view->table( items = client->_bind( mt_data )
       )->columns(
-        )->template_repeat( list = `{template>/MT_LAYOUT}` var = `LO`
-          )->column( mergeduplicates = `{LO>MERGE}` visible = `{LO>VISIBLE}` )->get_parent(
+        )->template_repeat( list = `{template>/MT_LAYOUT}` var = `L0`
+          )->column( mergeduplicates = `{L0>MERGE}` visible = `{L0>VISIBLE}` )->text( text = `{L0>FNAME}` )->get_parent(
         )->get_parent( )->get_parent(
         )->items(
           )->column_list_item(
             )->cells(
-              )->template_repeat( list = `{template>/MT_LAYOUT}` var = `LO2`
-                )->object_identifier( text = `{LO2>BINDING}` ).
+              )->template_repeat( list = `{template>/MT_LAYOUT}` var = `L1`
+                )->object_identifier( text = `{= '{' + ${L1>FNAME} + '}' }` ).
 
     client->view_display( view->stringify( ) ).
 
