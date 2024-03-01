@@ -60,10 +60,16 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
      DATA page TYPE REF TO z2ui5_cl_xml_view.
+     DATA temp2 TYPE xsdboolean.
     DATA temp1 TYPE string_table.
     view = z2ui5_cl_xml_view=>factory( ).
      
-     page = z2ui5_cl_xml_view=>factory( )->shell( )->page( `abap2UI5 - App Finder`
+     
+     temp2 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
+     page = z2ui5_cl_xml_view=>factory( )->shell( )->page(
+        navbuttonpress = client->_event( val = 'BACK' )
+        shownavbutton = temp2
+        title = `abap2UI5 - App Finder`
     )->content( ).
 
     
