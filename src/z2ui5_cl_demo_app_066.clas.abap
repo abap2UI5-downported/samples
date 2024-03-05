@@ -113,7 +113,7 @@ CLASS z2ui5_cl_demo_app_066 IMPLEMENTATION.
 
     page->header_content(
              )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1628701535222865922`
-             )->link(  
+             )->link(
          )->get_parent( ).
 
     

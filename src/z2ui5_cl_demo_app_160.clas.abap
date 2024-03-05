@@ -175,7 +175,7 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
           shownavbutton = temp2
         )->header_content(
             )->link(
-                 
+
 
         )->get_parent( ).
 

@@ -330,7 +330,7 @@ CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
             shownavbutton = abap_true
           )->header_content(
              )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1691003695654133760`
-             )->link(  
+             )->link(
          )->get_parent( ).
 
     
