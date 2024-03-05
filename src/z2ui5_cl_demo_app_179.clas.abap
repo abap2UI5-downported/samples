@@ -4,108 +4,151 @@ CLASS z2ui5_cl_demo_app_179 DEFINITION
 
   PUBLIC SECTION.
 
+*https://github.com/abap2UI5/abap2UI5/issues/988#issuecomment-1978738754
+
     INTERFACES z2ui5_if_app.
 
-    TYPES:
-      BEGIN OF ty_s_relationships,
-        id           TYPE string,
-        successor    TYPE string,
-        presuccessor TYPE string,
-      END OF ty_s_relationships.
-
-    TYPES ty_t_relation TYPE STANDARD TABLE OF ty_s_relationships WITH DEFAULT KEY .
+    DATA zoomlevel TYPE i.
 
     TYPES:
-      BEGIN OF t_subtask5,
-        id        TYPE string,
-        starttime TYPE string,
-        endtime   TYPE string,
-      END OF t_subtask5 .
-    TYPES:
-      tt_subtask5 TYPE STANDARD TABLE OF t_subtask5 WITH DEFAULT KEY .
-    TYPES:
-      BEGIN OF t_task3,
-        id        TYPE string,
-        starttime TYPE string,
-        endtime   TYPE string,
-      END OF t_task3 .
-    TYPES:
-      BEGIN OF t_children4,
-        id        TYPE string,
-        text      TYPE string,
-        subtask   TYPE tt_subtask5,
-        relations TYPE ty_t_relation,
-      END OF t_children4 .
-    TYPES:
-      tt_task3 TYPE STANDARD TABLE OF t_task3 WITH DEFAULT KEY .
-    TYPES:
-      tt_children4 TYPE STANDARD TABLE OF t_children4 WITH DEFAULT KEY .
-
-    TYPES:
-      BEGIN OF t_children2,
-        id            TYPE string,
-        text          TYPE string,
-        task          TYPE tt_task3,
-        children      TYPE tt_children4,
-        relationships TYPE ty_t_relation,
-      END OF t_children2 .
-    TYPES:
-      tt_children2 TYPE STANDARD TABLE OF t_children2 WITH DEFAULT KEY .
-    TYPES:
-      BEGIN OF t_root6,
-        children TYPE tt_children2,
-      END OF t_root6 .
-    TYPES:
-      BEGIN OF t_json1,
-        root TYPE t_root6,
-      END OF t_json1 .
-
-    DATA mt_table TYPE t_root6 .
-    DATA zoomlevel TYPE i .
+      BEGIN OF ty_s_data,
+        objectid       TYPE string,
+        relationid     TYPE string,
+        parentobjectid TYPE string,
+        predectaskid   TYPE string,
+        succtaskid     TYPE string,
+        relationtype   TYPE string,
+        shapetypestart TYPE string,
+        shapetypeend   TYPE string,
+        StartTime      TYPE string,
+        EndTime        TYPE string,
+      END OF ty_s_data.
+    TYPES temp1_6cd5a9d875 TYPE STANDARD TABLE OF ty_s_data WITH DEFAULT KEY.
+DATA mt_data TYPE temp1_6cd5a9d875.
 
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client .
     DATA check_initialized TYPE abap_bool .
 
-    METHODS z2ui5_on_init .
+    METHODS set_view .
     METHODS z2ui5_on_event .
-    METHODS z2ui5_set_data .
+    METHODS set_mock_data .
 
   PRIVATE SECTION.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
+
+CLASS Z2UI5_CL_DEMO_APP_179 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
-    me->client = client.
+  METHOD set_mock_data.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
 
-      z2ui5_set_data( ).
-      z2ui5_on_init( ).
-      RETURN.
-    ENDIF.
+    DATA lv_mock TYPE string.
+    lv_mock = `[` && |\n|  &&
+                    `   {` && |\n|  &&
+                    `       "ObjectID": "rls-0-1",` && |\n|  &&
+                    `       "RelationID": "rls-0",` && |\n|  &&
+                    `       "ParentObjectID": "object-0-1-1",` && |\n|  &&
+                    `       "PredecTaskID": "object-0-1-1",` && |\n|  &&
+                    `       "SuccTaskID": "object-0-1-2",` && |\n|  &&
+                    `       "RelationType": "StartToFinish",` && |\n|  &&
+                    `       "shapeTypeStart":"VerticalRectangle",` && |\n|  &&
+                    `       "shapeTypeEnd":"Diamond",` && |\n|  &&
+                    `       "StartTime":"2018-11-01T09:00:00",` && |\n|  &&
+                    `       "EndTime":"2018-11-27T09:00:00"` && |\n|  &&
+                    `   },` && |\n|  &&
+                    |\n|  &&
+                    `   {` && |\n|  &&
+                    `       "ObjectID": "rls-1-1",` && |\n|  &&
+                    `       "RelationID": "rls-1",` && |\n|  &&
+                    `       "ParentObjectID": "object-0-2-2",` && |\n|  &&
+                    `       "PredecTaskID": "object-0-2-2",` && |\n|  &&
+                    `       "SuccTaskID": "object-0-2-3",` && |\n|  &&
+                    `       "RelationType": "FinishToFinish",` && |\n|  &&
+                    `       "shapeTypeStart":"Square",` && |\n|  &&
+                    `       "shapeTypeEnd":"Diamond",` && |\n|  &&
+                           `       "StartTime":"2018-11-01T09:00:00",` && |\n|  &&
+                    `       "EndTime":"2018-11-27T09:00:00"` && |\n|  &&
+                    `   },  ` && |\n|  &&
+                    |\n|  &&
+                    `   {` && |\n|  &&
+                    `       "ObjectID": "rls-2-1",` && |\n|  &&
+                    `       "RelationID": "rls-2",` && |\n|  &&
+                    `       "ParentObjectID": "object-0-2-1",` && |\n|  &&
+                    `       "PredecTaskID": "object-0-2-1",` && |\n|  &&
+                    `       "SuccTaskID": "object-0-2-4",` && |\n|  &&
+                    `       "RelationType": "StartToStart",` && |\n|  &&
+                    `       "enableCurvedEdge":true,` && |\n|  &&
+                           `       "StartTime":"2018-11-01T09:00:00",` && |\n|  &&
+                    `       "EndTime":"2018-11-27T09:00:00"` && |\n|  &&
+                    `   ` && |\n|  &&
+                    `   },` && |\n|  &&
+                    `   {` && |\n|  &&
+                    `       "ObjectID": "rls-3-1",` && |\n|  &&
+                    `       "RelationID": "rls-3",` && |\n|  &&
+                    `       "ParentObjectID": "object-0-2-1",` && |\n|  &&
+                    `       "PredecTaskID": "object-0-2-1",` && |\n|  &&
+                    `       "SuccTaskID": "object-0-2-3",` && |\n|  &&
+                    `       "RelationType": "FinishToFinish",` && |\n|  &&
+                    `       "shapeTypeStart":"Diamond",` && |\n|  &&
+                    `       "shapeTypeEnd":"Circle",` && |\n|  &&
+                           `       "StartTime":"2018-11-01T09:00:00",` && |\n|  &&
+                    `       "EndTime":"2018-11-27T09:00:00"` && |\n|  &&
+                    `   },` && |\n|  &&
+                    `   ` && |\n|  &&
+                    `   {` && |\n|  &&
+                    `       "ObjectID": "rls-4-1",` && |\n|  &&
+                    `       "RelationID": "rls-4",` && |\n|  &&
+                    `       "ParentObjectID": "object-0-1",` && |\n|  &&
+                    `       "PredecTaskID": "object-0-1",` && |\n|  &&
+                    `       "SuccTaskID": "object-0-2",` && |\n|  &&
+                    `       "RelationType": "StartToFinish",` && |\n|  &&
+                    `       "shapeTypeStart":"Circle",` && |\n|  &&
+                    `       "shapeTypeEnd":"Diamond",` && |\n|  &&
+                    `       "startShapeColor":"white",` && |\n|  &&
+                    `       "endShapeColor":"green",` && |\n|  &&
+                    `       "selectedStartShapeColor":"blue",` && |\n|  &&
+                    `       "selectedEndShapeColor":"yellow",` && |\n|  &&
+                    `       "enableCurvedEdge":true,` && |\n|  &&
+                           `       "StartTime":"2018-11-01T09:00:00",` && |\n|  &&
+                    `       "EndTime":"2018-11-27T09:00:00"` && |\n|  &&
+                    `   },` && |\n|  &&
+                    `   {` && |\n|  &&
+                    `       "ObjectID": "rls-5-1",` && |\n|  &&
+                    `       "RelationID": "rls-5",` && |\n|  &&
+                    `       "ParentObjectID": "object-0-2-4",` && |\n|  &&
+                    `       "PredecTaskID": "object-0-2-4",` && |\n|  &&
+                    `       "SuccTaskID": "object-0-2-5",` && |\n|  &&
+                    `       "RelationType": "FinishToStart",` && |\n|  &&
+                    `       "lShapeForTypeFS":false,` && |\n|  &&
+                           `       "StartTime":"2018-11-01T09:00:00",` && |\n|  &&
+                    `       "EndTime":"2018-11-27T09:00:00"` && |\n|  &&
+                    `   },` && |\n|  &&
+                    `   {` && |\n|  &&
+                    `       "ObjectID": "rls-6-1",` && |\n|  &&
+                    `       "RelationID": "rls-6",` && |\n|  &&
+                    `       "ParentObjectID": "object-0-3",` && |\n|  &&
+                    `       "PredecTaskID": "object-0-3",` && |\n|  &&
+                    `       "SuccTaskID": "object-0-3-1",` && |\n|  &&
+                    `       "RelationType": "FinishToStart",` && |\n|  &&
+                           `       "StartTime":"2018-11-01T09:00:00",` && |\n|  &&
+                    `       "EndTime":"2018-11-27T09:00:00"` && |\n|  &&
+                    `   }` && |\n|  &&
+                    `]`.
 
-    z2ui5_on_event( ).
+    z2ui5_cl_util=>json_parse(
+      EXPORTING
+        val  = lv_mock
+      CHANGING
+        data = mt_data ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
-
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-    ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_on_init.
+  METHOD set_view.
 
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
@@ -117,10 +160,11 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
     DATA gantt_container TYPE REF TO z2ui5_cl_xml_view.
     DATA gantt TYPE REF TO z2ui5_cl_xml_view.
     DATA table TYPE REF TO z2ui5_cl_xml_view.
-    DATA gantt_row_template TYPE REF TO z2ui5_cl_xml_view.
-    DATA gantt_rs TYPE REF TO z2ui5_cl_xml_view.
-    DATA lo_s TYPE REF TO z2ui5_cl_xml_view.
-    DATA lo_rel TYPE REF TO z2ui5_cl_xml_view.
+    DATA row_settings TYPE REF TO z2ui5_cl_xml_view.
+    DATA shapes TYPE REF TO z2ui5_cl_xml_view.
+    DATA relas TYPE REF TO z2ui5_cl_xml_view.
+    DATA columns TYPE REF TO z2ui5_cl_xml_view.
+    DATA column TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory( ).
 
     
@@ -157,10 +201,10 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
         showlegendbutton          =  abap_true
         showsettingbutton         =  abap_true
         showtimezoomcontrol       =  abap_true
-        findbuttonpress           = client->_event( val = 'FIRE' )
+*        findbuttonpress           = client->_event( val = 'FIRE' )
 *    stepcountofslider         =
 *    zoomcontroltype           =
-        zoomlevel                 = client->_bind_edit( zoomlevel )
+*        zoomlevel                 = client->_bind_edit( zoomlevel )
 *  RECEIVING
 *    result                    =
     ).
@@ -168,144 +212,124 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
 
     
     gantt_container = cont->gantt_chart_container(   ).
-    
-    gantt = gantt_container->gantt_chart_with_table( id = `gantt` shapeselectionmode = `Single` ).
 
-    gantt->axis_time_strategy(
-      )->proportion_zoom_strategy( zoomlevel = client->_bind_edit( zoomlevel )
-        )->total_horizon(
-          )->time_horizon( starttime = `20181029000000` endtime = `20181231000000` )->get_parent( )->get_parent(
-        )->visible_horizon(
-          )->time_horizon( starttime = `20181029000000` endtime = `20181131000000` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-  ).
+*    gantt_charts
+
     
-    table =  gantt->gantt_table( )->tree_table( rows = `{path: '` && client->_bind( val = mt_table path = abap_true ) && `', parameters: {arrayNames: ['CHILDREN'],numberOfExpandedLevels: 1}}`
+    gantt = gantt_container->gantt_chart_with_table(
+         id = `gantt`
+         shapeselectionmode = `Single`
+         isconnectordetailsvisible = abap_true
+          ).
+
+    
+    table =  gantt->gantt_table( )->tree_table(
+        rows = `{path: '` && client->_bind( val = mt_data path = abap_true ) &&
+         `',     parameters: {` && |\r\n|  &&
+         `           operationMode: 'Server',` && |\r\n|  &&
+         `           numberOfExpandedLevels: 2,` && |\r\n|  &&
+         `           treeAnnotationProperties: {` && |\r\n|  &&
+         `                 hierarchyNodeFor:                'OBJECTID',` && |\r\n|  &&
+         `                 hierarchyParentNodeFor:          'PARENTOBJECTID',` && |\r\n|  &&
+         `                 hierarchyLevelFor:               'HierarchyNodeLevel',` && |\r\n|  &&
+         `                 hierarchyDrillStateFor:          'DrillDownState',` && |\r\n|  &&
+         `                 hierarchyNodeDescendantCountFor: 'Magnitude'` && |\r\n|  &&
+         `             },` && |\r\n|  &&
+         `          expand: 'Relationships'` && |\r\n|  &&
+         `     }` && |\r\n|  &&
+         `}`
         ).
-    
-    gantt_row_template =   table->tree_columns(
-           )->tree_column( label = 'Col 1' )->tree_template( )->text( text = `{TEXT}` )->get_parent( )->get_parent( )->get_parent(
-*            )->tree_column( label = 'Col 1' template = 'text' )->get_parent( )->get_parent(
-         )->row_settings_template(
-           ).
+
+
+
+
+*    DATA(gantt_row_template) =   table->tree_columns(
+*           )->tree_column( label = 'Col 1' )->tree_template( )->text( text = `{TEXT}` )->get_parent( )->get_parent( )->get_parent(
+**            )->tree_column( label = 'Col 1' template = 'text' )->get_parent( )->get_parent(
+*         )->row_settings_template(
+*           ).
 
     
-    gantt_rs =  gantt_row_template->gantt_row_settings( rowid = `{ID}`
-                                  shapes1 = `{path: 'TASK', templateShareable:false}`
-                                  shapes2 = `{path: 'SUBTASK', templateShareable:false}`
-                                  relationships = `{path:'RELATIONSHIPS', templateShareable:false}`
+    row_settings =  table->row_settings_template( )->gantt_row_settings( rowid = `{OBJECTID}`
+*                                  shapes1 = `{path: 'TASK', templateShareable:false}`
+*                                  shapes2 = `{path: 'SUBTASK', templateShareable:false}`
+                                  relationships = `{path:'Relationships', templateShareable: 'true'}`
             ).
 
-    gantt_rs->shapes1(
-            )->task( id = 'TSK1' time = `{= Helper.DateCreateObject(${STARTTIME} ) }`
-            endtime = `{= Helper.DateCreateObject(${ENDTIME} ) }` type = `SummaryExpanded` color = `sapUiAccent5`  connectable = abap_true )."->get_parent( )->get_parent(
+    
+    shapes = row_settings->shapes1( ).
+    shapes->base_rectangle(
+        shapeid                 =  `{OBJECTID}`
+        time                    =  `{= Helper.DateCreateObject(${STARTTIME}) }`
+        endtime                 = `{= Helper.DateCreateObject(${ENDTIME}) }`
+        height                  = `19`
+        title                   = `{OBJECTNAME}`
+        connectable             = abap_true
+        horizontaltextalignment = `Start`
+    ).
 
-    gantt_rs->shapes2(
-      )->task( id = 'TSK2' time = `{= Helper.DateCreateObject(${STARTTIME} ) }`
-      endtime = `{= Helper.DateCreateObject(${ENDTIME} ) }`
-      connectable = abap_true ).
-
-
+    
+    relas = row_settings->relationships( ).
+    relas->relationship(
+        shapeid     = `{RELATIONID}`
+        type        = `{RELATIONTYPE}`
+        successor   = `{SUCCTASKID}`
+        predecessor = `{PREDECTASKID}`
+    ).
 
 
     
-    lo_s = gantt_rs->relationships( ).
-
-
-*                 <gnt2:relationships>
-*                   <gnt2:Relationship shapeId="{data>RelationID}"
-*                   predecessor="{data>PredecTaskID}" successor="{data>SuccTaskID}" type="{data>RelationType}" tooltip="{data>RelationType}"
-*                   selectable="true"/>
-*                 </gnt2:relationships>
-
-
-
-
+    columns = table->ui_columns( ).
     
-    CALL METHOD lo_s->relationship
-      EXPORTING
-        shapeid          = '{ID}'
-        successor   = '{SUCCESSOR}'
-        predecessor = '{PRESUCCESSOR}'
-        type        = 'StartToFinish'
-      RECEIVING
-        result      = lo_rel.
+    column = columns->ui_column(
+         id                = 'OBJECTNAME' ).
 
-*  RECEIVING
-*    result =.
+    column->ui_custom_data( )->core_custom_data(
+       key    = 'exportTableColumnConfig'
+        value  = '{"columnKey": "OBJECTNAME",' && |\r\n|  &&
+                 '    "leadingProperty":"OBJECTNAME",' && |\r\n|  &&
+                 '    "dataType": "string",' && |\r\n|  &&
+                 '    "hierarchyNodeLevel": "HierarchyNodeLevel",' && |\r\n|  &&
+                 '    "wrap": true}'
+    ).
 
+    column->text( text = `Object Name` ).
+    column->tree_template( )->label( text = `{OBJECTNAME}` ).
 
+    gantt->axis_time_strategy(
+      )->proportion_zoom_strategy(
+        )->total_horizon(
+          )->time_horizon( starttime = `20181101000000` endtime = `20181131000000` )->get_parent( )->get_parent(
+        )->visible_horizon(
+          )->time_horizon( starttime = `20181101000000` endtime = `20181131000000` ).
 
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
-    DATA temp1 TYPE z2ui5_cl_demo_app_179=>tt_children2.
-    DATA temp2 LIKE LINE OF temp1.
-    DATA temp3 TYPE z2ui5_cl_demo_app_179=>tt_task3.
-    DATA temp4 LIKE LINE OF temp3.
-    DATA temp5 TYPE z2ui5_cl_demo_app_179=>ty_t_relation.
-    DATA temp6 LIKE LINE OF temp5.
-    DATA temp7 TYPE z2ui5_cl_demo_app_179=>tt_children4.
-    DATA temp8 LIKE LINE OF temp7.
-    DATA temp9 TYPE z2ui5_cl_demo_app_179=>tt_subtask5.
-    DATA temp10 LIKE LINE OF temp9.
-    DATA temp11 TYPE z2ui5_cl_demo_app_179=>ty_t_relation.
-    DATA temp12 LIKE LINE OF temp11.
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+
+    IF check_initialized = abap_false.
+      check_initialized = abap_true.
+      set_mock_data( ).
+      set_view( ).
+      RETURN.
+    ENDIF.
+
+    z2ui5_on_event( ).
+
+  ENDMETHOD.
 
 
-    CLEAR mt_table.
-    
-    CLEAR temp1.
-    
-    temp2-id = `line`.
-    temp2-text = `Level 1`.
-    
-    CLEAR temp3.
-    
-    temp4-id = `rectangle1`.
-    temp4-starttime = `2018-11-01T09:00:00`.
-    temp4-endtime = `2018-11-27T09:00:00`.
-    INSERT temp4 INTO TABLE temp3.
-    temp2-task = temp3.
-    
-    CLEAR temp5.
-    
-    temp6-id = '34'.
-    temp6-successor = `chevron1`.
-    temp6-presuccessor = `chevron2`.
-    INSERT temp6 INTO TABLE temp5.
-    temp2-relationships = temp5.
-    
-    CLEAR temp7.
-    
-    temp8-id = `line2`.
-    temp8-text = `Level 2`.
-    
-    CLEAR temp9.
-    
-    temp10-id = `chevron1`.
-    temp10-starttime = `2018-11-01T09:00:00`.
-    temp10-endtime = `2018-11-13T09:00:00`.
-    INSERT temp10 INTO TABLE temp9.
-    temp10-id = `chevron2`.
-    temp10-starttime = `2018-11-15T09:00:00`.
-    temp10-endtime = `2018-11-27T09:00:00`.
-    INSERT temp10 INTO TABLE temp9.
-    temp8-subtask = temp9.
-    
-    CLEAR temp11.
-    
-    temp12-id = '34'.
-    temp12-successor = `chevron1`.
-    temp12-presuccessor = `chevron2`.
-    INSERT temp12 INTO TABLE temp11.
-    temp8-relations = temp11.
-    INSERT temp8 INTO TABLE temp7.
-    temp2-children = temp7.
-    INSERT temp2 INTO TABLE temp1.
-    mt_table-children = temp1.
+  METHOD z2ui5_on_event.
+
+    CASE client->get( )-event.
+      WHEN 'BACK'.
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+    ENDCASE.
 
   ENDMETHOD.
 ENDCLASS.

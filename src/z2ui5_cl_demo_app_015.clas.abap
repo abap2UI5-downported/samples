@@ -47,7 +47,7 @@ CLASS Z2UI5_CL_DEMO_APP_015 IMPLEMENTATION.
             shownavbutton = temp1
             )->header_content(
                 )->toolbar_spacer(
-                )->link( text = 'Source_Code'  target = '_blank'
+                )->link(  
             )->get_parent(
             )->vbox( 'sapUiSmallMargin'
                 )->link(
