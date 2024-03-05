@@ -502,16 +502,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
       ).
 
     panel->generic_tile(
-           header    = 'Tree Table I'
-         subheader = 'Basic'
-           press     =  client->_event( 'Z2UI5_CL_DEMO_APP_007' )
-           mode      = 'LineMode'
-           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-       ).
-
-
-    panel->generic_tile(
-        header    = 'Tree Table II'
+        header    = 'Tree Table'
         subheader = 'Popup Select Entry'
         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_068' )
         mode      = 'LineMode'
@@ -1317,6 +1308,14 @@ class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      mode      = 'LineMode'
      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
  ).
+
+     panel->generic_tile(
+           header    = 'Tree Table with Template'
+           press     =  client->_event( 'Z2UI5_CL_DEMO_APP_007' )
+           mode      = 'LineMode'
+           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+       ).
+
 
     client->view_display( page->stringify( ) ).
 
