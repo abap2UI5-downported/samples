@@ -16,7 +16,7 @@ CLASS z2ui5_cl_demo_app_174 DEFINITION PUBLIC.
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH DEFAULT KEY.
 
     DATA mt_table TYPE ty_t_table.
-    DATA ms_layout  TYPE z2ui5_cl_popup_layout_v2=>ty_s_layout.
+    DATA ms_layout  TYPE z2ui5_cl_popup_layout=>ty_s_layout.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -216,7 +216,7 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
 
     DATA temp6 LIKE REF TO mt_table.
     GET REFERENCE OF mt_table INTO temp6.
-ms_layout = z2ui5_cl_popup_layout_v2=>init_layout(
+ms_layout = z2ui5_cl_popup_layout=>init_layout(
       tab       = temp6
       classname = z2ui5_cl_util=>rtti_get_classname_by_ref( me ) ).
 
@@ -224,9 +224,9 @@ ms_layout = z2ui5_cl_popup_layout_v2=>init_layout(
 
 
   METHOD on_after_layout.
-        DATA temp7 TYPE REF TO z2ui5_cl_popup_layout_v2.
+        DATA temp7 TYPE REF TO z2ui5_cl_popup_layout.
         DATA app LIKE temp7.
-        DATA ls_result TYPE z2ui5_cl_popup_layout_v2=>ty_s_result.
+        DATA ls_result TYPE z2ui5_cl_popup_layout=>ty_s_result.
 
     TRY.
         
@@ -253,7 +253,7 @@ ms_layout = z2ui5_cl_popup_layout_v2=>init_layout(
     CASE client->get( )-event.
 
       WHEN 'LAYOUT_EDIT'.
-        client->nav_app_call( z2ui5_cl_popup_layout_v2=>factory( layout = ms_layout
+        client->nav_app_call( z2ui5_cl_popup_layout=>factory( layout = ms_layout
                                        extended_layout = abap_true   ) ).
 
     ENDCASE.

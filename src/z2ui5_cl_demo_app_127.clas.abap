@@ -4,9 +4,15 @@ CLASS z2ui5_cl_demo_app_127 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA product  TYPE string.
-    DATA quantity TYPE string.
+*    DATA product  TYPE string.
+*    DATA quantity TYPE string.
     DATA check_initialized TYPE abap_bool.
+
+    DATA:
+      BEGIN OF nav_params,
+        product  TYPE string,
+        quantity TYPE string,
+      END OF nav_params.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -22,15 +28,15 @@ CLASS z2ui5_cl_demo_app_127 IMPLEMENTATION.
     DATA lt_startup_params TYPE z2ui5_if_types=>ty_t_name_value.
       DATA view TYPE REF TO z2ui5_cl_xml_view.
       DATA temp1 TYPE string_table.
-      DATA temp2 TYPE xsdboolean.
+      DATA temp2 LIKE LINE OF temp1.
       DATA temp3 TYPE xsdboolean.
+      DATA temp4 TYPE xsdboolean.
     lt_startup_params = client->get( )-s_config-t_startup_params.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      product  = 'tomato'.
-      quantity = '500'.
+      nav_params-product  = '102343333'.
 
       
       view = z2ui5_cl_xml_view=>factory( ).
@@ -38,15 +44,18 @@ CLASS z2ui5_cl_demo_app_127 IMPLEMENTATION.
       CLEAR temp1.
       INSERT `{ semanticObject: "Z2UI5_CL_DEMO_APP_128",  action: "Z2UI5_CL_DEMO_APP_128" }` INTO TABLE temp1.
       
-      temp2 = boolc( abap_false = client->get( )-check_launchpad_active ).
+      temp2 = `$` && client->_bind_edit( nav_params ).
+      INSERT temp2 INTO TABLE temp1.
       
-      temp3 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
+      temp3 = boolc( abap_false = client->get( )-check_launchpad_active ).
+      
+      temp4 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
       client->view_display( view->shell(
             )->page(
-                     showheader       = temp2
-                    title          = 'abap2UI5 - Cross App Navigation App 127'
+                     showheader       = temp3
+                    title          = 'abap2UI5 - Cross App Navigation App 127 - This App only works when started via Launchpad'
                     navbuttonpress = client->_event( val = 'BACK' )
-                    shownavbutton = temp3
+                    shownavbutton = temp4
                 )->header_content(
                     )->link(
                         text = 'Source_Code'
@@ -55,11 +64,8 @@ CLASS z2ui5_cl_demo_app_127 IMPLEMENTATION.
                 )->get_parent(
                 )->simple_form( title = 'App 127' editable = abap_true
                     )->content( 'form'
-*                        )->title( 'Input'
-*                        )->label( 'Product'
-*                        )->input( client->_bind_edit( product )
-*                        )->label( `Quantity`
-*                        )->input( client->_bind_edit( quantity )
+                        )->label( `Product`
+                        )->input( client->_bind_edit( nav_params-product )
                         )->button(  text  = 'BACK' press = client->_event_client( client->cs_event-cross_app_nav_to_prev_app )
                         )->button(
                             text  = 'go to app 128'

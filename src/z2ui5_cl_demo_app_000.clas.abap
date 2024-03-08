@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_000 DEFINITION PUBLIC.
+    CLASS z2ui5_cl_demo_app_000 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -876,6 +876,20 @@ class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     panel->generic_tile(
        header    = 'Camera & Picture'
        press     =  client->_event( 'z2ui5_cl_demo_app_137' )
+       mode      = 'LineMode'
+       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+   ).
+
+    panel = page->panel(
+            expandable = abap_false
+            expanded   = abap_true
+            headertext = `Launchpad Integration`
+       ).
+
+    panel->generic_tile(
+       header    = 'Launchpad I'
+       subheader = `App Navigation & Parameters`
+       press     =  client->_event( 'z2ui5_cl_demo_app_127' )
        mode      = 'LineMode'
        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
    ).
