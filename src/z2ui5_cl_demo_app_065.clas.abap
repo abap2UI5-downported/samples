@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_065 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_065 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     DATA mv_input_main  TYPE string.
     DATA mv_input_nest  TYPE string.
@@ -14,40 +14,40 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_065 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_065 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
-      DATA lo_view TYPE REF TO z2ui5_cl_xml_view.
-        DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA lo_view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA temp1 TYPE string_table.
     DATA lo_view_nested TYPE REF TO z2ui5_cl_xml_view.
-      lo_view = z2ui5_cl_xml_view=>factory( ).
+    lo_view = z2ui5_cl_xml_view=>factory( ).
 
-        
-        page = lo_view->shell(
-            )->page(
-                    title = `Main View` id = `test`
-                    navbuttonpress = client->_event( 'BACK' )
-                      shownavbutton = abap_true
-                )->header_content(
-                    )->link(
+    
+    page = lo_view->shell(
+        )->page(
+                title = `Main View` id = `test`
+                navbuttonpress = client->_event( 'BACK' )
+                  shownavbutton = abap_true
+            )->header_content(
+                )->link(
 
 
-                )->get_parent( ).
+            )->get_parent( ).
 
-              page->content(
-                )->button( text = 'Rerender all' press = client->_event( 'ALL' )
-                )->button( text = 'Rerender Main without nest' press = client->_event( 'MAIN' )
-                )->button( text = 'Rerender only nested view' press = client->_event( 'NEST' )
-                )->input( value = client->_bind_edit( mv_input_main )  ).
+    page->content(
+      )->button( text = 'Rerender all' press = client->_event( 'ALL' )
+      )->button( text = 'Rerender Main without nest' press = client->_event( 'MAIN' )
+      )->button( text = 'Rerender only nested view' press = client->_event( 'NEST' )
+      )->input( value = client->_bind_edit( mv_input_main )  ).
 
     
     CLEAR temp1.
     INSERT `https://github.com/abap2UI5/abap2UI5/` INTO TABLE temp1.
     
-    lo_view_nested = Z2UI5_cl_xml_view=>factory(
+    lo_view_nested = z2ui5_cl_xml_view=>factory(
           )->page( title = `Nested View`
               )->button( text = 'event' press = client->_event( 'TEST' )
               )->button( text  = `frontend event`
@@ -62,6 +62,9 @@ CLASS Z2UI5_CL_DEMO_APP_065 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
+
+      WHEN `TEST`.
+       client->message_box_display( `input ` && mv_input_nest ).
 
       WHEN 'ALL'.
         client->view_display( lo_view->stringify( ) ).
