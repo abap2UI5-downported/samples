@@ -188,6 +188,12 @@ CLASS Z2UI5_CL_DEMO_APP_048 IMPLEMENTATION.
     
     CLEAR temp9.
     INSERT `${TITLE}` INTO TABLE temp9.
+    INSERT `${DESCR}` INTO TABLE temp9.
+    INSERT `${ICON}` INTO TABLE temp9.
+    INSERT `${HIGHLIGHT}` INTO TABLE temp9.
+    INSERT `${INFO}` INTO TABLE temp9.
+    INSERT `${WRAPCHARLIMIT}` INTO TABLE temp9.
+    INSERT `${SELECTED}` INTO TABLE temp9.
     temp6-v = client->_event( val = 'EDIT' t_arg = temp9 ).
     INSERT temp6 INTO TABLE temp5.
     page->list(

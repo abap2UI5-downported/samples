@@ -44,6 +44,11 @@ CLASS z2ui5_cl_demo_app_066 DEFINITION
     DATA mv_check_enabled_01 TYPE abap_bool VALUE abap_true.
     DATA mv_check_enabled_02 TYPE abap_bool.
 
+    DATA mv_ui5_version TYPE string.
+
+    DATA mt_messaging TYPE z2ui5_cl_cc_messaging=>ty_t_items.
+    DATA mt_message_manager TYPE z2ui5_cl_cc_message_manager=>ty_t_items.
+
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -57,7 +62,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_066 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_066 IMPLEMENTATION.
 
 
   METHOD view_display_detail.
@@ -104,6 +109,13 @@ CLASS z2ui5_cl_demo_app_066 IMPLEMENTATION.
     DATA lr_master TYPE REF TO z2ui5_cl_xml_view.
     DATA tab TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory( ).
+
+    IF mv_ui5_version > `1.118`.
+      view->_z2ui5( )->messaging( client->_bind_edit( mt_messaging ) ).
+    ELSE.
+      view->_z2ui5( )->message_manager( client->_bind_edit( mt_message_manager ) ).
+    ENDIF.
+
     
     page = view->shell(
         )->page(
@@ -153,16 +165,17 @@ CLASS z2ui5_cl_demo_app_066 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
-        DATA temp1 TYPE z2ui5_cl_demo_app_066=>tt_tree_level1.
-        DATA temp2 LIKE LINE OF temp1.
-        DATA temp3 TYPE z2ui5_cl_demo_app_066=>tt_tree_level2.
-        DATA temp4 LIKE LINE OF temp3.
-        DATA temp9 TYPE z2ui5_cl_demo_app_066=>tt_tree_level3.
-        DATA temp10 LIKE LINE OF temp9.
-        DATA temp5 TYPE z2ui5_cl_demo_app_066=>tt_tree_level2.
-        DATA temp6 LIKE LINE OF temp5.
-        DATA temp7 TYPE z2ui5_cl_demo_app_066=>tt_tree_level2.
-        DATA temp8 LIKE LINE OF temp7.
+      DATA temp1 TYPE z2ui5_cl_demo_app_066=>tt_tree_level1.
+      DATA temp2 LIKE LINE OF temp1.
+      DATA temp3 TYPE z2ui5_cl_demo_app_066=>tt_tree_level2.
+      DATA temp4 LIKE LINE OF temp3.
+      DATA temp9 TYPE z2ui5_cl_demo_app_066=>tt_tree_level3.
+      DATA temp10 LIKE LINE OF temp9.
+      DATA temp5 TYPE z2ui5_cl_demo_app_066=>tt_tree_level2.
+      DATA temp6 LIKE LINE OF temp5.
+      DATA temp7 TYPE z2ui5_cl_demo_app_066=>tt_tree_level2.
+      DATA temp8 LIKE LINE OF temp7.
+      DATA view TYPE REF TO z2ui5_cl_xml_view.
         DATA temp11 TYPE xsdboolean.
         DATA temp12 TYPE xsdboolean.
 
@@ -171,56 +184,65 @@ CLASS z2ui5_cl_demo_app_066 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-        view_display_master(  ).
-        view_display_detail(  ).
+      
+      CLEAR temp1.
+      
+      temp2-object = '1'.
+      
+      CLEAR temp3.
+      
+      temp4-object = '1.1'.
+      
+      CLEAR temp9.
+      
+      temp10-object = '1.1.1'.
+      INSERT temp10 INTO TABLE temp9.
+      temp10-object = '1.1.2'.
+      INSERT temp10 INTO TABLE temp9.
+      temp4-categories = temp9.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-object = '1.2'.
+      INSERT temp4 INTO TABLE temp3.
+      temp2-categories = temp3.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-object = '2'.
+      
+      CLEAR temp5.
+      
+      temp6-object = '2.1'.
+      INSERT temp6 INTO TABLE temp5.
+      temp6-object = '2.2'.
+      INSERT temp6 INTO TABLE temp5.
+      temp2-categories = temp5.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-object = '3'.
+      
+      CLEAR temp7.
+      
+      temp8-object = '3.1'.
+      INSERT temp8 INTO TABLE temp7.
+      temp8-object = '3.2'.
+      INSERT temp8 INTO TABLE temp7.
+      temp2-categories = temp7.
+      INSERT temp2 INTO TABLE temp1.
+      mt_tree = temp1.
 
-        
-        CLEAR temp1.
-        
-        temp2-object = '1'.
-        
-        CLEAR temp3.
-        
-        temp4-object = '1.1'.
-        
-        CLEAR temp9.
-        
-        temp10-object = '1.1.1'.
-        INSERT temp10 INTO TABLE temp9.
-        temp10-object = '1.1.2'.
-        INSERT temp10 INTO TABLE temp9.
-        temp4-categories = temp9.
-        INSERT temp4 INTO TABLE temp3.
-        temp4-object = '1.2'.
-        INSERT temp4 INTO TABLE temp3.
-        temp2-categories = temp3.
-        INSERT temp2 INTO TABLE temp1.
-        temp2-object = '2'.
-        
-        CLEAR temp5.
-        
-        temp6-object = '2.1'.
-        INSERT temp6 INTO TABLE temp5.
-        temp6-object = '2.2'.
-        INSERT temp6 INTO TABLE temp5.
-        temp2-categories = temp5.
-        INSERT temp2 INTO TABLE temp1.
-        temp2-object = '3'.
-        
-        CLEAR temp7.
-        
-        temp8-object = '3.1'.
-        INSERT temp8 INTO TABLE temp7.
-        temp8-object = '3.2'.
-        INSERT temp8 INTO TABLE temp7.
-        temp2-categories = temp7.
-        INSERT temp2 INTO TABLE temp1.
-        mt_tree = temp1.
+*      load two types of message handling
+      
+      view = z2ui5_cl_xml_view=>factory( ).
+      client->view_display(
+        view->_z2ui5( )->info_frontend( ui5_version = client->_bind_edit( mv_ui5_version ) )->get_parent(
+        )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_messaging=>get_js( ) )->get_parent(
+        )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_message_manager=>get_js( ) )->get_parent(
+            )->_z2ui5( )->timer( client->_event( `START` )
+            )->stringify( ) ).
 
     ENDIF.
 
     CASE client->get( )-event.
-
+      WHEN 'START'.
+        view_display_master(  ).
+        view_display_detail(  ).
 
       WHEN `UPDATE_DETAIL`.
         view_display_detail(  ).
