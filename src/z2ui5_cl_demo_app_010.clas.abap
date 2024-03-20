@@ -14,6 +14,7 @@ CLASS Z2UI5_CL_DEMO_APP_010 IMPLEMENTATION.
 
   METHOD Z2UI5_if_app~main.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE xsdboolean.
     DATA grid TYPE REF TO z2ui5_cl_xml_view.
 
     CASE client->get( )-event.
@@ -22,11 +23,13 @@ CLASS Z2UI5_CL_DEMO_APP_010 IMPLEMENTATION.
     ENDCASE.
 
     
+    
+    temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = z2ui5_cl_xml_view=>factory( )->shell(
         )->page(
-            title           = 'abap2UI5 - Demo Layout'
-            navbuttonpress  = client->_event( 'BACK' )
-            shownavbutton   = abap_true
+            title          = 'abap2UI5 - Demo Layout'
+            navbuttonpress = client->_event( 'BACK' )
+            shownavbutton  = temp1
              ).
 
     page->header_content(

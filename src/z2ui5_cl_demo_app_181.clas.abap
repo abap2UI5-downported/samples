@@ -51,7 +51,7 @@ CLASS Z2UI5_CL_DEMO_APP_181 IMPLEMENTATION.
         client->message_toast_display( 'BOOKED !!! ENJOY' ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
         RETURN.
     ENDCASE.
 
@@ -61,6 +61,8 @@ CLASS Z2UI5_CL_DEMO_APP_181 IMPLEMENTATION.
   METHOD view_display.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp7 TYPE xsdboolean.
     DATA temp1 TYPE t_cities.
     DATA temp2 LIKE LINE OF temp1.
     DATA temp5 TYPE t_cities.
@@ -70,6 +72,16 @@ CLASS Z2UI5_CL_DEMO_APP_181 IMPLEMENTATION.
     DATA temp4 LIKE LINE OF temp3.
     DATA card_2 TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory( ).
+
+    
+    
+    temp7 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
+    page = view->page(
+        title = `Cards Demo`
+        class = `sapUiContentPadding`
+        navbuttonpress = client->_event( 'BACK' )
+        shownavbutton  = temp7
+    ).
 
     
     CLEAR temp1.
@@ -120,7 +132,7 @@ CLASS Z2UI5_CL_DEMO_APP_181 IMPLEMENTATION.
     temp6-key = `VN`.
     INSERT temp6 INTO TABLE temp5.
     
-    card_1 = view->card( width = `300px` class = `sapUiMediumMargin`
+    card_1 = page->card( width = `300px` class = `sapUiMediumMargin`
       )->header( ns = `f`
         )->card_header( title = `Buy bus ticket on-line`
                         subtitle = `Buy a single-ride ticket for a date`
@@ -171,7 +183,7 @@ CLASS Z2UI5_CL_DEMO_APP_181 IMPLEMENTATION.
     temp4-status_schema = `Warning`.
     INSERT temp4 INTO TABLE temp3.
     
-    card_2 = view->card( width = `300px` class = `sapUiMediumMargin`
+    card_2 = page->card( width = `300px` class = `sapUiMediumMargin`
                      )->header( ns = `f`
                        )->card_header( title = `Project Cloud Transformation`
                                        subtitle = `Revenue per Product | EUR`
@@ -183,7 +195,6 @@ CLASS Z2UI5_CL_DEMO_APP_181 IMPLEMENTATION.
                                        )->custom_list_item(
                                         )->hbox( alignitems = `Center`  justifycontent = `SpaceBetween`
                                           )->vbox( class = `sapUiSmallMarginBegin sapUiSmallMarginTopBottom`
-*                                            )->label( text = `{TITLE}`
                                             )->title( text = `{TITLE}` titlestyle = `H3`
                                             )->text( text = `{SUBTITLE}`
                                           )->get_parent(
