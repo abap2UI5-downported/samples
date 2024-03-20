@@ -22,7 +22,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_180 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_180 IMPLEMENTATION.
 
 
   METHOD on_event.
@@ -32,7 +32,7 @@ CLASS z2ui5_cl_demo_app_180 IMPLEMENTATION.
 
       WHEN 'CUSTOM_JS_FROM_EB'.
 
-        client->follow_up_action( custom_js = `sap.z2ui5.afterBE()` ).
+        client->follow_up_action( val = `sap.z2ui5.afterBE()` ).
 
       WHEN 'CALL_EF'.
 
@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_180 IMPLEMENTATION.
         
         CLEAR temp1.
         INSERT mv_url INTO TABLE temp1.
-        client->follow_up_action( custom_js = client->_event_client( val = client->cs_event-open_new_tab t_arg = temp1 ) ).
+        client->follow_up_action( val = client->_event_client( val = client->cs_event-open_new_tab t_arg = temp1 ) ).
 
       WHEN 'BACK'.
         client->nav_app_leave( ).
