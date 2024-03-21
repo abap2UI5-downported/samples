@@ -43,12 +43,16 @@ CLASS z2ui5_cl_demo_app_116 DEFINITION
     DATA mv_run_js TYPE abap_bool VALUE abap_false.
 
     METHODS ui5_display_view .
+    methods UI5_DISPLAY_POPOVER
+      importing
+        !ID type STRING .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
     METHODS ui5_initialize.
     METHODS add_node
       IMPORTING p_prodh TYPE string.
+
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -88,6 +92,27 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
   ENDMETHOD.
 
 
+  method ui5_display_popover.
+    DATA lo_popover TYPE REF TO z2ui5_cl_xml_view.
+    lo_popover = Z2UI5_cl_xml_view=>factory_popup(  ).
+    lo_popover->popover( placement = `Right`
+                         title = 'SS' "text-028 "`Stock - Details:`
+                                                         "&& '-' && gv_matnr  "contentwidth = `32%`
+            )->footer(
+             )->overflow_toolbar(
+                )->toolbar_spacer(
+                )->button(
+                    text  = 'OK'
+                    press = client->_event( 'POPOVER_OK' )
+                    type  = 'Emphasized'
+           )->get_parent( )->get_parent(
+           )->text( 'TEST'
+                           ).
+
+    client->popover_display( xml = lo_popover->stringify( )  by_id = id ).
+  endmethod.
+
+
   METHOD ui5_display_view.
 
 
@@ -97,6 +122,7 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
     DATA header_content TYPE REF TO z2ui5_cl_xml_view.
     DATA sections TYPE REF TO z2ui5_cl_xml_view.
     DATA temp1 TYPE string_table.
+    DATA temp2 TYPE string_table.
     DATA cont TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory( ).
 *    view->_z2ui5( )->timer( checkactive = client->_bind_edit( mv_run_js ) finished = `setState();` ).
@@ -155,7 +181,10 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
 
     
     CLEAR temp1.
-    INSERT `${PRODH}` INTO TABLE temp1.
+    INSERT `${$source>/id}` INTO TABLE temp1.
+    
+    CLEAR temp2.
+    INSERT `${PRODH}` INTO TABLE temp2.
     
     cont = sections->object_page_section( titleuppercase = abap_false id = 'Sets' title = 'Sets'
         )->heading( ns = `uxap`
@@ -170,7 +199,7 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
                          )->tree_columns(
                           )->tree_column( label = 'Label'
                           )->tree_template(
-                           )->text(   text = `{����}`
+                           )->text(   text = `{####}`
                           )->get_parent( )->get_parent(
                           )->tree_column( label = 'PRODH'
                           )->tree_template(
@@ -178,12 +207,14 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
                           )->get_parent( )->get_parent(
                           )->tree_column( label = 'Counter'
                           )->tree_template(
-                           )->text(   text = `{COUNTER}`
+                           )->link(   text = `{COUNTER}`
+                                      press = client->_event( val = 'POPOVER' t_arg = temp1  )
+
                           )->get_parent( )->get_parent(
                           )->tree_column( label = 'ADD'
                           )->tree_template(
                            )->button( icon = 'sap-icon://add'
-                                 press = client->_event( val = 'ROW_ADD' t_arg = temp1 )
+                                 press = client->_event( val = 'ROW_ADD' t_arg = temp2 )
                                  tooltip = 'ADD'
                           )->get_parent( )->get_parent(
        ).
@@ -194,12 +225,12 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
   METHOD ui5_initialize.
     DATA temp3 TYPE z2ui5_cl_demo_app_116=>ty_prodh_nodes.
     DATA temp4 LIKE LINE OF temp3.
-    DATA temp1 TYPE z2ui5_cl_demo_app_116=>ty_prodh_node_level1-nodes.
-    DATA temp2 LIKE LINE OF temp1.
-    DATA temp7 TYPE z2ui5_cl_demo_app_116=>ty_prodh_node_level2-nodes.
-    DATA temp8 LIKE LINE OF temp7.
     DATA temp5 TYPE z2ui5_cl_demo_app_116=>ty_prodh_node_level1-nodes.
     DATA temp6 LIKE LINE OF temp5.
+    DATA temp1 TYPE z2ui5_cl_demo_app_116=>ty_prodh_node_level2-nodes.
+    DATA temp2 LIKE LINE OF temp1.
+    DATA temp7 TYPE z2ui5_cl_demo_app_116=>ty_prodh_node_level1-nodes.
+    DATA temp8 LIKE LINE OF temp7.
     DATA temp9 TYPE z2ui5_cl_demo_app_116=>ty_prodh_node_level2-nodes.
     DATA temp10 LIKE LINE OF temp9.
     CLEAR temp3.
@@ -207,30 +238,30 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
     temp4-text = 'Machines'.
     temp4-prodh = '00100'.
     
+    CLEAR temp5.
+    
+    temp6-text = 'Pumps'.
+    temp6-prodh = '0010000100'.
+    
     CLEAR temp1.
     
-    temp2-text = 'Pumps'.
-    temp2-prodh = '0010000100'.
-    
-    CLEAR temp7.
-    
-    temp8-text = 'Pump 001'.
-    temp8-prodh = '001000010000000100'.
-    INSERT temp8 INTO TABLE temp7.
-    temp8-text = 'Pump 002'.
-    temp8-prodh = '001000010000000105'.
-    INSERT temp8 INTO TABLE temp7.
-    temp2-nodes = temp7.
+    temp2-text = 'Pump 001'.
+    temp2-prodh = '001000010000000100'.
     INSERT temp2 INTO TABLE temp1.
-    temp4-nodes = temp1.
+    temp2-text = 'Pump 002'.
+    temp2-prodh = '001000010000000105'.
+    INSERT temp2 INTO TABLE temp1.
+    temp6-nodes = temp1.
+    INSERT temp6 INTO TABLE temp5.
+    temp4-nodes = temp5.
     INSERT temp4 INTO TABLE temp3.
     temp4-text = 'Paints'.
     temp4-prodh = '00110'.
     
-    CLEAR temp5.
+    CLEAR temp7.
     
-    temp6-text = 'Gloss paints'.
-    temp6-prodh = '0011000105'.
+    temp8-text = 'Gloss paints'.
+    temp8-prodh = '0011000105'.
     
     CLEAR temp9.
     
@@ -240,9 +271,9 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
     temp10-text = 'Paint 002'.
     temp10-prodh = '001100010500000105'.
     INSERT temp10 INTO TABLE temp9.
-    temp6-nodes = temp9.
-    INSERT temp6 INTO TABLE temp5.
-    temp4-nodes = temp5.
+    temp8-nodes = temp9.
+    INSERT temp8 INTO TABLE temp7.
+    temp4-nodes = temp7.
     INSERT temp4 INTO TABLE temp3.
     prodh_nodes =
     temp3.
@@ -256,6 +287,9 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
       DATA lv_save_state_js TYPE string.
       DATA lv_reset_state_js TYPE string.
     DATA lt_event_arg TYPE string_table.
+        DATA lv_open_by_id LIKE LINE OF lt_event_arg.
+        DATA temp9 LIKE LINE OF lt_event_arg.
+        DATA temp10 LIKE sy-tabix.
         DATA temp5 LIKE LINE OF lt_event_arg.
         DATA temp6 LIKE sy-tabix.
 
@@ -305,6 +339,19 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
 
       WHEN 'CANCEL'.
         client->popup_destroy( ).
+      when 'POPOVER'.
+        lt_event_arg = client->get( )-t_event_arg.
+        
+        
+        
+        temp10 = sy-tabix.
+        READ TABLE lt_event_arg INDEX 1 INTO temp9.
+        sy-tabix = temp10.
+        IF sy-subrc <> 0.
+          ASSERT 1 = 0.
+        ENDIF.
+        lv_open_by_id = temp9.
+        ui5_display_popover( lv_open_by_id ).
 
       WHEN 'ROW_ADD'.
         
