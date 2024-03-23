@@ -21,6 +21,27 @@ DATA mt_spot TYPE temp1_d73221ca3a.
 
     DATA check_initialized TYPE abap_bool.
 
+    TYPES:
+      BEGIN OF ty_ROUTE,
+        position    TYPE string,
+        routetype   TYPE string,
+        lineDash    TYPE string,
+        color       TYPE string,
+        colorborder TYPE string,
+        linewidth   TYPE string,
+      END OF ty_route .
+
+ TYPES temp2_d73221ca3a TYPE TABLE OF ty_ROUTE.
+DATA:
+      mt_route TYPE temp2_d73221ca3a .
+
+    TYPES: BEGIN OF ty_s_legend,
+             text  TYPE string,
+             color TYPE string,
+           END OF ty_s_legend.
+    TYPES temp3_d73221ca3a TYPE TABLE OF ty_s_legend.
+DATA mt_legend TYPE temp3_d73221ca3a.
+
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
@@ -32,8 +53,14 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
       DATA temp1 LIKE mt_spot.
       DATA temp2 LIKE LINE OF temp1.
-    DATA view TYPE REF TO z2ui5_cl_xml_view.
-    DATA temp3 TYPE xsdboolean.
+ DATA temp3 LIKE mt_route.
+ DATA temp4 LIKE LINE OF temp3.
+      DATA temp5 LIKE mt_legend.
+      DATA temp6 LIKE LINE OF temp5.
+       DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp7 TYPE xsdboolean.
+    DATA map TYPE REF TO z2ui5_cl_xml_view.
 
 
     IF check_initialized = abap_false.
@@ -68,6 +95,29 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
       INSERT temp2 INTO TABLE temp1.
       mt_spot = temp1.
 
+ 
+ CLEAR temp3.
+ 
+ temp4-position = '2.3522219;48.856614;0; -74.0059731;40.7143528;0'.
+ temp4-routetype = 'Geodesic'.
+ temp4-lineDash = '10;5'.
+ temp4-color = '92,186,230'.
+ temp4-colorBorder = 'rgb(255,255,255)'.
+ temp4-linewidth = '25'.
+ INSERT temp4 INTO TABLE temp3.
+ mt_route = temp3.
+
+
+      
+      CLEAR temp5.
+      
+      temp6-text = 'Dashed flight route'.
+      temp6-color = 'rgb(92,186,230)'.
+      INSERT temp6 INTO TABLE temp5.
+      temp6-text = 'Flight route'.
+      temp6-color = 'rgb(92,186,35)'.
+      INSERT temp6 INTO TABLE temp5.
+      mt_legend = temp5.
     ENDIF.
 
 
@@ -79,39 +129,81 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
     ENDCASE.
 
 
+       
+       view = z2ui5_cl_xml_view=>factory( ).
     
-    view = z2ui5_cl_xml_view=>factory( ).
     
-    temp3 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
-    client->view_display( view->shell(
-          )->page(
-                  title          = 'abap2UI5 - Map Container'
-                  navbuttonpress = client->_event( val = 'BACK' )
-                  shownavbutton = temp3
-              )->header_content(
-                  )->link(
-                      text = 'Source_Code'
+    temp7 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
+    page =   view->shell(
+            )->page(
+                    title          = 'abap2UI5 - Map Container'
+                    navbuttonpress = client->_event( val = 'BACK' )
+                    shownavbutton = temp7
+                ).
 
-                      target = '_blank'
-              )->get_parent(
-            )->map_container(  autoadjustheight = abap_true
-                )->content( ns = `vk`
-                    )->container_content(
-                      title = `Analytic Map`
-                      icon  = `sap-icon://geographic-bubble-chart`
-                        )->content( ns = `vk`
-                            )->analytic_map(
-                              initialposition = `9.933573;50;0`
-                              initialzoom = `6`
-                            )->vos(
-                                )->spots( client->_bind( mt_spot )
-                                )->spot(
-                                  position      = `{POS}`
-                                  contentoffset = `{CONTENTOFFSET}`
-                                  type          =  `{TYPE}`
-                                  scale         =  `{SCALE}`
-                                  tooltip       =  `{TOOLTIP}`
-           )->stringify( ) ).
+    page->header_content(
+                      )->link(
+                          text = 'Source_Code'
+
+                          target = '_blank'
+                  ).
+
+    
+    map =  page->map_container(  autoadjustheight = abap_true
+         )->content( ns = `vk`
+             )->container_content(
+               title = `Analytic Map`
+               icon  = `sap-icon://geographic-bubble-chart`
+                 )->content( ns = `vk`
+                     )->analytic_map(
+                       initialposition = `9.933573;50;0`
+                       initialzoom = `6`
+                     )  .
+
+
+
+    map->vos(
+      )->spots( client->_bind( mt_spot )
+      )->spot(
+        position      = `{POS}`
+        contentoffset = `{CONTENTOFFSET}`
+        type          =  `{TYPE}`
+        scale         =  `{SCALE}`
+        tooltip       =  `{TOOLTIP}`
+).
+
+
+    map->routes( client->_bind( mt_route ) )->route(
+      EXPORTING
+*        id        =
+        position  = `{POSITION}`
+        routetype = `{ROUTETYPE}`
+        lineDash = '{LINEDASH}'
+        color = '{COLOR}'
+        colorBorder = '{COLORBORDER}'
+   linewidth = '{LINEWIDTH}'
+*      RECEIVING
+*        result    =
+    ).
+
+
+    map->legend_area( )->legend(
+*      EXPORTING
+*        id      =
+        items   = client->_bind( mt_legend )
+        caption = 'Legend'
+*      RECEIVING
+*        result  =
+    )->legenditem(
+      EXPORTING
+*        id     =
+        text   = '{TEXT}'
+        color  = '{COLOR}'
+*      RECEIVING
+*        result =
+    ).
+    client->view_display(  page->stringify( ) ).
+
 
   ENDMETHOD.
 ENDCLASS.
