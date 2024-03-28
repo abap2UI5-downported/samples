@@ -77,11 +77,7 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
             title          = 'abap2UI5 - Popups'
             navbuttonpress = client->_event( val = 'BACK' )
             shownavbutton = temp3
-            )->header_content(
-                )->link(
-                    text = 'Source_Code' target = '_blank'
-
-            )->get_parent( ).
+            ).
 
     
     CLEAR temp1.

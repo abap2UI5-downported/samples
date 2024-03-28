@@ -74,11 +74,6 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
                 title          = 'abap2UI5 - Template'
                 navbuttonpress = client->_event( val = 'BACK' )
                 shownavbutton = temp1
-            )->header_content(
-                )->link(
-                    text = 'Source_Code' target = '_blank'
-
-            )->get_parent(
             )->simple_form( title = 'VIEW_MAIN' editable = abap_true
                 )->content( 'form'
                     )->title( 'Input'
