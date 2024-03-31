@@ -28,6 +28,8 @@ CLASS Z2UI5_CL_DEMO_APP_106 IMPLEMENTATION.
       
       view = z2ui5_cl_xml_view=>factory( ).
 
+      view->_generic( ns = `html` name = `style` )->_cc_plain_xml( `.tox-silver-sink { position: absolute !important; }` ).
+
       
       temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
       view->shell(
@@ -50,6 +52,7 @@ CLASS Z2UI5_CL_DEMO_APP_106 IMPLEMENTATION.
                                         showGroupFont = abap_true
                                         showGroupLink = abap_true
                                         showGroupInsert = abap_true
+                                        wrapping = abap_false
                        )->get_parent( )->get_parent( )->get_parent(
                  )->footer(
                     )->overflow_toolbar(
