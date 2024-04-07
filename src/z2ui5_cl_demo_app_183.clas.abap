@@ -1,14 +1,13 @@
-class Z2UI5_CL_DEMO_APP_183 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_183 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    INTERFACES z2ui5_if_app.
 
-  types:
-    BEGIN OF ty_row,
+    TYPES:
+      BEGIN OF ty_row,
         count         TYPE i,
         value         TYPE string,
         descr         TYPE string,
@@ -19,24 +18,24 @@ public section.
         valuecolor    TYPE string,
       END OF ty_row .
 
-  TYPES temp1_52e0031ecb TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY.
-data:
-    t_tab TYPE temp1_52e0031ecb .
-  data CHECK_INITIALIZED type ABAP_BOOL .
-  data CHECK_UI5 type ABAP_BOOL .
-  data MV_KEY type STRING .
+    TYPES temp1_2eadad6e11 TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY.
+DATA:
+      t_tab TYPE temp1_2eadad6e11 .
+    DATA check_initialized TYPE abap_bool .
+    DATA check_ui5 TYPE abap_bool .
+    DATA mv_key TYPE string .
 
-  methods REFRESH_DATA .
+    METHODS refresh_data .
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_183 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
 
 
-  METHOD REFRESH_DATA.
+  METHOD refresh_data.
       DATA ls_row TYPE ty_row.
 
     DO 100 TIMES.
@@ -54,13 +53,13 @@ CLASS Z2UI5_CL_DEMO_APP_183 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
         DATA lt_arg TYPE string_table.
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA temp2 TYPE xsdboolean.
     DATA tab TYPE REF TO z2ui5_cl_xml_view.
-   DATA temp1 TYPE string_table.
+    DATA temp1 TYPE string_table.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
@@ -72,10 +71,10 @@ CLASS Z2UI5_CL_DEMO_APP_183 IMPLEMENTATION.
       WHEN 'GET_OPENED_COL'.
         
         lt_arg = client->get( )-t_event_arg.
+        RETURN.
 
       WHEN 'ONSORT'.
         lt_arg = client->get( )-t_event_arg.
-
 
       WHEN 'ONGROUP'.
 
@@ -141,27 +140,27 @@ CLASS Z2UI5_CL_DEMO_APP_183 IMPLEMENTATION.
         ).
 
 *    column menu
-   
-   CLEAR temp1.
-   INSERT `$event.mParameters.openBy.getId()` INTO TABLE temp1.
-   tab->dependents(
-    )->column_menu( id = `menu` beforeopen = client->_event( val = `GET_OPENED_COL` t_arg = temp1 )
+    
+    CLEAR temp1.
+    INSERT `$event.mParameters.openBy.getId()` INTO TABLE temp1.
+    tab->dependents(
+     )->column_menu( id = `menu` beforeopen = client->_event( val = `GET_OPENED_COL` t_arg = temp1 )
 *      )->column_menu_quick_sort( change = client->_event( val = 'ONSORT' t_arg = VALUE #( ( `${$parameters>/item.getKey}` ) ) )
 *      )->column_menu_quick_sort( change = client->_event( val = 'ONSORT' t_arg = VALUE #( ( `$event` ) ) )
-      )->column_menu_quick_sort( change = client->_event( 'ONSORT' )
-        )->items( ns = `columnmenu`
-          )->column_menu_quick_sort_item(
-      )->get_parent( )->get_parent( )->get_parent(
-      )->column_menu_quick_group( change = client->_event( 'ONGROUP' )
-        )->items( ns = `columnmenu`
-          )->column_menu_quick_group_item(
-      )->get_parent( )->get_parent( )->get_parent(
-      )->items( ns = `columnmenu`
-        )->column_menu_action_item( icon = `sap-icon://sort` label = `Sort` press = client->_event( 'ONSORTACTIONITEM' ) )->get_parent(
-        )->column_menu_action_item( icon = `sap-icon://group-2` label = `Group` press = client->_event( 'ONSGROUPACTIONITEM' ) )->get_parent(
-        )->column_menu_action_item( icon = `sap-icon://filter` label = `Filter` press = client->_event( 'ONSFILTERACTIONITEM' ) )->get_parent(
-        )->column_menu_action_item( icon = `sap-icon://table-column` label = `Columns` press = client->_event( 'ONSCOLUMNSACTIONITEM' )
-      ).
+       )->column_menu_quick_sort( change = client->_event( 'ONSORT' )
+         )->items( ns = `columnmenu`
+           )->column_menu_quick_sort_item(
+       )->get_parent( )->get_parent( )->get_parent(
+       )->column_menu_quick_group( change = client->_event( 'ONGROUP' )
+         )->items( ns = `columnmenu`
+           )->column_menu_quick_group_item(
+       )->get_parent( )->get_parent( )->get_parent(
+       )->items( ns = `columnmenu`
+         )->column_menu_action_item( icon = `sap-icon://sort` label = `Sort` press = client->_event( 'ONSORTACTIONITEM' ) )->get_parent(
+         )->column_menu_action_item( icon = `sap-icon://group-2` label = `Group` press = client->_event( 'ONSGROUPACTIONITEM' ) )->get_parent(
+         )->column_menu_action_item( icon = `sap-icon://filter` label = `Filter` press = client->_event( 'ONSFILTERACTIONITEM' ) )->get_parent(
+         )->column_menu_action_item( icon = `sap-icon://table-column` label = `Columns` press = client->_event( 'ONSCOLUMNSACTIONITEM' )
+       ).
 
     tab->columns(
         )->column( headermenu = `menu` id = `color_col`
