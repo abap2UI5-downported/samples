@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_126 DEFINITION
     METHODS on_init.
     METHODS on_event.
 
-    METHODS Render_main.
+    METHODS render_main.
 
   PRIVATE SECTION.
     METHODS get_data.
@@ -49,16 +49,18 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD on_init.
-    get_Data( ).
-    Render_main( ).
+    get_data( ).
+    render_main( ).
   ENDMETHOD.
 
   METHOD render_main.
       DATA page TYPE REF TO z2ui5_cl_xml_view.
+    FIELD-SYMBOLS <tab> TYPE data.
     DATA table TYPE REF TO z2ui5_cl_xml_view.
     DATA columns TYPE REF TO z2ui5_cl_xml_view.
     DATA comp LIKE LINE OF mt_comp.
     DATA cells TYPE REF TO z2ui5_cl_xml_view.
+
     IF mo_parent_view IS INITIAL.
 
       
@@ -71,9 +73,12 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
     ENDIF.
 
     
+    ASSIGN mt_table->* TO <tab>.
+
+    
     table = page->table( growing    = 'true'
                                width      = 'auto'
-                               items      = client->_bind( val = mt_table->* )
+                               items      = client->_bind( <tab> )
                                headertext = mv_table ).
 
     
@@ -122,7 +127,7 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD set_app_data.
-      mv_table = table.
+    mv_table = table.
   ENDMETHOD.
 
   METHOD get_data.

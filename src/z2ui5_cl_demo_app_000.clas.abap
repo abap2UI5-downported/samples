@@ -456,6 +456,13 @@
              class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
          ).
 
+       panel->generic_tile(
+            header    = 'Column Menu'
+            press     =  client->_event( 'z2ui5_cl_demo_app_183' )
+            mode      = 'LineMode'
+            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+        ).
+
         panel->generic_tile(
             header    = 'ui.Table I'
             subheader = 'Simple example'
@@ -1418,14 +1425,6 @@
          mode      = 'LineMode'
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
-
-        panel->generic_tile(
-            header    = 'Column Menu'
-            subheader = 'Sorting & Filtering'
-            press     =  client->_event( 'z2ui5_cl_demo_app_183' )
-            mode      = 'LineMode'
-            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-        ).
 
         client->view_display( page->stringify( ) ).
 
