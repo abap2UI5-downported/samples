@@ -855,7 +855,7 @@
 
            panel->generic_tile(
         header    = 'Dynamic Objects III'
-        subheader = 'Main App Inheriting from other App'
+        subheader = 'User Generic Data Refs in Subapps'
         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_185' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
