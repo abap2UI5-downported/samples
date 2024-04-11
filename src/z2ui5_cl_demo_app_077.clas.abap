@@ -75,7 +75,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_077 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_077 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -85,7 +85,8 @@ CLASS z2ui5_cl_demo_app_077 IMPLEMENTATION.
     IF check_load_cc = abap_false.
       check_load_cc = abap_true.
       z2ui5_set_data( ).
-      client->nav_app_call( z2ui5_cl_popup_js_loader=>factory( z2ui5_cl_cc_spreadsheet=>get_js( mv_column_config ) ) ).
+*      client->nav_app_call( z2ui5_cl_popup_js_loader=>factory( z2ui5_cl_cc_spreadsheet=>get_js( mv_column_config ) ) ).
+      client->nav_app_call( z2ui5_cl_popup_js_loader=>factory( z2ui5_cl_cc_spreadsheet=>get_js( ) ) ).
       RETURN.
     ELSEIF check_initialized = abap_false.
       check_initialized = abap_true.
@@ -112,21 +113,22 @@ CLASS z2ui5_cl_demo_app_077 IMPLEMENTATION.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA page1 TYPE REF TO z2ui5_cl_xml_view.
-    DATA temp1 TYPE xsdboolean.
+    DATA temp2 TYPE xsdboolean.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA header_title TYPE REF TO z2ui5_cl_xml_view.
     DATA lo_box TYPE REF TO z2ui5_cl_xml_view.
     DATA cont TYPE REF TO z2ui5_cl_xml_view.
     DATA tab TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE REF TO z2ui5_cl_cc_spreadsheet.
     view = z2ui5_cl_xml_view=>factory( ).
 
     
     
-    temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
+    temp2 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page1 = view->page( id = `page_main`
             title          = 'abap2UI5 - XLSX Export'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = temp1
+            shownavbutton = temp2
             class = 'sapUiContentPadding' ).
 
     page1->header_content(
@@ -151,6 +153,8 @@ CLASS z2ui5_cl_demo_app_077 IMPLEMENTATION.
     cont = page->content( ns = 'f' ).
 
     
+    
+    CREATE OBJECT temp1 TYPE z2ui5_cl_cc_spreadsheet.
     tab = cont->table(
               id = `exportTable`
               items = client->_bind( mt_table )
@@ -162,6 +166,10 @@ CLASS z2ui5_cl_demo_app_077 IMPLEMENTATION.
                 tableid = 'exportTable'
                 icon = 'sap-icon://excel-attachment'
                 type = 'Emphasized'
+                columnconfig = client->_bind( val = mt_column_config
+                                              custom_filter = temp1
+                                              custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( )
+                                             )
           )->get_parent( )->get_parent( ).
 
     tab->columns(
