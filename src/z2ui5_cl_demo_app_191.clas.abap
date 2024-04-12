@@ -67,12 +67,12 @@ CLASS Z2UI5_CL_DEMO_APP_191 IMPLEMENTATION.
     CLEAR temp1.
     
     temp2-id = '1'.
-    temp2-class = 'Z2UI5_CL_DEMO_APP_191'.
+    temp2-class = 'Z2UI5_CL_DEMO_APP_190'.
     temp2-count = '10'.
     temp2-table = 'Z2UI5_T001'.
     INSERT temp2 INTO TABLE temp1.
     temp2-id = '2'.
-    temp2-class = 'Z2UI5_CL_DEMO_APP_191'.
+    temp2-class = 'Z2UI5_CL_DEMO_APP_190'.
     temp2-count = '12'.
     temp2-table = 'Z2UI5_T002'.
     INSERT temp2 INTO TABLE temp1.
