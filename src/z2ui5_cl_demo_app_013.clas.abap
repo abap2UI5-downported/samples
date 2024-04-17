@@ -11,6 +11,15 @@ CLASS z2ui5_cl_demo_app_013 DEFINITION PUBLIC.
     DATA mv_sel6 TYPE abap_bool.
 
     DATA mv_tab_donut_active TYPE abap_bool.
+    DATA total_count TYPE i.
+
+    TYPES:
+      BEGIN OF ty_chart,
+        text    TYPE string,
+        percent TYPE p LENGTH 3 DECIMALS 2,
+      END OF ty_chart.
+
+    DATA counts TYPE STANDARD TABLE OF ty_chart WITH DEFAULT KEY.
 
     METHODS render_tab_donut.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -21,7 +30,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_013 IMPLEMENTATION.
 
 
   METHOD render_tab_donut.
@@ -29,6 +38,7 @@ CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
     DATA container TYPE REF TO z2ui5_cl_xml_view.
     DATA grid TYPE REF TO z2ui5_cl_xml_view.
     DATA seg TYPE REF TO z2ui5_cl_xml_view.
+    DATA donut_chart TYPE REF TO z2ui5_cl_xml_view.
     container = z2ui5_cl_xml_view=>factory(
         )->shell(
         )->page(
@@ -112,17 +122,61 @@ CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
     seg->interact_donut_chart_segment( label = 'Design Phase'         value = '21.5' displayedvalue = '21.5%' ).
     seg->interact_donut_chart_segment( label = 'Test Phase'           value = '38.5' displayedvalue = '38.5%' ).
 
+    grid->text(
+            text  = 'Model Update Table Data'
+            class = 'sapUiSmallMargin'
+        )->get( )->layout_data(
+            )->grid_data( 'XL12 L12 M12 S12' ).
+
+    
+    donut_chart = grid->button( text = `update chart` press = client->_event( 'UPDATE_CHART_DATA' ) )->get_parent(
+      )->flex_box(
+        width          = '30rem'
+        height         = '18rem'
+        alignitems     = 'Start'
+        justifycontent = 'SpaceBetween'
+            )->items(
+                )->interact_donut_chart( displayedsegments =  client->_bind_edit( total_count ) segments = client->_bind_edit( counts ) ).
+
+
+      donut_chart->interact_donut_chart_segment(
+              label          = `{TEXT}`
+              value          = `{PERCENT}`
+              displayedvalue = `{PERCENT}`
+        ).
+
     client->view_display( container->stringify( ) ).
 
   ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 LIKE counts.
+      DATA temp2 LIKE LINE OF temp1.
+        DATA temp3 LIKE counts.
+        DATA temp4 LIKE LINE OF temp3.
 
     me->client = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
+
+
+      
+      CLEAR temp1.
+      
+      temp2-text = '1st'.
+      temp2-percent = '10.0'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-text = '2nd'.
+      temp2-percent = '60.0'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-text = '3rd'.
+      temp2-percent = '30.0'.
+      INSERT temp2 INTO TABLE temp1.
+      counts = temp1.
+
+      total_count = lines( counts ).
 
 *      DATA(lv_version) = to_upper( client->get( )-s_config-version ).
 *      IF lv_version CS `OPEN`.
@@ -134,6 +188,28 @@ CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
+      WHEN 'UPDATE_CHART_DATA'.
+        CLEAR counts.
+        
+        CLEAR temp3.
+        
+        temp4-text = '1st'.
+        temp4-percent = '60.0'.
+        INSERT temp4 INTO TABLE temp3.
+        temp4-text = '2nd'.
+        temp4-percent = '10.0'.
+        INSERT temp4 INTO TABLE temp3.
+        temp4-text = '3rd'.
+        temp4-percent = '15.0'.
+        INSERT temp4 INTO TABLE temp3.
+        temp4-text = '4th'.
+        temp4-percent = '15.0'.
+        INSERT temp4 INTO TABLE temp3.
+        counts = temp3.
+
+        total_count = lines( counts ).
+
+        client->view_model_update( ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
