@@ -73,8 +73,18 @@ CLASS Z2UI5_CL_DEMO_APP_191 IMPLEMENTATION.
     INSERT temp2 INTO TABLE temp1.
     temp2-id = '2'.
     temp2-class = 'Z2UI5_CL_DEMO_APP_190'.
-    temp2-count = '12'.
+    temp2-count = '20'.
     temp2-table = 'Z2UI5_T002'.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-id = '3'.
+    temp2-class = 'Z2UI5_CL_DEMO_APP_190'.
+    temp2-count = '30'.
+    temp2-table = 'Z2UI5_TOOL_T_001'.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-id = '4'.
+    temp2-class = 'Z2UI5_CL_DEMO_APP_190'.
+    temp2-count = '40'.
+    temp2-table = 'Z2UI5_TOOL_T_002'.
     INSERT temp2 INTO TABLE temp1.
     mt_t002 = temp1.
 
