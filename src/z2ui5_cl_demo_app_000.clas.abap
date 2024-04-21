@@ -18,7 +18,7 @@
             built_in        TYPE abap_bool,
           END OF ms_check_expanded.
 
-        DATA mt_scroll TYPE z2ui5_cl_fw_cc_scrolling=>ty_t_item.
+        DATA mt_scroll TYPE z2ui5_cl_cc_scrolling=>ty_t_item.
         DATA mv_set_scroll TYPE abap_bool.
 
       PROTECTED SECTION.
@@ -33,7 +33,7 @@
       METHOD z2ui5_if_app~main.
 
         DATA ls_get TYPE z2ui5_if_types=>ty_s_get.
-            DATA temp1 TYPE z2ui5_cl_fw_cc_scrolling=>ty_t_item.
+            DATA temp1 TYPE z2ui5_cl_cc_scrolling=>ty_t_item.
             DATA temp2 LIKE LINE OF temp1.
                 DATA lv_classname TYPE string.
                 DATA li_app TYPE REF TO z2ui5_if_app.

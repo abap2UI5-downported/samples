@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
         client->view_model_update( ).
 
       WHEN `PREVIEW_FILTER`.
-        client->nav_app_call( z2ui5_cl_popup_get_range_multi=>factory( mt_sql ) ).
+        client->nav_app_call( z2ui5_cl_pop_get_range_multi=>factory( mt_sql ) ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
@@ -164,7 +164,7 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
-          DATA temp3 TYPE REF TO z2ui5_cl_popup_get_range_multi.
+          DATA temp3 TYPE REF TO z2ui5_cl_pop_get_range_multi.
           DATA lo_value_help LIKE temp3.
 
     me->client = client.

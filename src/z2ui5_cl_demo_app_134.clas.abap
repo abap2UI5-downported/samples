@@ -23,7 +23,7 @@ CLASS z2ui5_cl_demo_app_134 DEFINITION PUBLIC.
     DATA selend TYPE string.
     DATA update_focus TYPE abap_bool.
 
-    DATA mt_scroll TYPE z2ui5_cl_fw_cc_scrolling=>ty_t_item.
+    DATA mt_scroll TYPE z2ui5_cl_cc_scrolling=>ty_t_item.
 
   PROTECTED SECTION.
     METHODS display_view
@@ -103,7 +103,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
 
 
   METHOD init.
-    DATA temp2 TYPE z2ui5_cl_fw_cc_scrolling=>ty_s_item.
+    DATA temp2 TYPE z2ui5_cl_cc_scrolling=>ty_s_item.
 
     field_01 = `this is a text`.
     field_02 = `this is another text`.
@@ -120,7 +120,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
-        DATA temp3 TYPE z2ui5_cl_fw_cc_scrolling=>ty_s_item.
+        DATA temp3 TYPE z2ui5_cl_cc_scrolling=>ty_s_item.
         DATA temp4 TYPE i.
         DATA temp1 LIKE LINE OF mt_scroll.
         DATA temp2 LIKE sy-tabix.
@@ -133,7 +133,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
         FIELD-SYMBOLS <temp9> LIKE LINE OF mt_scroll.
         DATA temp10 LIKE sy-tabix.
         DATA temp9 TYPE string.
-        DATA temp11 TYPE z2ui5_cl_fw_cc_scrolling=>ty_s_item.
+        DATA temp11 TYPE z2ui5_cl_cc_scrolling=>ty_s_item.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
