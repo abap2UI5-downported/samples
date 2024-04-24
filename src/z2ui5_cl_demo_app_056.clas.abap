@@ -29,7 +29,7 @@ CLASS z2ui5_cl_demo_app_056 DEFINITION PUBLIC.
     METHODS set_data.
 
   PRIVATE SECTION.
-    DATA mt_range TYPE z2ui5_cl_popup_get_range=>ty_s_result-t_range.
+    DATA mt_range TYPE z2ui5_cl_pop_get_range=>ty_s_result-t_range.
 ENDCLASS.
 
 
@@ -71,7 +71,7 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
         client->view_model_update( ).
 
       WHEN `FILTER_VALUE_HELP`.
-        client->nav_app_call( z2ui5_cl_popup_get_range=>factory( mt_range ) ).
+        client->nav_app_call( z2ui5_cl_pop_get_range=>factory( mt_range ) ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
@@ -211,7 +211,7 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
-          DATA temp4 TYPE REF TO z2ui5_cl_popup_get_range.
+          DATA temp4 TYPE REF TO z2ui5_cl_pop_get_range.
           DATA lo_value_help LIKE temp4.
 
     me->client = client.

@@ -20,13 +20,13 @@ CLASS z2ui5_cl_demo_app_155 IMPLEMENTATION.
 
 
   METHOD ui5_event.
-        DATA lo_app TYPE REF TO z2ui5_cl_popup_textedit.
+        DATA lo_app TYPE REF TO z2ui5_cl_pop_textedit.
 
     CASE client->get( )-event.
 
       WHEN 'POPUP'.
         
-        lo_app = z2ui5_cl_popup_textedit=>factory( `this is a text` ).
+        lo_app = z2ui5_cl_pop_textedit=>factory( `this is a text` ).
         client->nav_app_call( lo_app ).
 
       WHEN 'BACK'.
@@ -80,8 +80,8 @@ CLASS z2ui5_cl_demo_app_155 IMPLEMENTATION.
 
   METHOD ui5_callback.
         DATA lo_prev TYPE REF TO z2ui5_if_app.
-        DATA temp1 TYPE REF TO z2ui5_cl_popup_textedit.
-        DATA lv_text TYPE z2ui5_cl_popup_textedit=>ty_s_result-text.
+        DATA temp1 TYPE REF TO z2ui5_cl_pop_textedit.
+        DATA lv_text TYPE z2ui5_cl_pop_textedit=>ty_s_result-text.
 
     TRY.
         

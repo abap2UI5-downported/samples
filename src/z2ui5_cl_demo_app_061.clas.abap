@@ -16,7 +16,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
 
 
   METHOD set_view.
@@ -83,9 +83,9 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
       FIELD-SYMBOLS <tab> TYPE table.
-      DATA temp2 TYPE z2ui5_t_core_01.
-      DATA temp3 TYPE z2ui5_t_core_01.
-      DATA temp4 TYPE z2ui5_t_core_01.
+      DATA temp2 TYPE z2ui5_t_01.
+      DATA temp3 TYPE z2ui5_t_01.
+      DATA temp4 TYPE z2ui5_t_01.
 
     me->client = client.
 

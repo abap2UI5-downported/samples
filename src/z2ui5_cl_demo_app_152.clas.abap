@@ -32,7 +32,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
   METHOD ui5_event.
         DATA temp1 LIKE mt_tab.
         DATA temp2 LIKE LINE OF temp1.
-        DATA lo_app TYPE REF TO z2ui5_cl_popup_to_select.
+        DATA lo_app TYPE REF TO z2ui5_cl_pop_to_select.
 
     CASE client->get( )-event.
 
@@ -60,7 +60,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
         mt_tab = temp1.
 
         
-        lo_app = z2ui5_cl_popup_to_select=>factory( mt_tab ).
+        lo_app = z2ui5_cl_pop_to_select=>factory( mt_tab ).
         client->nav_app_call( lo_app ).
 
       WHEN 'BACK'.
@@ -118,8 +118,8 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
 
   METHOD ui5_callback.
         DATA lo_prev TYPE REF TO z2ui5_if_app.
-        DATA temp3 TYPE REF TO z2ui5_cl_popup_to_select.
-        DATA ls_result TYPE z2ui5_cl_popup_to_select=>ty_s_result.
+        DATA temp3 TYPE REF TO z2ui5_cl_pop_to_select.
+        DATA ls_result TYPE z2ui5_cl_pop_to_select=>ty_s_result.
         FIELD-SYMBOLS <row> TYPE ty_row.
 
     TRY.

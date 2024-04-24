@@ -21,8 +21,8 @@ CLASS Z2UI5_CL_DEMO_APP_156 IMPLEMENTATION.
 
   METHOD ui5_callback.
         DATA lo_prev TYPE REF TO z2ui5_if_app.
-        DATA temp1 TYPE REF TO z2ui5_cl_popup_input_value.
-        DATA lv_text TYPE z2ui5_cl_popup_input_value=>ty_s_result-value.
+        DATA temp1 TYPE REF TO z2ui5_cl_pop_input_val.
+        DATA lv_text TYPE z2ui5_cl_pop_input_val=>ty_s_result-value.
 
     TRY.
         
@@ -66,13 +66,13 @@ CLASS Z2UI5_CL_DEMO_APP_156 IMPLEMENTATION.
 
 
   METHOD ui5_event.
-        DATA lo_app TYPE REF TO z2ui5_cl_popup_input_value.
+        DATA lo_app TYPE REF TO z2ui5_cl_pop_input_val.
 
     CASE client->get( )-event.
 
       WHEN 'POPUP'.
         
-        lo_app = z2ui5_cl_popup_input_value=>factory( text = `Amount of products:` ).
+        lo_app = z2ui5_cl_pop_input_val=>factory( text = `Amount of products:` ).
         client->nav_app_call( lo_app ).
 
       WHEN 'BACK'.

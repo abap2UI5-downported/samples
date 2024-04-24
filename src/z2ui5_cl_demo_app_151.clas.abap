@@ -20,13 +20,13 @@ CLASS z2ui5_cl_demo_app_151 IMPLEMENTATION.
 
 
   METHOD ui5_event.
-        DATA lo_app TYPE REF TO z2ui5_cl_popup_to_inform.
+        DATA lo_app TYPE REF TO z2ui5_cl_pop_to_inform.
 
     CASE client->get( )-event.
 
       WHEN 'POPUP'.
         
-        lo_app = z2ui5_cl_popup_to_inform=>factory( `this is a question` ).
+        lo_app = z2ui5_cl_pop_to_inform=>factory( `this is a question` ).
         client->nav_app_call( lo_app ).
 
       WHEN 'BACK'.
@@ -80,7 +80,7 @@ CLASS z2ui5_cl_demo_app_151 IMPLEMENTATION.
 
   METHOD ui5_callback.
         DATA lo_prev TYPE REF TO z2ui5_if_app.
-        DATA temp1 TYPE REF TO z2ui5_cl_popup_to_inform.
+        DATA temp1 TYPE REF TO z2ui5_cl_pop_to_inform.
         DATA lo_dummy LIKE temp1.
 
     TRY.

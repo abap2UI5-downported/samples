@@ -48,8 +48,8 @@ CLASS z2ui5_cl_demo_app_158 IMPLEMENTATION.
 
   METHOD ui5_callback.
         DATA lo_prev TYPE REF TO z2ui5_if_app.
-        DATA temp1 TYPE REF TO z2ui5_cl_popup_pdf.
-        DATA lv_text TYPE z2ui5_cl_popup_pdf=>ty_s_result-text.
+        DATA temp1 TYPE REF TO z2ui5_cl_pop_pdf.
+        DATA lv_text TYPE z2ui5_cl_pop_pdf=>ty_s_result-text.
 
     TRY.
         
@@ -94,7 +94,7 @@ CLASS z2ui5_cl_demo_app_158 IMPLEMENTATION.
 
   METHOD ui5_event.
         DATA lv_pdf TYPE string.
-        DATA lo_app TYPE REF TO z2ui5_cl_popup_pdf.
+        DATA lo_app TYPE REF TO z2ui5_cl_pop_pdf.
 
     CASE client->get( )-event.
 
@@ -102,7 +102,7 @@ CLASS z2ui5_cl_demo_app_158 IMPLEMENTATION.
         
         lv_pdf = get_example_pdf( ).
         
-        lo_app = z2ui5_cl_popup_pdf=>factory( lv_pdf ).
+        lo_app = z2ui5_cl_pop_pdf=>factory( lv_pdf ).
         client->nav_app_call( lo_app ).
 
       WHEN 'BACK'.

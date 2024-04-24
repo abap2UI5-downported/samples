@@ -22,7 +22,7 @@ CLASS z2ui5_cl_demo_app_165 IMPLEMENTATION.
   METHOD ui5_event.
             DATA lv_dummy TYPE i.
             DATA lx TYPE REF TO cx_root.
-        DATA lo_app TYPE REF TO z2ui5_cl_popup_error.
+        DATA lo_app TYPE REF TO z2ui5_cl_pop_error.
 
     CASE client->get( )-event.
 
@@ -34,7 +34,7 @@ CLASS z2ui5_cl_demo_app_165 IMPLEMENTATION.
           CATCH cx_root INTO lx.
         ENDTRY.
         
-        lo_app = z2ui5_cl_popup_error=>factory( lx ).
+        lo_app = z2ui5_cl_pop_error=>factory( lx ).
         client->nav_app_call( lo_app ).
 
       WHEN 'BACK'.
@@ -88,7 +88,7 @@ CLASS z2ui5_cl_demo_app_165 IMPLEMENTATION.
 
   METHOD ui5_callback.
         DATA lo_prev TYPE REF TO z2ui5_if_app.
-        DATA temp1 TYPE REF TO z2ui5_cl_popup_to_inform.
+        DATA temp1 TYPE REF TO z2ui5_cl_pop_to_inform.
         DATA lo_dummy LIKE temp1.
 
     TRY.

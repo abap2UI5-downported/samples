@@ -37,7 +37,7 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN `BUTTON_START`.
-        client->nav_app_call( z2ui5_cl_popup_table=>factory( mt_table ) ).
+        client->nav_app_call( z2ui5_cl_pop_table=>factory( mt_table ) ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
@@ -150,7 +150,7 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
-          DATA temp3 TYPE REF TO z2ui5_cl_popup_table.
+          DATA temp3 TYPE REF TO z2ui5_cl_pop_table.
           DATA lo_popup_table LIKE temp3.
 
     me->client = client.

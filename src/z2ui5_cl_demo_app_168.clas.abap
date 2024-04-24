@@ -25,7 +25,7 @@ CLASS z2ui5_cl_demo_app_168 IMPLEMENTATION.
 
   METHOD ui5_callback.
         DATA lo_prev TYPE REF TO z2ui5_if_app.
-        DATA temp1 TYPE REF TO z2ui5_cl_popup_file_download.
+        DATA temp1 TYPE REF TO z2ui5_cl_pop_file_dl.
 
     TRY.
         
@@ -69,13 +69,13 @@ CLASS z2ui5_cl_demo_app_168 IMPLEMENTATION.
 
 
   METHOD ui5_event.
-        DATA lo_app TYPE REF TO z2ui5_cl_popup_file_download.
+        DATA lo_app TYPE REF TO z2ui5_cl_pop_file_dl.
 
     CASE client->get( )-event.
 
       WHEN 'POPUP'.
         
-        lo_app = z2ui5_cl_popup_file_download=>factory( get_file( ) ).
+        lo_app = z2ui5_cl_pop_file_dl=>factory( get_file( ) ).
         client->nav_app_call( lo_app ).
 
       WHEN 'BACK'.

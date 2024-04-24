@@ -21,9 +21,9 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
 
 
   METHOD ui5_event.
-        DATA temp1 TYPE z2ui5_cl_popup_messages=>ty_t_msg.
+        DATA temp1 TYPE z2ui5_cl_pop_messages=>ty_t_msg.
         DATA temp2 LIKE LINE OF temp1.
-        DATA lo_app TYPE REF TO z2ui5_cl_popup_messages.
+        DATA lo_app TYPE REF TO z2ui5_cl_pop_messages.
 
     CASE client->get( )-event.
 
@@ -63,7 +63,7 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
         temp2-number = '375'.
         INSERT temp2 INTO TABLE temp1.
         
-        lo_app = z2ui5_cl_popup_messages=>factory( temp1 ).
+        lo_app = z2ui5_cl_pop_messages=>factory( temp1 ).
         client->nav_app_call( lo_app ).
 
       WHEN 'BACK'.
@@ -121,7 +121,7 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
 
   METHOD ui5_callback.
         DATA lo_prev TYPE REF TO z2ui5_if_app.
-        DATA temp3 TYPE REF TO z2ui5_cl_popup_messages.
+        DATA temp3 TYPE REF TO z2ui5_cl_pop_messages.
         DATA lo_dummy LIKE temp3.
 
     TRY.
