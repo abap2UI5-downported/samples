@@ -22,8 +22,7 @@ CLASS z2ui5_cl_demo_app_192 DEFINITION PUBLIC.
 
 *    DATA mt_new_data TYPE ty_t_merged_data.
 
-    TYPES temp1_76af0975e1 TYPE STANDARD TABLE OF REF TO z2ui5_cl_demo_app_193 WITH DEFAULT KEY.
-DATA mt_new_data2 TYPE temp1_76af0975e1.
+    DATA mt_new_data2 TYPE STANDARD TABLE OF REF TO z2ui5_cl_demo_app_193 WITH DEFAULT KEY.
 
     TYPES:
       BEGIN OF ty_s_out,
@@ -40,6 +39,8 @@ DATA mt_new_data2 TYPE temp1_76af0975e1.
 
   PROTECTED SECTION.
     METHODS get_data.
+    METHODS xml_parse.
+    METHODS xml_stringify.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -60,14 +61,11 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
   METHOD ui5_display.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
-    DATA temp1 TYPE xsdboolean.
     view = z2ui5_cl_xml_view=>factory( ).
-    
-    temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     view->shell(
         )->page( title          = 'xxx'
                  navbuttonpress = client->_event( val = 'BACK' )
-                 shownavbutton  = temp1
+                 shownavbutton  = abap_true
             )->header_content( ).
 
     client->view_display( view->stringify( ) ).
@@ -75,15 +73,13 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
+    xml_parse( ).
 
     me->client = client.
     get_data( ).
     ui5_display( ).
 
-*    DATA(lv_stringify) = z2ui5_cl_util_api=>xml_srtti_stringify( data = mt_new_data2 ).
-
-*    DATA(lr_result) = z2ui5_cl_util_api=>xml_srtti_parse( rtti_data = lv_stringify ).
-
+    xml_stringify( ).
   ENDMETHOD.
 
   METHOD get_data.
@@ -121,7 +117,6 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
 
     LOOP AT kopf->* ASSIGNING <fs_s_head>.
 
-*      APPEND INITIAL LINE TO mt_new_data ASSIGNING FIELD-SYMBOL(<fs_s_new_data>).
       
       CREATE OBJECT lo_new_data TYPE z2ui5_cl_demo_app_193.
       INSERT lo_new_data INTO TABLE mt_new_data2.
@@ -134,8 +129,27 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
 
       APPEND INITIAL LINE TO <fs_t_head_new> ASSIGNING <fs_s_head_new>.
       MOVE-CORRESPONDING <fs_s_head> TO <fs_s_head_new>.
-*      <fs_s_head> = CORRESPONDING #( <fs_s_head_new> ).
 
+    ENDLOOP.
+
+  ENDMETHOD.
+
+
+  METHOD xml_parse.
+
+    DATA lo_data LIKE LINE OF mt_new_data2.
+    LOOP AT mt_new_data2 INTO lo_data.
+      lo_data->xml_parse( ).
+    ENDLOOP.
+
+  ENDMETHOD.
+
+
+  METHOD xml_stringify.
+
+    DATA lo_data LIKE LINE OF mt_new_data2.
+    LOOP AT mt_new_data2 INTO lo_data.
+      lo_data->xml_stringify( ).
     ENDLOOP.
 
   ENDMETHOD.
