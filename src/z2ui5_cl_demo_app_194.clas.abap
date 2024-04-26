@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_190 DEFINITION
+CLASS z2ui5_cl_demo_app_194 DEFINITION
   PUBLIC
   CREATE PUBLIC.
 
@@ -11,7 +11,7 @@ CLASS z2ui5_cl_demo_app_190 DEFINITION
     DATA mv_table        TYPE string.
     DATA mt_table        TYPE REF TO data.
     DATA mt_table_tmp    TYPE REF TO data.
-*    DATA ms_table_row    TYPE REF TO data.
+    DATA ms_table_row    TYPE REF TO data.
     DATA mt_comp         TYPE abap_component_tab.
     DATA ms_fixval       TYPE REF TO data.
 
@@ -37,17 +37,39 @@ CLASS z2ui5_cl_demo_app_190 DEFINITION
     METHODS get_fixval.
 ENDCLASS.
 
-CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
 
   METHOD on_event.
 
     FIELD-SYMBOLS <row> TYPE any.
+        DATA temp1 LIKE LINE OF mt_comp.
+        DATA comp LIKE REF TO temp1.
+          FIELD-SYMBOLS <val> TYPE any.
 
     CASE client->get( )-event.
 
       WHEN 'BACK'.
 
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+
+      WHEN 'BUTTON'.
+
+        
+        
+        LOOP AT mt_comp REFERENCE INTO comp.
+
+          ASSIGN ms_table_row->* TO <row>.
+          
+          ASSIGN COMPONENT comp->name OF STRUCTURE <row> TO <val>.
+          IF <val> IS NOT ASSIGNED.
+            CONTINUE.
+          ELSE.
+
+            client->_bind( val = <val>    ).
+
+          ENDIF.
+
+        ENDLOOP.
 
     ENDCASE.
   ENDMETHOD.
@@ -159,7 +181,7 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
         CREATE DATA mt_table     TYPE HANDLE new_table_desc.
 *        CREATE DATA mt_table_del TYPE HANDLE new_table_desc.
         CREATE DATA mt_table_tmp TYPE HANDLE new_table_desc.
-*        CREATE DATA ms_table_row TYPE HANDLE new_struct_desc.
+        CREATE DATA ms_table_row TYPE HANDLE new_struct_desc.
 
         ASSIGN mt_table->* TO <table>.
 
@@ -195,23 +217,23 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
     DATA structdescr TYPE REF TO cl_abap_structdescr.
     DATA lt_fixval   TYPE fixvalues.
 
-    DATA temp1 LIKE LINE OF mt_comp.
-    DATA dfies LIKE REF TO temp1.
-      DATA temp2 TYPE cl_abap_structdescr=>component_table.
-      DATA temp3 LIKE LINE OF temp2.
-      DATA temp4 TYPE REF TO cl_abap_datadescr.
+    DATA temp2 LIKE LINE OF mt_comp.
+    DATA dfies LIKE REF TO temp2.
+      DATA temp3 TYPE cl_abap_structdescr=>component_table.
+      DATA temp4 LIKE LINE OF temp3.
+      DATA temp1 TYPE REF TO cl_abap_datadescr.
     LOOP AT mt_comp REFERENCE INTO dfies.
 
       
-      CLEAR temp2.
-      temp2 = comp.
+      CLEAR temp3.
+      temp3 = comp.
       
-      temp3-name = dfies->name.
+      temp4-name = dfies->name.
       
-      temp4 ?= cl_abap_datadescr=>describe_by_data( lt_fixval ).
-      temp3-type = temp4.
-      INSERT temp3 INTO TABLE temp2.
-      comp = temp2.
+      temp1 ?= cl_abap_datadescr=>describe_by_data( lt_fixval ).
+      temp4-type = temp1.
+      INSERT temp4 INTO TABLE temp3.
+      comp = temp3.
     ENDLOOP.
 
     structdescr = cl_abap_structdescr=>create( comp ).
@@ -234,14 +256,14 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
   METHOD get_comp.
         DATA index TYPE int4.
             DATA typedesc TYPE REF TO cl_abap_typedescr.
-            DATA temp4 TYPE REF TO cl_abap_structdescr.
-            DATA structdesc LIKE temp4.
+            DATA temp5 TYPE REF TO cl_abap_structdescr.
+            DATA structdesc LIKE temp5.
             DATA comp TYPE abap_component_tab.
             DATA com LIKE LINE OF comp.
-        DATA temp5 TYPE cl_abap_structdescr=>component_table.
-        DATA temp6 LIKE LINE OF temp5.
-        DATA temp7 TYPE REF TO cl_abap_datadescr.
-        DATA component LIKE temp5.
+        DATA temp6 TYPE cl_abap_structdescr=>component_table.
+        DATA temp7 LIKE LINE OF temp6.
+        DATA temp2 TYPE REF TO cl_abap_datadescr.
+        DATA component LIKE temp6.
     TRY.
 
         
@@ -255,9 +277,9 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
                                                             OTHERS         = 2 ).
 
             
-            temp4 ?= typedesc.
+            temp5 ?= typedesc.
             
-            structdesc = temp4.
+            structdesc = temp5.
             
             comp = structdesc->get_components( ).
 
@@ -273,15 +295,15 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
         ENDTRY.
 
         
-        CLEAR temp5.
+        CLEAR temp6.
         
-        temp6-name = 'ROW_ID'.
+        temp7-name = 'ROW_ID'.
         
-        temp7 ?= cl_abap_datadescr=>describe_by_data( index ).
-        temp6-type = temp7.
-        INSERT temp6 INTO TABLE temp5.
+        temp2 ?= cl_abap_datadescr=>describe_by_data( index ).
+        temp7-type = temp2.
+        INSERT temp7 INTO TABLE temp6.
         
-        component = temp5.
+        component = temp6.
 
         APPEND LINES OF component TO result.
 
