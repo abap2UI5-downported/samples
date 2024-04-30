@@ -54,7 +54,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_002 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -71,9 +71,30 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_event.
+        DATA temp1 TYPE string_table.
 
     CASE client->get( )-event.
-
+      WHEN 'BUTTON_MCUSTOM'.
+*        send type = '' is mandatory in order to not break current implementation
+        
+        CLEAR temp1.
+        INSERT `First Button` INTO TABLE temp1.
+        INSERT `Second Button` INTO TABLE temp1.
+        client->message_box_display( type = '' text = 'Custom MessageBox' icon = `SUCCESS`
+                                     title = 'Custom MessageBox' actions = temp1 emphasizedaction = `First Button`
+                                     onclose = `callMessageToast()` details = `<h3>these are details</h3>`).
+      WHEN 'BUTTON_MCONFIRM'.
+        client->message_box_display( type = 'confirm' text = 'Confirm MessageBox' ).
+      WHEN 'BUTTON_MALERT'.
+        client->message_box_display( type = 'alert' text = 'Alert MessageBox' ).
+      WHEN 'BUTTON_MERROR'.
+        client->message_box_display( type = 'error' text = 'Error MessageBox' ).
+      WHEN 'BUTTON_MINFO'.
+        client->message_box_display( type = 'information' text = 'Information MessageBox' ).
+      WHEN 'BUTTON_MWARNING'.
+        client->message_box_display( type = 'warning' text = 'Warning MessageBox' ).
+      WHEN 'BUTTON_MSUCCESS'.
+        client->message_box_display( type = 'success' text = 'Success MessageBox' icon = `sap-icon://accept` ).
       WHEN 'BUTTON_SEND'.
         client->message_box_display( 'success - values send to the server' ).
       WHEN 'BUTTON_CLEAR'.
@@ -88,8 +109,8 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_init.
-    DATA temp1 LIKE mt_suggestion.
-    DATA temp2 LIKE LINE OF temp1.
+    DATA temp3 LIKE mt_suggestion.
+    DATA temp4 LIKE LINE OF temp3.
 
     CLEAR screen.
     screen-check_is_active = abap_true.
@@ -102,27 +123,27 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
     screen-time_end = '17:23:57'.
 
     
-    CLEAR temp1.
+    CLEAR temp3.
     
-    temp2-descr = 'Green'.
-    temp2-value = 'GREEN'.
-    INSERT temp2 INTO TABLE temp1.
-    temp2-descr = 'Blue'.
-    temp2-value = 'BLUE'.
-    INSERT temp2 INTO TABLE temp1.
-    temp2-descr = 'Black'.
-    temp2-value = 'BLACK'.
-    INSERT temp2 INTO TABLE temp1.
-    temp2-descr = 'Grey'.
-    temp2-value = 'GREY'.
-    INSERT temp2 INTO TABLE temp1.
-    temp2-descr = 'Blue2'.
-    temp2-value = 'BLUE2'.
-    INSERT temp2 INTO TABLE temp1.
-    temp2-descr = 'Blue3'.
-    temp2-value = 'BLUE3'.
-    INSERT temp2 INTO TABLE temp1.
-    mt_suggestion = temp1.
+    temp4-descr = 'Green'.
+    temp4-value = 'GREEN'.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-descr = 'Blue'.
+    temp4-value = 'BLUE'.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-descr = 'Black'.
+    temp4-value = 'BLACK'.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-descr = 'Grey'.
+    temp4-value = 'GREY'.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-descr = 'Blue2'.
+    temp4-value = 'BLUE2'.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-descr = 'Blue3'.
+    temp4-value = 'BLUE3'.
+    INSERT temp4 INTO TABLE temp3.
+    mt_suggestion = temp3.
 
   ENDMETHOD.
 
@@ -136,12 +157,12 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
     DATA grid TYPE REF TO z2ui5_cl_xml_view.
     DATA form TYPE REF TO z2ui5_cl_xml_view.
     DATA lv_test TYPE REF TO z2ui5_cl_xml_view.
-    DATA temp3 TYPE ty_t_combo.
-    DATA temp4 LIKE LINE OF temp3.
     DATA temp5 TYPE ty_t_combo.
     DATA temp6 LIKE LINE OF temp5.
+    DATA temp7 TYPE ty_t_combo.
+    DATA temp8 LIKE LINE OF temp7.
     view = z2ui5_cl_xml_view=>factory( ).
-
+    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( `function callMessageToast(sAction) { sap.m.MessageToast.show('Hello there !!'); }` ).
     
     
     temp1 = boolc( abap_false = client->get( )-check_launchpad_active ).
@@ -197,30 +218,6 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
              enabled  = abap_true ).
 
     
-    CLEAR temp3.
-    
-    temp4-key = 'BLUE'.
-    temp4-text = 'green'.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-key = 'GREEN'.
-    temp4-text = 'blue'.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-key = 'BLACK'.
-    temp4-text = 'red'.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-key = 'GRAY'.
-    temp4-text = 'gray'.
-    INSERT temp4 INTO TABLE temp3.
-    lv_test->label( 'Combobox'
-      )->combobox(
-          selectedkey = client->_bind_edit( screen-combo_key )
-          items       = client->_bind_local( temp3 )
-              )->item(
-                  key = '{KEY}'
-                  text = '{TEXT}'
-      )->get_parent( )->get_parent( ).
-
-    
     CLEAR temp5.
     
     temp6-key = 'BLUE'.
@@ -235,10 +232,34 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
     temp6-key = 'GRAY'.
     temp6-text = 'gray'.
     INSERT temp6 INTO TABLE temp5.
+    lv_test->label( 'Combobox'
+      )->combobox(
+          selectedkey = client->_bind_edit( screen-combo_key )
+          items       = client->_bind_local( temp5 )
+              )->item(
+                  key = '{KEY}'
+                  text = '{TEXT}'
+      )->get_parent( )->get_parent( ).
+
+    
+    CLEAR temp7.
+    
+    temp8-key = 'BLUE'.
+    temp8-text = 'green'.
+    INSERT temp8 INTO TABLE temp7.
+    temp8-key = 'GREEN'.
+    temp8-text = 'blue'.
+    INSERT temp8 INTO TABLE temp7.
+    temp8-key = 'BLACK'.
+    temp8-text = 'red'.
+    INSERT temp8 INTO TABLE temp7.
+    temp8-key = 'GRAY'.
+    temp8-text = 'gray'.
+    INSERT temp8 INTO TABLE temp7.
     lv_test->label( 'Combobox2'
       )->combobox(
           selectedkey = client->_bind_edit( screen-combo_key2 )
-          items       = client->_bind_local( temp5 )
+          items       = client->_bind_local( temp7 )
               )->item(
                   key = '{KEY}'
                   text = '{TEXT}'
@@ -279,6 +300,28 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
         customtextoff = 'NO' ).
 
     page->footer( )->overflow_toolbar(
+         )->text( text = `MessageBox Types`
+         )->button(
+             text  = 'Confirm'
+             press = client->_event( 'BUTTON_MCONFIRM' )
+         )->button(
+             text  = 'Alert'
+             press = client->_event( 'BUTTON_MALERT' )
+         )->button(
+             text  = 'Error'
+             press = client->_event( 'BUTTON_MERROR' )
+         )->button(
+             text  = 'Information'
+             press = client->_event( 'BUTTON_MINFO' )
+         )->button(
+             text  = 'Warning'
+             press = client->_event( 'BUTTON_MWARNING' )
+         )->button(
+             text  = 'Success'
+             press = client->_event( 'BUTTON_MSUCCESS' )
+         )->button(
+             text  = 'Custom'
+             press = client->_event( 'BUTTON_MCUSTOM' )
          )->toolbar_spacer(
          )->button(
              text  = 'Clear'
