@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_181 DEFINITION
 
   PUBLIC SECTION.
 
-    INTERFACES if_serializable_object .
+
     INTERFACES z2ui5_if_app .
 
     DATA mv_initialized TYPE abap_bool .
@@ -76,7 +76,7 @@ CLASS Z2UI5_CL_DEMO_APP_181 IMPLEMENTATION.
     
     
     temp7 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
-    page = view->page(
+    page = view->shell( )->page(
         title = `Cards Demo`
         class = `sapUiContentPadding`
         navbuttonpress = client->_event( 'BACK' )
