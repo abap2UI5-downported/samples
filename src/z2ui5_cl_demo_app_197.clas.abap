@@ -60,11 +60,12 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
 
     
     CLEAR temp1.
-    INSERT `$event}` INTO TABLE temp1.
+    INSERT `$event.mParameters.selectedItems` INTO TABLE temp1.
     
-    facet = page->facet_filter( id = `idFacetFilter` type = `Light` showpersonalization = abap_true showreset = abap_true "lists = client->_bind( mt_table_products )
+    facet = page->facet_filter( id = `idFacetFilter` type = `Light` showpersonalization = abap_true showreset = abap_true
       )->facet_filter_list( title = `Products` mode = `MultiSelect` items = client->_bind( mt_table_products ) listclose = client->_event( val = `FILTER`
 *                                                                           t_arg = VALUE #( ( `${$parameters>/selectedAll}` ) ) )
+*                                                                           t_arg = VALUE #( ( `$event.mParameters` ) ) )
                                                                            t_arg = temp1 )
         )->facet_filter_item( text = `{PRODUCT}` ).
 
@@ -93,8 +94,20 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+TYPES BEGIN OF ty_t_arg.
+TYPES mProperties TYPE string.
+TYPES val TYPE string.
+TYPES END OF ty_t_arg.
+        TYPES temp3 TYPE TABLE OF ty_t_arg.
+DATA mt_t_arg TYPE temp3.
         DATA lt_arg TYPE string_table.
-        DATA lt3 LIKE lt_arg.
+        DATA lv_json LIKE LINE OF lt_arg.
+        DATA temp1 LIKE LINE OF lt_arg.
+        DATA temp2 LIKE sy-tabix.
+            DATA lo_json TYPE REF TO z2ui5_cl_ajson.
+            DATA l_members TYPE string_table.
+            DATA l_member LIKE LINE OF l_members.
+              DATA lv_val TYPE string.
 
     me->client = client.
 
@@ -109,9 +122,38 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
       WHEN 'FILTER'.
 
         
+
+        
+
+
+        
         lt_arg = client->get( )-t_event_arg.
         
-        lt3 = lt_arg.
+        
+        
+        temp2 = sy-tabix.
+        READ TABLE lt_arg INDEX 1 INTO temp1.
+        sy-tabix = temp2.
+        IF sy-subrc <> 0.
+          ASSERT 1 = 0.
+        ENDIF.
+        lv_json = temp1.
+        TRY.
+            
+            lo_json = z2ui5_cl_ajson=>parse( lv_json ).
+
+            
+            l_members = lo_json->members( '/' ).
+
+            
+            LOOP AT l_members INTO l_member.
+              
+              lv_val =  lo_json->get( '/' && l_member && '/mProperties/text' ).
+            ENDLOOP.
+
+          CATCH cx_root.
+        ENDTRY.
+
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 

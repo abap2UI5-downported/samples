@@ -40,7 +40,7 @@ CLASS Z2UI5_CL_DEMO_APP_198 IMPLEMENTATION.
       temp1-check_view_destroy = abap_true.
       
       CLEAR temp2.
-      INSERT `$event.mParameters` INTO TABLE temp2.
+      INSERT `$event` INTO TABLE temp2.
       
       temp3 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
       client->view_display( view->shell(
