@@ -20,6 +20,7 @@ CLASS z2ui5_cl_demo_app_197 DEFINITION
       ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH DEFAULT KEY .
 
     DATA mt_table TYPE ty_t_table .
+    DATA mt_table_full TYPE ty_t_table .
     DATA mt_table_products TYPE ty_t_table .
     DATA check_initialized TYPE abap_bool .
     DATA client TYPE REF TO z2ui5_if_client .
@@ -62,7 +63,7 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
     CLEAR temp1.
     INSERT `$event.mParameters.selectedItems` INTO TABLE temp1.
     
-    facet = page->facet_filter( id = `idFacetFilter` type = `Light` showpersonalization = abap_true showreset = abap_true
+    facet = page->facet_filter( id = `idFacetFilter` type = `Light` showpersonalization = abap_true showreset = abap_true reset = client->_event( val = `RESET` )
       )->facet_filter_list( title = `Products` mode = `MultiSelect` items = client->_bind( mt_table_products ) listclose = client->_event( val = `FILTER`
 *                                                                           t_arg = VALUE #( ( `${$parameters>/selectedAll}` ) ) )
 *                                                                           t_arg = VALUE #( ( `$event.mParameters` ) ) )
@@ -94,12 +95,8 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
-TYPES BEGIN OF ty_t_arg.
-TYPES mProperties TYPE string.
-TYPES val TYPE string.
-TYPES END OF ty_t_arg.
-        TYPES temp3 TYPE TABLE OF ty_t_arg.
-DATA mt_t_arg TYPE temp3.
+        TYPES temp4 TYPE RANGE OF string.
+DATA lt_range TYPE temp4.
         DATA lt_arg TYPE string_table.
         DATA lv_json LIKE LINE OF lt_arg.
         DATA temp1 LIKE LINE OF lt_arg.
@@ -108,6 +105,8 @@ DATA mt_t_arg TYPE temp3.
             DATA l_members TYPE string_table.
             DATA l_member LIKE LINE OF l_members.
               DATA lv_val TYPE string.
+              DATA temp3 LIKE LINE OF lt_range.
+        DATA ls_tab LIKE LINE OF mt_table.
 
     me->client = client.
 
@@ -119,9 +118,10 @@ DATA mt_t_arg TYPE temp3.
     ENDIF.
 
     CASE client->get( )-event.
+      WHEN 'RESET'.
+        mt_table = mt_table_full.
+        client->view_model_update( ).
       WHEN 'FILTER'.
-
-        
 
         
 
@@ -149,10 +149,29 @@ DATA mt_t_arg TYPE temp3.
             LOOP AT l_members INTO l_member.
               
               lv_val =  lo_json->get( '/' && l_member && '/mProperties/text' ).
+
+              
+              CLEAR temp3.
+              temp3-sign = 'I'.
+              temp3-option = 'EQ'.
+              temp3-low = lv_val.
+              APPEND temp3 TO lt_range.
+
             ENDLOOP.
 
           CATCH cx_root.
         ENDTRY.
+
+        mt_table = mt_table_full.
+
+        
+        LOOP AT mt_table INTO ls_tab.
+          IF ls_tab-product NOT IN lt_range.
+            DELETE mt_table.
+          ENDIF.
+        ENDLOOP.
+
+        client->view_model_update( ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
@@ -164,303 +183,304 @@ DATA mt_t_arg TYPE temp3.
 
   METHOD z2ui5_set_data.
 
-    DATA temp3 TYPE z2ui5_cl_demo_app_197=>ty_t_table.
-    DATA temp4 LIKE LINE OF temp3.
-    CLEAR temp3.
+    DATA temp4 TYPE z2ui5_cl_demo_app_197=>ty_t_table.
+    DATA temp5 LIKE LINE OF temp4.
+    CLEAR temp4.
     
-    temp4-product = 'table'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Peter`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 400.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'chair'.
-    temp4-create_date = `01.01.2022`.
-    temp4-create_by = `James`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 123.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'sofa'.
-    temp4-create_date = `01.05.2021`.
-    temp4-create_by = `Simone`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 700.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'computer'.
-    temp4-create_date = `27.01.2023`.
-    temp4-create_by = `Theo`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 200.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'printer'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Hannah`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 90.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'table2'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Julia`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 110.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'table'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Peter`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 400.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'chair'.
-    temp4-create_date = `01.01.2022`.
-    temp4-create_by = `James`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 123.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'sofa'.
-    temp4-create_date = `01.05.2021`.
-    temp4-create_by = `Simone`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 700.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'computer'.
-    temp4-create_date = `27.01.2023`.
-    temp4-create_by = `Theo`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 200.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'printer'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Hannah`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 90.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'table2'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Julia`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 110.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'table'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Peter`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 400.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'chair'.
-    temp4-create_date = `01.01.2022`.
-    temp4-create_by = `James`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 123.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'sofa'.
-    temp4-create_date = `01.05.2021`.
-    temp4-create_by = `Simone`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 700.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'computer'.
-    temp4-create_date = `27.01.2023`.
-    temp4-create_by = `Theo`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 200.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'printer'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Hannah`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 90.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'table2'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Julia`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 110.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'table'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Peter`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 400.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'chair'.
-    temp4-create_date = `01.01.2022`.
-    temp4-create_by = `James`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 123.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'sofa'.
-    temp4-create_date = `01.05.2021`.
-    temp4-create_by = `Simone`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 700.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'computer'.
-    temp4-create_date = `27.01.2023`.
-    temp4-create_by = `Theo`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 200.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'printer'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Hannah`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 90.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'table2'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Julia`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 110.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'table'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Peter`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 400.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'chair'.
-    temp4-create_date = `01.01.2022`.
-    temp4-create_by = `James`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 123.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'sofa'.
-    temp4-create_date = `01.05.2021`.
-    temp4-create_by = `Simone`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 700.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'computer'.
-    temp4-create_date = `27.01.2023`.
-    temp4-create_by = `Theo`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 200.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'printer'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Hannah`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 90.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'table2'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Julia`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 110.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'table'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Peter`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 400.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'chair'.
-    temp4-create_date = `01.01.2022`.
-    temp4-create_by = `James`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 123.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'sofa'.
-    temp4-create_date = `01.05.2021`.
-    temp4-create_by = `Simone`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 700.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'computer'.
-    temp4-create_date = `27.01.2023`.
-    temp4-create_by = `Theo`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 200.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'printer'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Hannah`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 90.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'table2'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Julia`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 110.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'table'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Peter`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 400.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'chair'.
-    temp4-create_date = `01.01.2022`.
-    temp4-create_by = `James`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 123.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'sofa'.
-    temp4-create_date = `01.05.2021`.
-    temp4-create_by = `Simone`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 700.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'computer'.
-    temp4-create_date = `27.01.2023`.
-    temp4-create_by = `Theo`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 200.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'printer'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Hannah`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 90.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'table2'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Julia`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 110.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'table'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Peter`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 400.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'chair'.
-    temp4-create_date = `01.01.2022`.
-    temp4-create_by = `James`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 123.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'sofa'.
-    temp4-create_date = `01.05.2021`.
-    temp4-create_by = `Simone`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 700.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'computer'.
-    temp4-create_date = `27.01.2023`.
-    temp4-create_by = `Theo`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 200.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'printer'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Hannah`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 90.
-    INSERT temp4 INTO TABLE temp3.
-    temp4-product = 'table2'.
-    temp4-create_date = `01.01.2023`.
-    temp4-create_by = `Julia`.
-    temp4-storage_location = `AREA_001`.
-    temp4-quantity = 110.
-    INSERT temp4 INTO TABLE temp3.
-    mt_table = temp3.
+    temp5-product = 'table'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Peter`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 400.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'chair'.
+    temp5-create_date = `01.01.2022`.
+    temp5-create_by = `James`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 123.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'sofa'.
+    temp5-create_date = `01.05.2021`.
+    temp5-create_by = `Simone`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 700.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'computer'.
+    temp5-create_date = `27.01.2023`.
+    temp5-create_by = `Theo`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 200.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'printer'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Hannah`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 90.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'table2'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Julia`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 110.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'table'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Peter`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 400.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'chair'.
+    temp5-create_date = `01.01.2022`.
+    temp5-create_by = `James`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 123.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'sofa'.
+    temp5-create_date = `01.05.2021`.
+    temp5-create_by = `Simone`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 700.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'computer'.
+    temp5-create_date = `27.01.2023`.
+    temp5-create_by = `Theo`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 200.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'printer'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Hannah`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 90.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'table2'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Julia`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 110.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'table'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Peter`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 400.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'chair'.
+    temp5-create_date = `01.01.2022`.
+    temp5-create_by = `James`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 123.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'sofa'.
+    temp5-create_date = `01.05.2021`.
+    temp5-create_by = `Simone`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 700.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'computer'.
+    temp5-create_date = `27.01.2023`.
+    temp5-create_by = `Theo`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 200.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'printer'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Hannah`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 90.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'table2'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Julia`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 110.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'table'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Peter`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 400.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'chair'.
+    temp5-create_date = `01.01.2022`.
+    temp5-create_by = `James`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 123.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'sofa'.
+    temp5-create_date = `01.05.2021`.
+    temp5-create_by = `Simone`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 700.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'computer'.
+    temp5-create_date = `27.01.2023`.
+    temp5-create_by = `Theo`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 200.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'printer'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Hannah`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 90.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'table2'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Julia`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 110.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'table'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Peter`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 400.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'chair'.
+    temp5-create_date = `01.01.2022`.
+    temp5-create_by = `James`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 123.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'sofa'.
+    temp5-create_date = `01.05.2021`.
+    temp5-create_by = `Simone`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 700.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'computer'.
+    temp5-create_date = `27.01.2023`.
+    temp5-create_by = `Theo`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 200.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'printer'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Hannah`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 90.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'table2'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Julia`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 110.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'table'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Peter`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 400.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'chair'.
+    temp5-create_date = `01.01.2022`.
+    temp5-create_by = `James`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 123.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'sofa'.
+    temp5-create_date = `01.05.2021`.
+    temp5-create_by = `Simone`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 700.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'computer'.
+    temp5-create_date = `27.01.2023`.
+    temp5-create_by = `Theo`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 200.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'printer'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Hannah`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 90.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'table2'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Julia`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 110.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'table'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Peter`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 400.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'chair'.
+    temp5-create_date = `01.01.2022`.
+    temp5-create_by = `James`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 123.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'sofa'.
+    temp5-create_date = `01.05.2021`.
+    temp5-create_by = `Simone`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 700.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'computer'.
+    temp5-create_date = `27.01.2023`.
+    temp5-create_by = `Theo`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 200.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'printer'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Hannah`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 90.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'table2'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Julia`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 110.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'table'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Peter`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 400.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'chair'.
+    temp5-create_date = `01.01.2022`.
+    temp5-create_by = `James`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 123.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'sofa'.
+    temp5-create_date = `01.05.2021`.
+    temp5-create_by = `Simone`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 700.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'computer'.
+    temp5-create_date = `27.01.2023`.
+    temp5-create_by = `Theo`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 200.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'printer'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Hannah`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 90.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-product = 'table2'.
+    temp5-create_date = `01.01.2023`.
+    temp5-create_by = `Julia`.
+    temp5-storage_location = `AREA_001`.
+    temp5-quantity = 110.
+    INSERT temp5 INTO TABLE temp4.
+    mt_table = temp4.
+
+    SORT mt_table BY product.
+    mt_table_full = mt_table.
 
     mt_table_products = mt_table.
-
-    SORT mt_table_products BY product.
 
     DELETE ADJACENT DUPLICATES FROM mt_table_products COMPARING product.
 
