@@ -1,25 +1,25 @@
-class Z2UI5_CL_DEMO_APP_198 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_198 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    INTERFACES z2ui5_if_app .
 
-  data PRODUCT type STRING .
-  data QUANTITY type STRING .
-  data CHECK_INITIALIZED type ABAP_BOOL .
+    DATA product TYPE string .
+    DATA quantity TYPE string .
+    DATA check_initialized TYPE abap_bool.
+
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_198 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_198 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
       DATA view TYPE REF TO z2ui5_cl_xml_view.
       DATA temp1 TYPE z2ui5_if_types=>ty_s_event_control.
       DATA temp2 TYPE string_table.

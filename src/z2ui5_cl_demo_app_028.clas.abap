@@ -15,8 +15,8 @@ CLASS z2ui5_cl_demo_app_028 DEFINITION PUBLIC.
       END OF ty_row.
     TYPES temp1_35f4bb9be9 TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY.
 DATA t_tab TYPE temp1_35f4bb9be9.
+
     DATA mv_counter TYPE i.
-*    DATA mv_check_repeat TYPE abap_bool.
     DATA mv_check_active TYPE abap_bool.
 
   PROTECTED SECTION.
@@ -69,7 +69,6 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
             INTO TABLE t_tab.
 
         IF mv_counter = 3.
-*           mv_check_repeat = abap_false.
            mv_check_active = abap_false.
           client->message_toast_display( `timer deactivated` ).
         ENDIF.
@@ -89,7 +88,6 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
     DATA temp3 LIKE LINE OF temp2.
 
     mv_counter = 1.
-*    mv_check_repeat = abap_true.
     mv_check_active = abap_true.
 
     
@@ -115,9 +113,7 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
     lo_view->_z2ui5( )->timer(
         finished = client->_event( 'TIMER_FINISHED' )
         delayms  = `2000`
-*        checkrepeat = client->_bind( mv_check_repeat )
-        checkactive = client->_bind( mv_check_active )
-    ).
+        checkactive = client->_bind( mv_check_active )  ).
 
     
     
@@ -130,7 +126,6 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
              )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1645816100813152256`
              )->link(
                  text = 'Source_Code' target = '_blank'
-
          )->get_parent( ).
 
     page->list(
