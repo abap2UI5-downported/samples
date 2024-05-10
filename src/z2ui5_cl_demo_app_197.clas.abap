@@ -48,7 +48,7 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
     DATA tab TYPE REF TO z2ui5_cl_xml_view.
     DATA lo_columns TYPE REF TO z2ui5_cl_xml_view.
     DATA lo_cells TYPE REF TO z2ui5_cl_xml_view.
-    view = z2ui5_cl_xml_view=>factory( ).
+    view = z2ui5_cl_xml_view=>factory( )->shell( ).
 
     
     

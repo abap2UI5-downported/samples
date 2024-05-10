@@ -175,6 +175,14 @@ CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
             mode      = 'LineMode'
             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
 
+            panel->generic_tile(
+        header    = 'Event IV'
+        subheader = `Facet Filter - T_arg with Objects`
+        press     = client->_event( 'Z2UI5_CL_DEMO_APP_197' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
         panel->generic_tile(
         header    = 'Follow Up Action'
         subheader = ``
@@ -183,13 +191,7 @@ CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-            panel->generic_tile(
-        header    = 'Facet Filteer - Events (t_arg) with Objects'
-        subheader = ``
-        press     = client->_event( 'Z2UI5_CL_DEMO_APP_197' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
+
 
         panel = page->panel(
              expandable = abap_false
