@@ -55,7 +55,7 @@ CLASS z2ui5_cl_demo_app_128 IMPLEMENTATION.
 
       
       CLEAR temp3.
-      INSERT `{ semanticObject: "Z2UI5_CL_DEMO_APP_127",  action: "Z2UI5_CL_DEMO_APP_127" }` INTO TABLE temp3.
+      INSERT `{ semanticObject: "Z2UI5_CL_DEMO_APP_127",  action: "display   " }` INTO TABLE temp3.
       INSERT `{ ProductID : "123234" }` INTO TABLE temp3.
       
       temp4 = boolc( abap_false = client->get( )-check_launchpad_active ).

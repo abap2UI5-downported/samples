@@ -23,24 +23,20 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp2 TYPE xsdboolean.
     FIELD-SYMBOLS <tab> TYPE table.
     DATA temp1 TYPE z2ui5_if_types=>ty_s_event_control.
     DATA tab TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory( ).
     
+    
+    temp2 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = view->shell(
         )->page(
                 title          = 'abap2UI5 - RTTI created Table'
                 navbuttonpress = client->_event( 'BACK' )
-                  shownavbutton = abap_true
-            )->header_content(
-                )->link(
-                    text = 'Demo' target = '_blank'
-                    href = 'https://twitter.com/abap2UI5/status/1676522756781817857'
-                )->link(
-                    text = 'Source_Code' target = '_blank'
-
-        )->get_parent( ).
+                shownavbutton  = temp2
+        ).
 
 
     
@@ -92,7 +88,7 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      CREATE DATA t_tab TYPE STANDARD TABLE OF ('Z2UI5_T_CORE_01').
+      CREATE DATA t_tab TYPE STANDARD TABLE OF ('Z2UI5_T_01').
       
       ASSIGN t_tab->* TO <tab>.
 

@@ -38,11 +38,15 @@ CLASS z2ui5_cl_demo_app_127 IMPLEMENTATION.
 
       nav_params-product  = '102343333'.
 
+      IF client->get( )-check_launchpad_active = abap_false.
+        client->message_box_display( `No Launchpad Active, Sample not working!` ).
+      ENDIF.
+
       
       view = z2ui5_cl_xml_view=>factory( ).
       
       CLEAR temp1.
-      INSERT `{ semanticObject: "Z2UI5_CL_DEMO_APP_128",  action: "Z2UI5_CL_DEMO_APP_128" }` INTO TABLE temp1.
+      INSERT `{ semanticObject: "Z2UI5_CL_DEMO_APP_128",  action: "display" }` INTO TABLE temp1.
       
       temp2 = `$` && client->_bind_edit( nav_params ).
       INSERT temp2 INTO TABLE temp1.
@@ -52,7 +56,7 @@ CLASS z2ui5_cl_demo_app_127 IMPLEMENTATION.
       temp4 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
       client->view_display( view->shell(
             )->page(
-                     showheader       = temp3
+                    showheader       = temp3
                     title          = 'abap2UI5 - Cross App Navigation App 127 - This App only works when started via Launchpad'
                     navbuttonpress = client->_event( val = 'BACK' )
                     shownavbutton = temp4
