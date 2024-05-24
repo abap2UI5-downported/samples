@@ -24,11 +24,11 @@
       PROTECTED SECTION.
       PRIVATE SECTION.
 
-ENDCLASS.
+    ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
+    CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
 
       METHOD z2ui5_if_app~main.
@@ -175,13 +175,13 @@ CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
             mode      = 'LineMode'
             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
 
-            panel->generic_tile(
-        header    = 'Event IV'
-        subheader = `Facet Filter - T_arg with Objects`
-        press     = client->_event( 'Z2UI5_CL_DEMO_APP_197' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
+        panel->generic_tile(
+    header    = 'Event IV'
+    subheader = `Facet Filter - T_arg with Objects`
+    press     = client->_event( 'Z2UI5_CL_DEMO_APP_197' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
 
         panel->generic_tile(
         header    = 'Follow Up Action'
@@ -207,13 +207,13 @@ CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
         ).
 
-     panel->generic_tile(
-            header    = 'Timer II'
-            subheader = 'Set Loading Indicator while Server Request'
-            press     = client->_event( 'Z2UI5_CL_DEMO_APP_064' )
-            mode      = 'LineMode'
-            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-        ).
+        panel->generic_tile(
+               header    = 'Timer II'
+               subheader = 'Set Loading Indicator while Server Request'
+               press     = client->_event( 'Z2UI5_CL_DEMO_APP_064' )
+               mode      = 'LineMode'
+               class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+           ).
 
         panel->generic_tile(
             header    = 'New Tab'
@@ -477,12 +477,12 @@ CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
              class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
          ).
 
-       panel->generic_tile(
-            header    = 'Column Menu'
-            press     =  client->_event( 'z2ui5_cl_demo_app_183' )
-            mode      = 'LineMode'
-            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-        ).
+        panel->generic_tile(
+             header    = 'Column Menu'
+             press     =  client->_event( 'z2ui5_cl_demo_app_183' )
+             mode      = 'LineMode'
+             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+         ).
 
         panel->generic_tile(
             header    = 'ui.Table I'
@@ -859,7 +859,7 @@ CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
 
 
         panel->generic_tile(
-             header    = 'Dynamic Objects'
+             header    = 'Dynamic Objects I'
              subheader = 'Use S-RTTI to render different Subapps'
              press     =  client->_event( 'Z2UI5_CL_DEMO_APP_131' )
              mode      = 'LineMode'
@@ -874,37 +874,14 @@ CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-           panel->generic_tile(
-        header    = 'Dynamic Objects III'
-        subheader = 'User Generic Data Refs in Subapps'
-        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_185' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
+        panel->generic_tile(
+     header    = 'Dynamic Objects III'
+     subheader = 'User Generic Data Refs in Subapps'
+     press     =  client->_event( 'Z2UI5_CL_DEMO_APP_185' )
+     mode      = 'LineMode'
+     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+ ).
 
-               panel->generic_tile(
-        header    = 'Dynamic Objects IV'
-        subheader = 'User Generic Tab Refs in Subapps'
-        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_191' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
-
-               panel->generic_tile(
-        header    = 'Dynamic Objects V'
-        subheader = 'User Generic Struc Refs'
-        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_195' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
-
-               panel->generic_tile(
-        header    = 'Dynamic Objects VI'
-        subheader = 'User Generic Struc Refs with refresh'
-        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_199' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
 
 
         panel = page->panel(
@@ -1384,20 +1361,20 @@ CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-            panel->generic_tile(
-        header    = 'Network Graph'
-        press     =  client->_event( 'z2ui5_cl_demo_app_182' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
+        panel->generic_tile(
+    header    = 'Network Graph'
+    press     =  client->_event( 'z2ui5_cl_demo_app_182' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
 
-            panel->generic_tile(
-         header    = 'Status Indicator Library'
-         subheader = ``
-         press     = client->_event( 'Z2UI5_CL_DEMO_APP_196' )
-         mode      = 'LineMode'
-         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-     ).
+        panel->generic_tile(
+     header    = 'Status Indicator Library'
+     subheader = ``
+     press     = client->_event( 'Z2UI5_CL_DEMO_APP_196' )
+     mode      = 'LineMode'
+     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+ ).
 
         panel = page->panel(
         expandable = abap_false
@@ -1499,6 +1476,36 @@ CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
         panel = page->panel(
         expandable = abap_false
         expanded   = abap_true
+        headertext = `For Testing only...`
+    ).
+
+        panel->generic_tile(
+            header    = 'Model I'
+ subheader = 'RTTI Data'
+ press     =  client->_event( 'Z2UI5_CL_DEMO_APP_191' )
+ mode      = 'LineMode'
+ class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
+
+        panel->generic_tile(
+ header    = 'Model I'
+ subheader = 'RTTI Data'
+ press     =  client->_event( 'Z2UI5_CL_DEMO_APP_195' )
+ mode      = 'LineMode'
+ class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
+
+        panel->generic_tile(
+ header    = 'Model II'
+ subheader = 'RTTI Data'
+ press     =  client->_event( 'Z2UI5_CL_DEMO_APP_199' )
+ mode      = 'LineMode'
+ class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
+
+        panel = page->panel(
+        expandable = abap_false
+        expanded   = abap_true
         headertext = `Work in Progress`
     ).
         panel->message_strip( `Give it a try....` ).
@@ -1514,4 +1521,4 @@ CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
         client->view_display( page->stringify( ) ).
 
       ENDMETHOD.
-ENDCLASS.
+    ENDCLASS.

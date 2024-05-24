@@ -104,6 +104,7 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
+    FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
     me->client = client.
 
     IF check_initialized = abap_false.
@@ -111,12 +112,14 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
       on_init( ).
     ENDIF.
 
-    IF mv_counter <> lines( mt_table->* ) AND mv_counter IS NOT INITIAL.
+    
+    ASSIGN mt_table->* TO <tab>.
+    IF mv_counter <> lines( <tab> ) AND mv_counter IS NOT INITIAL.
       client->message_box_display( text = 'Frontend Lines <> Backend!' type = 'error' ).
     ENDIF.
 
     on_event( ).
-    mv_counter = lines( mt_table->*  ).
+    mv_counter = lines( <tab>  ).
 
   ENDMETHOD.
 
