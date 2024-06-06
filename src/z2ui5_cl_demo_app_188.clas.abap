@@ -12,10 +12,13 @@ CLASS z2ui5_cl_demo_app_188 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_188 IMPLEMENTATION.
+
+CLASS Z2UI5_CL_DEMO_APP_188 IMPLEMENTATION.
+
+
   METHOD z2ui5_if_app~main.
-      DATA view TYPE REF TO z2ui5_cl_xml_view.
-      DATA page TYPE REF TO z2ui5_cl_xml_view.
+      DATA shell TYPE REF TO z2ui5_cl_xml_view.
+         DATA page TYPE REF TO z2ui5_cl_xml_view.
         DATA lv_text TYPE string.
         DATA lt_params TYPE z2ui5_if_types=>ty_t_name_value.
         DATA ls_param LIKE LINE OF lt_params.
@@ -27,11 +30,14 @@ CLASS z2ui5_cl_demo_app_188 IMPLEMENTATION.
       ENDIF.
 
       
-      view = z2ui5_cl_xml_view=>factory( ).
-      
-      page = view->shell( )->page( showheader = abap_false  ).
-
-      page->_z2ui5( )->lp_title( client->_bind_edit( mv_title ) ).
+      shell = z2ui5_cl_xml_view=>factory( )->shell( ).
+      IF client->get( )-check_launchpad_active = abap_true.
+         
+         page = shell->page( showheader = abap_false  ).
+         page->_z2ui5( )->lp_title( client->_bind_edit( mv_title ) ).
+      ELSE.
+         page = shell->page( title = client->_bind_edit( mv_title ) ).
+      ENDIF.
 
       client->view_display( page->simple_form( title = 'Set Launchpad Title Dynamically' editable = abap_true
                      )->content( 'form'
