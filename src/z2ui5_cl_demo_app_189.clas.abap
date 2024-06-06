@@ -32,6 +32,9 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
         focus_field = 'IdTwo'.
       WHEN 'two_enter'.
         focus_field = 'IdThree'.
+      WHEN 'BACK'.
+        client->nav_app_leave( ).
+
     ENDCASE.
     client->view_model_update( ).
 
@@ -41,13 +44,18 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
   METHOD render.
 
     DATA page TYPE REF TO z2ui5_cl_xml_view.
-    page = z2ui5_cl_xml_view=>factory(
-                    )->shell(
-                    )->page( ).
+    DATA temp1 TYPE xsdboolean.
+    temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
+    page = z2ui5_cl_xml_view=>factory( )->shell(
+          )->page(
+              title          = 'abap2UI5 - Focus II'
+              navbuttonpress = client->_event( 'BACK' )
+              shownavbutton = temp1
+          ).
 
     page->simple_form(
        )->content( ns = 'form'
-       )->label( 'One'   )->input( id = 'IdOne'   value = client->_bind_edit( one ) submit = client->_event( 'one_enter' )
+       )->label( 'One (Press Enter)'   )->input( id = 'IdOne'   value = client->_bind_edit( one ) submit = client->_event( 'one_enter' )
        )->label( 'Two'   )->input( id = 'IdTwo'   value = client->_bind_edit( two ) submit = client->_event( 'two_enter' )
        )->label( 'Three' )->input( id = 'IdThree' value = client->_bind_edit( three )
        ).
