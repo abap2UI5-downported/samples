@@ -136,7 +136,7 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
 
 
       
-      lr_fields = z2ui5_cl_util=>rtti_get_t_attri_by_struc( <tab> ).
+      lr_fields = z2ui5_cl_util=>rtti_get_t_attri_by_any( <tab> ).
       
       lo_cols = tab->columns( ).
       
