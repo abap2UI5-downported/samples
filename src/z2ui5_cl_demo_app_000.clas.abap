@@ -1495,7 +1495,7 @@
 ).
 
         panel->generic_tile(
- header    = 'Model I'
+ header    = 'Model II'
  subheader = 'RTTI Data'
  press     =  client->_event( 'Z2UI5_CL_DEMO_APP_195' )
  mode      = 'LineMode'
@@ -1503,7 +1503,7 @@
 ).
 
         panel->generic_tile(
- header    = 'Model II'
+ header    = 'Model III'
  subheader = 'RTTI Data'
  press     =  client->_event( 'Z2UI5_CL_DEMO_APP_199' )
  mode      = 'LineMode'
