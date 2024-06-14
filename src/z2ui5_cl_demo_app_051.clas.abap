@@ -44,7 +44,7 @@ CLASS Z2UI5_CL_DEMO_APP_051 IMPLEMENTATION.
 
     
     layout = page->vertical_layout( class  = `sapUiContentPadding` width = `100%` ).
-    layout->label( text = 'Input mandantory' labelfor = `input1` ).
+    layout->label( text = 'Input mandatory' labelfor = `input1` ).
     layout->input( id = `input1` required = abap_true ).
 
 
