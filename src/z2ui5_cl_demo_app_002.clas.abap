@@ -159,8 +159,8 @@ CLASS Z2UI5_CL_DEMO_APP_002 IMPLEMENTATION.
     temp4-descr = 'Black'.
     temp4-value = 'BLACK'.
     INSERT temp4 INTO TABLE temp3.
-    temp4-descr = 'Grey'.
-    temp4-value = 'GREY'.
+    temp4-descr = 'Gray'.
+    temp4-value = 'GRAY'.
     INSERT temp4 INTO TABLE temp3.
     temp4-descr = 'Blue2'.
     temp4-value = 'BLUE2'.
@@ -207,7 +207,7 @@ CLASS Z2UI5_CL_DEMO_APP_002 IMPLEMENTATION.
 
     grid->simple_form( title = 'Input' editable = abap_true
         )->content( 'form'
-            )->label( 'Input with suggetion items'
+            )->label( 'Input with suggestion items'
             )->input(
                     id              = `suggInput`
                     value           = client->_bind_edit( screen-colour )
