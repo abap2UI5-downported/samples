@@ -36,7 +36,7 @@ CLASS Z2UI5_CL_DEMO_APP_110 IMPLEMENTATION.
     temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     view->shell(
       )->page(
-              title          = 'abap2UI5 - Popover Examples'
+              title          = 'abap2UI5 - Sample: MaskInput'
               navbuttonpress = client->_event( val = 'BACK' )
               shownavbutton = temp1
           )->header_content(
@@ -45,12 +45,12 @@ CLASS Z2UI5_CL_DEMO_APP_110 IMPLEMENTATION.
                   text = 'Source_Code' target = '_blank'
 
           )->get_parent(
-          )->simple_form( title = 'Mask Input' layout = 'ColumnLayout' editable = abap_true
+          )->simple_form( title = 'Generic Mask Input' layout = 'ColumnLayout' editable = abap_true
 *              )->content( 'form'
-                  )->label( text = 'Mask Input'
-                  )->mask_input( mask = '~~~~~~~~~~' placeholdersymbol = '_' placeholder = 'All characters allowed' )->get(
+                  )->label( text = 'Unique ID'
+                  )->mask_input( mask = `~~~~~~~~~~` placeholdersymbol = `_` placeholder = 'All characters allowed' )->get(
                     )->rules(
-                      )->mask_input_rule( maskformatsymbol = '~' regex = '"[^_]'
+                      )->mask_input_rule( maskformatsymbol = '~' regex = `[^_]`
                     )->get_parent( )->get_parent( )->get_parent(
                  )->label( text = `Promo code`
                  )->mask_input( mask = `**********` placeholdersymbol = `_` placeholder = `Latin characters (case insensitive) and numbers` )->get(
@@ -69,7 +69,7 @@ CLASS Z2UI5_CL_DEMO_APP_110 IMPLEMENTATION.
                   )->rules(
                     )->mask_input_rule( maskformatsymbol = `C` regex = `[A-Z0-9]`
                   )->get_parent( )->get_parent( )->get_parent(
-                )->label( text = `Product activation key"`
+                )->label( text = `Product activation key`
                  )->mask_input( mask = `SAP-CCCCC-CCCCC` placeholdersymbol = `_` placeholder = `Starts with 'SAP' followed by digits and capital letters` showclearicon = abap_true )->get(
                   )->rules(
                     )->mask_input_rule( maskformatsymbol = `C` regex = `[A-Z0-9]`
