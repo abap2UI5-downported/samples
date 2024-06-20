@@ -69,7 +69,7 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
      page = z2ui5_cl_xml_view=>factory( )->shell( )->page(
         navbuttonpress = client->_event( val = 'BACK' )
         shownavbutton = temp2
-        title = `abap2UI5 - App Finder`
+        title = `abap2UI5 - Sample: Nav Container`
     )->content( ).
 
     
