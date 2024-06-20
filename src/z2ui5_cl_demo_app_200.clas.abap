@@ -8,6 +8,17 @@ CLASS z2ui5_cl_demo_app_200 DEFINITION
     DATA mt_table  TYPE REF TO data.
     DATA ms_layout TYPE z2ui5_cl_pop_layout_v2=>ty_s_layout.
 
+    TYPES:
+      BEGIN OF ty_s_tab,
+        selkz            TYPE abap_bool,
+        product          TYPE string,
+        create_date      TYPE string,
+        create_by        TYPE string,
+        storage_location TYPE string,
+        quantity         TYPE i,
+      END OF ty_s_tab.
+    TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH DEFAULT KEY.
+
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool.
@@ -64,7 +75,11 @@ CLASS z2ui5_cl_demo_app_200 IMPLEMENTATION.
     DATA layout LIKE REF TO temp1.
       DATA lv_index LIKE sy-tabix.
     DATA cells TYPE REF TO z2ui5_cl_xml_view.
-    view = z2ui5_cl_xml_view=>factory( ). "->shell( ).
+        DATA sub_col TYPE string.
+        DATA index TYPE i.
+        DATA subcol LIKE LINE OF layout->t_sub_col.
+          DATA line TYPE z2ui5_cl_pop_layout_v2=>ty_s_positions.
+    view = z2ui5_cl_xml_view=>factory( )->shell( ).
 
     
     
@@ -129,10 +144,37 @@ CLASS z2ui5_cl_demo_app_200 IMPLEMENTATION.
 
                                        )->cells( ).
 
+    " Subcolumns require new rendering....
     LOOP AT ms_layout-t_layout REFERENCE INTO layout.
 
-      cells->object_identifier( text = |\{{ layout->fname }\}| ).
+      IF layout->t_sub_col IS NOT INITIAL.
 
+        
+        sub_col = ``.
+        
+        index = 0.
+        
+        LOOP AT layout->t_sub_col INTO subcol.
+
+          index = index + 1.
+
+          
+          READ TABLE ms_layout-t_layout INTO line WITH KEY fname = subcol-fname.
+
+          IF index = 1.
+            sub_col = |{ line-tlabel }: \{{ subcol-fname }\}|.
+          ELSE.
+            sub_col = |{ sub_col }{ cl_abap_char_utilities=>cr_lf } { line-tlabel }: \{{ subcol-fname }\}|.
+          ENDIF.
+
+        ENDLOOP.
+
+        cells->object_identifier( title = |\{{ layout->fname }\}|
+                                  text  = sub_col ).
+
+      ELSE.
+        cells->object_identifier( text = |\{{ layout->fname }\}| ).
+      ENDIF.
     ENDLOOP.
 
     client->view_display( view->stringify( ) ).
@@ -154,31 +196,40 @@ CLASS z2ui5_cl_demo_app_200 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD get_data.
-    TYPES ty_t_01 TYPE STANDARD TABLE OF z2ui5_t_01.
 
     FIELD-SYMBOLS <table> TYPE STANDARD TABLE.
+    DATA temp2 TYPE ty_t_table.
+    DATA temp3 LIKE LINE OF temp2.
 
-    TRY.
+    CREATE DATA mt_table TYPE ty_t_table.
+    ASSIGN mt_table->* TO <table>.
 
-        CREATE DATA mt_table TYPE ty_t_01.
-        ASSIGN mt_table->* TO <table>.
+    
+    CLEAR temp2.
+    
+    temp3-create_date = `01.01.2023`.
+    temp3-create_by = `Peter`.
+    temp3-storage_location = `AREA_001`.
+    temp3-quantity = 400.
+    temp3-product = 'table'.
+    INSERT temp3 INTO TABLE temp2.
+    temp3-product = 'chair'.
+    INSERT temp3 INTO TABLE temp2.
+    temp3-product = 'sofa'.
+    INSERT temp3 INTO TABLE temp2.
+    temp3-product = 'computer'.
+    INSERT temp3 INTO TABLE temp2.
+    temp3-product = 'oven'.
+    INSERT temp3 INTO TABLE temp2.
+    temp3-product = 'table2'.
+    INSERT temp3 INTO TABLE temp2.
+    <table> = temp2.
 
-        SELECT id
-               id_prev
-               id_prev_app
-               id_prev_app_stack
-               uname
-          FROM z2ui5_t_01
-          INTO CORRESPONDING FIELDS OF TABLE <table>
-          UP TO 5 ROWS.
-
-      CATCH cx_root.
-    ENDTRY.
   ENDMETHOD.
 
   METHOD init_layout.
     DATA class TYPE abap_abstypename.
-    DATA temp2 TYPE z2ui5_cl_pop_layout_v2=>handle.
+    DATA temp4 TYPE z2ui5_cl_pop_layout_v2=>handle.
     DATA temp1 TYPE z2ui5_cl_pop_layout_v2=>handle.
 
     IF ms_layout IS NOT INITIAL.
@@ -190,12 +241,12 @@ CLASS z2ui5_cl_demo_app_200 IMPLEMENTATION.
     SHIFT class LEFT DELETING LEADING '\CLASS='.
 
     
-    temp2 = class.
+    temp4 = class.
     
     temp1 = 'z2ui5_t_01'.
     ms_layout = z2ui5_cl_pop_layout_v2=>init_layout( control  = z2ui5_cl_pop_layout_v2=>m_table
                                                      data     = mt_table
-                                                     handle01 = temp2
+                                                     handle01 = temp4
                                                      handle02 = temp1
                                                      handle03 = ''
                                                      handle04 = '' ).
@@ -203,8 +254,8 @@ CLASS z2ui5_cl_demo_app_200 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD on_after_navigation.
-        DATA temp3 TYPE REF TO z2ui5_cl_pop_layout_v2.
-        DATA app LIKE temp3.
+        DATA temp5 TYPE REF TO z2ui5_cl_pop_layout_v2.
+        DATA app LIKE temp5.
 
     IF client->get( )-check_on_navigated = abap_false.
       RETURN.
@@ -213,12 +264,15 @@ CLASS z2ui5_cl_demo_app_200 IMPLEMENTATION.
     TRY.
 
         
-        temp3 ?= client->get_app( client->get( )-s_draft-id_prev_app ).
+        temp5 ?= client->get_app( client->get( )-s_draft-id_prev_app ).
         
-        app = temp3.
+        app = temp5.
 
         ms_layout = app->ms_layout.
 
+*        subcolumns need rerendering to work ..
+*        render_main( ).
+*        for all other changes in Layout View Model Update is enough.
         client->view_model_update( ).
 
       CATCH cx_root.
