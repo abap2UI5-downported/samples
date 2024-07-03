@@ -75,12 +75,6 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
     temp2-descr = 'Table 01'.
     temp2-icon = 'sap-icon://add'.
     INSERT temp2 INTO TABLE temp1.
-    temp2-id = '2'.
-    temp2-count = '10'.
-    temp2-table = 'Z2UI5_T003'.
-    temp2-descr = 'Table 01'.
-    temp2-icon = 'sap-icon://add'.
-    INSERT temp2 INTO TABLE temp1.
     temp2-id = '3'.
     temp2-count = '15'.
     temp2-table = 'Z2UI5_T004'.
