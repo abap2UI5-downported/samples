@@ -5,7 +5,6 @@ CLASS z2ui5_cl_demo_app_124 DEFINITION
   PUBLIC SECTION.
 
     INTERFACES z2ui5_if_app .
-
     DATA mv_scan_input TYPE string.
     DATA mv_scan_type TYPE string.
 
@@ -52,6 +51,8 @@ CLASS z2ui5_cl_demo_app_124 IMPLEMENTATION.
           ASSERT 1 = 0.
         ENDIF.
         mv_scan_type  = temp3.
+        "implement further processing here...
+        "...
         client->view_model_update( ).
         RETURN.
 
