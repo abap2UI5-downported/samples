@@ -31,11 +31,34 @@ CLASS z2ui5_cl_demo_app_244 IMPLEMENTATION.
 
   METHOD DISPLAY_VIEW.
 
+
+    DATA css TYPE string.
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA temp1 TYPE xsdboolean.
     DATA layout TYPE REF TO z2ui5_cl_xml_view.
+    css = `.sapUiDemoFlexBoxSizeAdjustments .sapMFlexItem {`               &&
+                `    border: 1px dashed #000;`                                   &&
+                `    margin: 0.1875rem;`                                         &&
+                `    padding: 0.1875rem;`                                        &&
+                `}`                                                              &&
+
+                `.sapUiDemoFlexBoxSizeAdjustmentsZeroWidthItems .sapMFlexItem {` &&
+                `    width: 0;`                                                  &&
+                `}`                                                              &&
+
+                `.sapMFlexItem {`                                                &&
+                `    position: relative;`                                        &&
+                `}`.
+
+    
+    view = z2ui5_cl_xml_view=>factory( ).
+    view->_generic( name = `style` ns = `html` )->_cc_plain_xml( css )->get_parent( ).
+
+    
+    
     temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
-    page = z2ui5_cl_xml_view=>factory( )->shell(
+    page = view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Flex Box - Size Adjustments`
             navbuttonpress = client->_event( 'BACK' )
