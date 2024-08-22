@@ -32,7 +32,6 @@ CLASS z2ui5_cl_demo_app_204 IMPLEMENTATION.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
       WHEN `CALL_POPUP_F4`.
-
         call_f4( ).
 
       WHEN OTHERS.
@@ -53,8 +52,7 @@ CLASS z2ui5_cl_demo_app_204 IMPLEMENTATION.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA temp2 TYPE xsdboolean.
     DATA temp1 TYPE string_table.
-    view = z2ui5_cl_xml_view=>factory( ). "->shell( ).
-
+    view = z2ui5_cl_xml_view=>factory( ).
     
     
     temp2 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
@@ -91,7 +89,6 @@ CLASS z2ui5_cl_demo_app_204 IMPLEMENTATION.
     ENDIF.
 
     on_event( ).
-
     on_after_f4( ).
 
   ENDMETHOD.
@@ -104,12 +101,10 @@ CLASS z2ui5_cl_demo_app_204 IMPLEMENTATION.
     DATA temp2 LIKE sy-tabix.
     DATA f4_field LIKE temp3.
     DATA temp4 TYPE string.
-    DATA temp6 LIKE LINE OF lt_arg.
-    DATA temp7 LIKE sy-tabix.
+    DATA temp5 LIKE LINE OF lt_arg.
+    DATA temp6 LIKE sy-tabix.
     DATA f4_table LIKE temp4.
-    DATA temp5 TYPE string.
     lt_arg = client->get( )-t_event_arg.
-
     
     CLEAR temp3.
     
@@ -127,28 +122,25 @@ CLASS z2ui5_cl_demo_app_204 IMPLEMENTATION.
     CLEAR temp4.
     
     
-    temp7 = sy-tabix.
-    READ TABLE lt_arg INDEX 2 INTO temp6.
-    sy-tabix = temp7.
+    temp6 = sy-tabix.
+    READ TABLE lt_arg INDEX 2 INTO temp5.
+    sy-tabix = temp6.
     IF sy-subrc <> 0.
       ASSERT 1 = 0.
     ENDIF.
-    temp4 = temp6.
+    temp4 = temp5.
     
     f4_table = temp4.
 
-    
-    temp5 = mv_arbgb.
     client->nav_app_call( z2ui5_cl_pop_f4_help=>factory( i_table = f4_table
                                                          i_fname = f4_field
-                                                         i_value = temp5 ) ).
+                                                         i_value = mv_arbgb ) ).
 
   ENDMETHOD.
 
   METHOD on_after_f4.
-        DATA temp6 TYPE REF TO z2ui5_cl_pop_f4_help.
-        DATA app LIKE temp6.
-              DATA temp7 TYPE string.
+        DATA temp5 TYPE REF TO z2ui5_cl_pop_f4_help.
+        DATA app LIKE temp5.
 
     IF client->get( )-check_on_navigated = abap_false.
       RETURN.
@@ -156,18 +148,15 @@ CLASS z2ui5_cl_demo_app_204 IMPLEMENTATION.
 
     TRY.
         
-        temp6 ?= client->get_app( client->get( )-s_draft-id_prev_app ).
+        temp5 ?= client->get_app( client->get( )-s_draft-id_prev_app ).
         
-        app = temp6.
+        app = temp5.
 
         IF app->mv_return_value IS NOT INITIAL.
 
           CASE app->mv_field.
             WHEN `ARBGB`.
-
-              
-              temp7 = app->mv_return_value.
-              mv_arbgb = temp7.
+              mv_arbgb = app->mv_return_value.
 
             WHEN OTHERS.
 
