@@ -39,7 +39,7 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
 
   METHOD on_event.
         DATA ls_token LIKE LINE OF mt_tokens_removed.
-          DATA temp1 TYPE z2ui5_cl_util_api=>ty_s_token.
+          DATA temp1 TYPE z2ui5_cl_util=>ty_s_token.
 
     CASE client->get( )-event.
 

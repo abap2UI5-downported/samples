@@ -107,7 +107,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_event.
-          DATA ls_range TYPE z2ui5_cl_util_api=>ty_s_range.
+          DATA ls_range TYPE z2ui5_cl_util=>ty_s_range.
         DATA temp1 LIKE LINE OF mt_filter.
         DATA lr_filter LIKE REF TO temp1.
           DATA temp2 LIKE LINE OF ms_filter-product.
