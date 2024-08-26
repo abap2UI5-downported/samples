@@ -71,7 +71,7 @@ CLASS Z2UI5_CL_DEMO_APP_202 IMPLEMENTATION.
     lr_wiz_step2->button(
 *      EXPORTING
         text             = `Press Step 2.3`
-        press            = client->_event(`STEP23` ) ).
+        press            = client->_event( `STEP23` ) ).
 
 
     
