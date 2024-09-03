@@ -31,9 +31,15 @@ CLASS z2ui5_cl_demo_app_276 IMPLEMENTATION.
 
 
   METHOD display_view.
-
+    DATA css TYPE string.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA temp1 TYPE xsdboolean.
+    css = `.tileLayout {`    &&
+                `    float: left;` &&
+                `}`.
+
+    
+    
     temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(

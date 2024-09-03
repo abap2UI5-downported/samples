@@ -31,11 +31,19 @@ CLASS z2ui5_cl_demo_app_278 IMPLEMENTATION.
 
 
   METHOD display_view.
-    " Define the base URL for the server
+    DATA css TYPE string.
     DATA base_url TYPE string VALUE 'https://sapui5.hana.ondemand.com/'.
-
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA temp1 TYPE xsdboolean.
+    css = `.tileLayout {`    &&
+                `    float: left;` &&
+                `}`.
+
+    " Define the base URL for the server
+    
+
+    
+    
     temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
