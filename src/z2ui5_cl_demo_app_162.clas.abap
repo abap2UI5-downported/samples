@@ -96,14 +96,12 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
     INSERT temp2 INTO TABLE temp1.
     mt_table = temp1.
 
-*    DATA lt_result LIKE mt_table.
-*    "put the range in the where clause of your abap sql command
-*    "here we use an internal table instead
-*    LOOP AT mt_sql INTO DATA(ls_tab).
-*
-*      "do filtering here..
-*
-*    ENDLOOP.
+    z2ui5_cl_util=>filter_itab(
+      EXPORTING
+        filter = mt_sql
+      CHANGING
+        val    = mt_table
+    ).
 
   ENDMETHOD.
 
