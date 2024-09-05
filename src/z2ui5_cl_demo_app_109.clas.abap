@@ -35,9 +35,6 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = mv_placement
-*                      beforeclose = client->_event( val = `CLOSE_POPOVER` )
-*                      beforeclose = client->_event_client( client->cs_event-popover_close )
-*                      afterclose = client->_event( `CLOSE_POPOVER` )
               )->quick_view_page( pageid = `employeePageId`
                                   header = `Employee Info`
                                   title  = `choper725`
@@ -93,7 +90,7 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
               )->content( 'form'
                   )->title( 'QuickView Popover'
                   )->label( 'placement'
-                  )->segmented_button( client->_bind_edit( mv_placement )
+                  )->segmented_button( selected_key = client->_bind_edit( mv_placement )
                         )->items(
                         )->segmented_button_item(
                                 key = 'Left'

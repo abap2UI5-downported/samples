@@ -41,11 +41,6 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_081 IMPLEMENTATION.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_DEMO_APP_026->Z2UI5_DISPLAY_POPOVER
-* +-------------------------------------------------------------------------------------------------+
-* | [--->] ID                             TYPE        STRING
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD Z2UI5_display_popover.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
@@ -74,12 +69,6 @@ CLASS Z2UI5_CL_DEMO_APP_081 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_DEMO_APP_026->Z2UI5_DISPLAY_POPOVER_LIST
-* +-------------------------------------------------------------------------------------------------+
-* | [--->] ID                             TYPE        STRING
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD Z2UI5_display_popover_list.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
@@ -106,10 +95,6 @@ CLASS Z2UI5_CL_DEMO_APP_081 IMPLEMENTATION.
   ENDMETHOD.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_DEMO_APP_026->Z2UI5_DISPLAY_VIEW
-* +-------------------------------------------------------------------------------------------------+
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD Z2UI5_display_view.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
@@ -133,7 +118,7 @@ CLASS Z2UI5_CL_DEMO_APP_081 IMPLEMENTATION.
                   )->label( 'Link'
                   )->link(  text = 'Documentation UI5 Popover Control' href = 'https://openui5.hana.ondemand.com/entity/sap.m.Popover'
                   )->label( 'placement'
-                  )->segmented_button( client->_bind_edit( mv_placement )
+                  )->segmented_button( selected_key = client->_bind_edit( mv_placement )
                         )->items(
                         )->segmented_button_item(
                                 key = 'Left'
@@ -163,12 +148,6 @@ CLASS Z2UI5_CL_DEMO_APP_081 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Public Method Z2UI5_CL_DEMO_APP_026->Z2UI5_IF_APP~MAIN
-* +-------------------------------------------------------------------------------------------------+
-* | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD Z2UI5_if_app~main.
 
     me->client = client.
@@ -185,10 +164,6 @@ CLASS Z2UI5_CL_DEMO_APP_081 IMPLEMENTATION.
   ENDMETHOD.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_DEMO_APP_026->Z2UI5_ON_EVENT
-* +-------------------------------------------------------------------------------------------------+
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD Z2UI5_on_event.
         DATA lt_sel LIKE mt_tab.
 
@@ -221,10 +196,6 @@ CLASS Z2UI5_CL_DEMO_APP_081 IMPLEMENTATION.
   ENDMETHOD.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_DEMO_APP_026->Z2UI5_ON_INIT
-* +-------------------------------------------------------------------------------------------------+
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD Z2UI5_on_init.
     DATA temp1 LIKE mt_tab.
     DATA temp2 LIKE LINE OF temp1.
