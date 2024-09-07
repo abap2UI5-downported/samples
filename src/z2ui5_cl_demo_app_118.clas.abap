@@ -45,26 +45,29 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
       CLEAR temp1.
       
       temp2-id = 1.
-      temp2-descr = 'First row'.
+      temp2-descr = 'filled with the actual date and time in correct format'.
       temp2-adate = sy-datum.
       temp2-atime = sy-uzeit.
       INSERT temp2 INTO TABLE temp1.
       temp2-id = 2.
-      temp2-descr = 'Second row'.
-      temp2-adate = sy-datum.
-      temp2-atime = sy-uzeit.
+      temp2-descr = 'correct init values'.
+      temp2-adate = '00000000'.
+      temp2-atime = '000000'.
       INSERT temp2 INTO TABLE temp1.
       temp2-id = 3.
-      temp2-descr = 'Third row'.
-      temp2-adate = ''.
-      temp2-atime = ''.
+      temp2-descr = 'correct init values by ignoring'.
       INSERT temp2 INTO TABLE temp1.
       temp2-id = 4.
-      temp2-descr = 'Fourth row'.
+      temp2-descr = 'filling with a zero leads to a correct init value'.
+      temp2-adate = 0.
+      temp2-atime = 0.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-id = 5.
+      temp2-descr = 'this raises an exception now'.
       temp2-adate = ''.
       temp2-atime = ''.
       INSERT temp2 INTO TABLE temp1.
-      temp2-id = 5.
+      temp2-id = 6.
       temp2-descr = 'Fifth row'.
       temp2-adate = sy-datum.
       temp2-atime = sy-uzeit.
