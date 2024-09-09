@@ -88,8 +88,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
             shownavbutton = temp4
             )->header_content(
                 )->toolbar_spacer(
-*            )->link( text = 'SCN'     target = '_blank' href = 'https://community.sap.com/t5/technology-blogs-by-members/abap2ui5-1-introduction-developing-ui5-apps-purely-in-abap/ba-p/13567635'
-*            )->link( text = 'Twitter' target = '_blank' href = 'https://twitter.com/abap2UI5'
                 )->link( text = 'Install with abapGit from GitHub'  target = '_blank' href = 'https://github.com/oblomov-dev/abap2ui5'
             )->get_parent( ).
 
@@ -146,6 +144,12 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
          mode      = 'LineMode'
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
 
+        panel->generic_tile(
+         header    = 'setSizeLimit'
+*         subheader = 'Table Cell Level'
+         press     =  client->_event( 'z2ui5_cl_demo_app_071' )
+         mode      = 'LineMode'
+         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
 
         panel = page->panel(
              expandable = abap_false
@@ -280,6 +284,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
       ).
 
+        panel->generic_tile(
+          header    = 'Message III'
+            subheader = 'Message Box & Events'
+          press     =  client->_event( 'z2ui5_cl_demo_app_084' )
+          mode      = 'LineMode'
+          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+      ).
 
         page = page2->panel(
             expandable = abap_true
