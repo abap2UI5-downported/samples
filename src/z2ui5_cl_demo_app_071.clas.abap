@@ -30,11 +30,14 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
       DATA temp2 TYPE z2ui5_cl_demo_app_071=>s_combobox.
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA temp3 TYPE z2ui5_if_types=>ty_s_event_control.
-    DATA temp4 TYPE z2ui5_if_types=>ty_t_name_value.
-    DATA temp5 LIKE LINE OF temp4.
-    DATA temp6 TYPE xsdboolean.
+    DATA temp4 TYPE z2ui5_if_types=>ty_s_view_config.
+    DATA temp5 TYPE xsdboolean.
 
     CASE client->get( )-event.
+      WHEN `UPDATE2`.
+        client->view_model_update( ).
+        RETURN.
+
       WHEN 'BACK'.
         client->nav_app_leave( ).
         RETURN.
@@ -61,17 +64,14 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
     temp3-check_view_destroy = abap_true.
     
     CLEAR temp4.
+    temp4-set_size_limit = mv_set_size_limit.
     
-    temp5-n = `setSizeLimit`.
-    temp5-v = mv_set_size_limit.
-    INSERT temp5 INTO TABLE temp4.
-    
-    temp6 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
+    temp5 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     client->view_display( val = view->shell(
          )->page(
                  title          = 'abap2UI5 - First Example'
                  navbuttonpress = client->_event( val = 'BACK' s_ctrl = temp3 )
-                 shownavbutton = temp6
+                 shownavbutton = temp5
              )->simple_form( title = 'Form Title' editable = abap_true
                  )->content( 'form'
                      )->title( 'Input'
@@ -87,7 +87,10 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
                      )->button(
                          text  = 'update'
                          press = client->_event( val = 'UPDATE' )
-        )->stringify( ) t_config = temp4 ).
+*                                )->button(
+*                         text  = 'update model'
+*                         press = client->_event( val = 'UPDATE2' )
+        )->stringify( ) s_config = temp4 ).
 
   ENDMETHOD.
 ENDCLASS.
