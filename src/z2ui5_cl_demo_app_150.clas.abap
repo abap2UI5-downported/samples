@@ -19,6 +19,23 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_150 IMPLEMENTATION.
 
 
+  METHOD ui5_event.
+        DATA lo_app TYPE REF TO z2ui5_cl_pop_to_confirm.
+
+    CASE client->get( )-event.
+
+      WHEN 'POPUP'.
+        
+        lo_app = z2ui5_cl_pop_to_confirm=>factory( `this is a question` ).
+        client->nav_app_call( lo_app ).
+
+      WHEN 'BACK'.
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+
+    ENDCASE.
+
+  ENDMETHOD.
+
   METHOD ui5_callback.
         DATA lo_prev TYPE REF TO z2ui5_if_app.
         DATA temp1 TYPE REF TO z2ui5_cl_pop_to_confirm.
@@ -37,7 +54,6 @@ CLASS Z2UI5_CL_DEMO_APP_150 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD ui5_display.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
@@ -50,35 +66,11 @@ CLASS Z2UI5_CL_DEMO_APP_150 IMPLEMENTATION.
                 title          = 'abap2UI5 - Popup To Confirm'
                 navbuttonpress = client->_event( val = 'BACK' )
                 shownavbutton = temp1
-            )->header_content(
-                )->link(
-                    text = 'Source_Code'
-                    target = '_blank'
-
-                    )->get_parent(
            )->button(
             text  = 'Open Popup...'
             press = client->_event( 'POPUP' ) ).
 
     client->view_display( view->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD ui5_event.
-        DATA lo_app TYPE REF TO z2ui5_cl_pop_to_confirm.
-
-    CASE client->get( )-event.
-
-      WHEN 'POPUP'.
-        
-        lo_app = z2ui5_cl_pop_to_confirm=>factory( `this is a question` ).
-        client->nav_app_call( lo_app ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
-    ENDCASE.
 
   ENDMETHOD.
 

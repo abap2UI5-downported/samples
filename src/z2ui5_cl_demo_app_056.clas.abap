@@ -82,7 +82,6 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
 
   METHOD set_data.
 
-    "replace this with a db select here...
     DATA temp2 TYPE z2ui5_cl_demo_app_056=>ty_t_table.
     DATA temp3 LIKE LINE OF temp2.
     CLEAR temp2.
@@ -125,8 +124,6 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
     INSERT temp3 INTO TABLE temp2.
     mt_table = temp2.
 
-    "put the range in the where clause of your abap sql command
-    "here we use an internal table instead
     DELETE mt_table WHERE product NOT IN mt_range.
 
   ENDMETHOD.
@@ -148,9 +145,6 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
              title          = 'abap2UI5 - Select-Options'
              navbuttonpress = client->_event( 'BACK' )
              shownavbutton = temp1
-         )->header_content(
-             )->link(
-                 text = 'Source_Code' target = '_blank'
         )->get_parent( ).
 
     
@@ -158,8 +152,8 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
     vbox->_z2ui5( )->multiinput_ext(
                        addedtokens      = client->_bind_edit( mt_tokens_added )
                        removedtokens    = client->_bind_edit( mt_tokens_removed )
-                       change    = client->_event( 'UPDATE_TOKENS' )
-                       multiinputid    = `MultiInput`  ).
+                       change           = client->_event( 'UPDATE_TOKENS' )
+                       multiinputid     = `MultiInput`  ).
 
     
     tab = vbox->table(
@@ -228,12 +222,15 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
           temp4 ?= client->get_app( client->get( )-s_draft-id_prev_app ).
           
           lo_value_help = temp4.
-          IF lo_value_help->result( )-check_confirmed = abap_true.
-            mt_range = lo_value_help->result( )-t_range.
-            mt_token = z2ui5_cl_util=>filter_get_token_t_by_range_t( mt_range ).
-            set_data( ).
-            client->view_model_update( ).
+          IF lo_value_help->result( )-check_confirmed = abap_false.
+            RETURN.
           ENDIF.
+
+          mt_range = lo_value_help->result( )-t_range.
+          mt_token = z2ui5_cl_util=>filter_get_token_t_by_range_t( mt_range ).
+          set_data( ).
+          client->view_model_update( ).
+
         CATCH cx_root.
       ENDTRY.
       RETURN.
