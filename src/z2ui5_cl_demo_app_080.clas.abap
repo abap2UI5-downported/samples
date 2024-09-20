@@ -86,10 +86,6 @@ CLASS Z2UI5_CL_DEMO_APP_080 IMPLEMENTATION.
             shownavbutton = temp3
             class = 'sapUiContentPadding' ).
 
-    page->header_content(
-          )->link( text = 'Demo' target = '_blank' href = `https://twitter.com/abap2UI5/status/1688451062137573376`
-          )->link(
-              text = 'Source_Code' target = '_blank'  ).
     
     lo_vbox = page->vbox( class ='sapUiSmallMargin' ).
 
@@ -173,7 +169,7 @@ CLASS Z2UI5_CL_DEMO_APP_080 IMPLEMENTATION.
         ENDIF.
         client->message_toast_display( |Event AppSelected with appointment {  temp4 }| ).
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
     ENDCASE.
   ENDMETHOD.
 

@@ -69,12 +69,6 @@ CLASS Z2UI5_CL_DEMO_APP_026 IMPLEMENTATION.
               title          = 'abap2UI5 - Popover Examples'
               navbuttonpress = client->_event( val = 'BACK' )
               shownavbutton = temp1
-          )->header_content(
-              )->link( text = 'Demo' target = '_blank' href = `https://twitter.com/abap2UI5/status/1643899059839672321`
-              )->link(
-                  text = 'Source_Code' target = '_blank'
-
-          )->get_parent(
           )->simple_form( 'Popover'
               )->content( 'form'
                   )->title( 'Input'
@@ -150,7 +144,7 @@ CLASS Z2UI5_CL_DEMO_APP_026 IMPLEMENTATION.
         client->popover_destroy( ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
 
     ENDCASE.
 

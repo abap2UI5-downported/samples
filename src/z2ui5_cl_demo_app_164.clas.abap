@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
         client->nav_app_call( z2ui5_cl_pop_table=>factory( mt_table ) ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
     ENDCASE.
 
   ENDMETHOD.
@@ -110,10 +110,7 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
              title          = 'abap2UI5 - Popup Display Table'
              navbuttonpress = client->_event( 'BACK' )
              shownavbutton = temp1
-         )->header_content(
-             )->link(
-                 text = 'Source_Code' target = '_blank'
-        )->get_parent( ).
+        ).
 
     
     vbox = view->vbox( ).

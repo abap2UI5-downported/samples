@@ -141,13 +141,6 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
                     shownavbutton = temp7
                 ).
 
-    page->header_content(
-                      )->link(
-                          text = 'Source_Code'
-
-                          target = '_blank'
-                  ).
-
     
     map =  page->map_container(  autoadjustheight = abap_true
          )->content( ns = `vk`

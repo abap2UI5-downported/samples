@@ -35,12 +35,6 @@ CLASS Z2UI5_CL_DEMO_APP_125 IMPLEMENTATION.
                  title          = 'abap2UI5 - Change Browser Title'
                  navbuttonpress = client->_event( val = 'BACK' )
                  shownavbutton = temp1
-             )->header_content(
-                 )->link(
-                     text = 'Source_Code'
-
-                     target = '_blank'
-             )->get_parent(
              )->simple_form( title = 'Form Title' editable = abap_true
                  )->content( 'form'
                      )->title( 'Input'

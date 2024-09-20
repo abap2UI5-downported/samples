@@ -41,12 +41,6 @@ CLASS Z2UI5_CL_DEMO_APP_067 IMPLEMENTATION.
                 title          = 'abap2UI5 - Currency Format'
                 navbuttonpress = client->_event( 'BACK' )
                 shownavbutton = temp1
-            )->header_content(
-                )->link(
-                    text = 'Source_Code'
-
-                    target = '_blank'
-            )->get_parent(
                 )->simple_form( title = 'Currency' editable = abap_true
                 )->content( 'form'
                     )->title( 'Input'

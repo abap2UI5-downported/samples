@@ -110,7 +110,7 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
         lt_arg = client->get( )-t_event_arg.
         client->message_toast_display( 'Event CUSTOMFILTER' ).
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
       WHEN 'ROWEDIT'.
         lt_arg = client->get( )-t_event_arg.
         
@@ -195,11 +195,6 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton = temp5
             class = 'sapUiContentPadding' ).
-
-    page1->header_content(
-          )->link(
-              text = 'Source_Code' target = '_blank'
-     ).
 
     
     page = page1->dynamic_page( headerexpanded = abap_true headerpinned = abap_true ).

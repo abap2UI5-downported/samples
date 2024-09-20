@@ -44,15 +44,7 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Tables and editable'
                 navbuttonpress = client->_event( 'BACK' )
-                  shownavbutton = abap_true
-            )->header_content(
-                )->link(
-                    text = 'Demo' target = '_blank'
-                    href = 'https://twitter.com/abap2UI5/status/1630240894581608448'
-                )->link(
-                    text = 'Source_Code' target = '_blank'
-
-        )->get_parent( ).
+                  shownavbutton = abap_true ).
 
     
     CASE check_editable_active.
@@ -188,7 +180,7 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
         INSERT temp5 INTO TABLE t_tab.
         client->view_model_update( ).
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
 
     ENDCASE.
 

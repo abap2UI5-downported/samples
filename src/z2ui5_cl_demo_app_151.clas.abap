@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_151 IMPLEMENTATION.
         client->nav_app_call( lo_app ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
 
     ENDCASE.
 
@@ -49,12 +49,6 @@ CLASS z2ui5_cl_demo_app_151 IMPLEMENTATION.
                 title          = 'abap2UI5 - Popup To Inform'
                 navbuttonpress = client->_event( val = 'BACK' )
                 shownavbutton = temp1
-            )->header_content(
-                )->link(
-                    text = 'Source_Code'
-                    target = '_blank'
-
-                    )->get_parent(
            )->button(
             text  = 'Open Popup...'
             press = client->_event( 'POPUP' ) ).

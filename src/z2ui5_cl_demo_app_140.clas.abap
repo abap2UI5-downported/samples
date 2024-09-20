@@ -109,12 +109,6 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
                     title          = 'abap2UI5 - Multi Combo Box'
                     navbuttonpress = client->_event( val = 'BACK' )
                     shownavbutton = temp1
-                )->header_content(
-                    )->link(
-                        text = 'Source_Code'
-
-                        target = '_blank'
-                )->get_parent(
                )->simple_form( title = 'Form Title' editable = abap_true
                     )->content( 'form'
                   )->multi_combobox(

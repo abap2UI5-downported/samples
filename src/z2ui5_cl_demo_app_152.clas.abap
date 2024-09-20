@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
         client->view_model_update( ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
 
     ENDCASE.
 
@@ -116,12 +116,6 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
                 title          = 'abap2UI5 - Popup To Select'
                 navbuttonpress = client->_event( val = 'BACK' )
                 shownavbutton = temp1
-            )->header_content(
-                )->link(
-                    text = 'Source_Code'
-                    target = '_blank'
-
-                    )->get_parent(
            )->hbox(
            )->text( text = 'Multiselect: ' class = 'sapUiTinyMargin'
            )->switch( state = client->_bind_edit( mv_multiselect ) change = client->_event( `MULTISELECT_TOGGLE` )

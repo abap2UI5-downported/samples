@@ -195,7 +195,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
         ENDLOOP.
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
     ENDCASE.
 
   ENDMETHOD.
@@ -296,10 +296,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
              title          = 'abap2UI5 - Select-Options'
              navbuttonpress = client->_event( 'BACK' )
              shownavbutton = temp1
-         )->header_content(
-             )->link(
-                 text = 'Source_Code' target = '_blank'
-        )->get_parent( ).
+        ).
 
     
     page = view->dynamic_page(

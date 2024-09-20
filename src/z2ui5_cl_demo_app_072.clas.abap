@@ -75,7 +75,7 @@ CLASS Z2UI5_CL_DEMO_APP_072 IMPLEMENTATION.
         set_filter( ).
         client->view_model_update( ).
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
     ENDCASE.
 
   ENDMETHOD.
@@ -105,9 +105,6 @@ CLASS Z2UI5_CL_DEMO_APP_072 IMPLEMENTATION.
             shownavbutton = temp3
             class = 'sapUiContentPadding' ).
 
-    page->header_content(
-          )->link(
-              text = 'Source_Code' target = '_blank'  ).
     
     CLEAR temp1.
     INSERT `${LV_SELECTEDKEY}` INTO TABLE temp1.

@@ -76,7 +76,7 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
         client->view_model_update( ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
 
     ENDCASE.
 
@@ -122,11 +122,7 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
              title          = 'abap2UI5 - CL_GUI_TIMER - Monitor'
              navbuttonpress = client->_event( 'BACK' )
              shownavbutton = temp1
-         )->header_content(
-             )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1645816100813152256`
-             )->link(
-                 text = 'Source_Code' target = '_blank'
-         )->get_parent( ).
+         ).
 
     page->list(
          headertext = 'Data auto refresh (2 sec)'

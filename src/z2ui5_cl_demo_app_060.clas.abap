@@ -1186,7 +1186,7 @@ DATA lt_range TYPE temp5.
         client->view_model_update( ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
 
     ENDCASE.
 
@@ -1204,11 +1204,6 @@ DATA lt_range TYPE temp5.
        title          = 'abap2UI5 - Live Suggestion Event'
        navbuttonpress = client->_event( 'BACK' )
        shownavbutton = temp1 ).
-
-    page->header_content(
-             )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1675074394710765568`
-             )->link( text = 'Source_Code' target = '_blank'
-         )->get_parent( ).
 
     
     grid = page->grid( 'L6 M12 S12'
