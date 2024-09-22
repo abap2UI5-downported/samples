@@ -41,6 +41,7 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
         
         temp2 = mv_set_size_limit.
         INSERT temp2 INTO TABLE temp1.
+        INSERT client->cs_view-main INTO TABLE temp1.
         client->follow_up_action( client->_event_client(
                                     val   = `SET_SIZE_LIMIT`
                                     t_arg = temp1
