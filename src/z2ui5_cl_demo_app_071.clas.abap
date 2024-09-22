@@ -25,53 +25,61 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
-    DATA temp1 TYPE ty_t_combo.
-    DATA lt_combo LIKE temp1.
-      DATA temp2 TYPE z2ui5_cl_demo_app_071=>s_combobox.
+        DATA temp1 TYPE string_table.
+        DATA temp2 TYPE string.
+    DATA temp3 TYPE ty_t_combo.
+    DATA lt_combo LIKE temp3.
+      DATA temp4 TYPE z2ui5_cl_demo_app_071=>s_combobox.
     DATA view TYPE REF TO z2ui5_cl_xml_view.
-    DATA temp3 TYPE z2ui5_if_types=>ty_s_event_control.
-    DATA temp4 TYPE z2ui5_if_types=>ty_s_view_config.
-    DATA temp5 TYPE xsdboolean.
+    DATA temp5 TYPE z2ui5_if_types=>ty_s_event_control.
+    DATA temp6 TYPE xsdboolean.
 
     CASE client->get( )-event.
-      WHEN `UPDATE2`.
+      WHEN `UPDATE`.
+        
+        CLEAR temp1.
+        
+        temp2 = mv_set_size_limit.
+        INSERT temp2 INTO TABLE temp1.
+        client->follow_up_action( client->_event_client(
+                                    val   = `SET_SIZE_LIMIT`
+                                    t_arg = temp1
+                        )    ).
         client->view_model_update( ).
-        RETURN.
+        client->message_toast_display( `SizeLimitUpdated` ).
+*        RETURN.
 
       WHEN 'BACK'.
         client->nav_app_leave( ).
         RETURN.
     ENDCASE.
 
-    client->message_toast_display( `View updated` ).
+
 
     
-    CLEAR temp1.
+    CLEAR temp3.
     
-    lt_combo = temp1.
+    lt_combo = temp3.
     DO mv_combo_number TIMES.
       
-      CLEAR temp2.
-      temp2-key = sy-index.
-      temp2-text = sy-index.
-      INSERT temp2 INTO TABLE lt_combo.
+      CLEAR temp4.
+      temp4-key = sy-index.
+      temp4-text = sy-index.
+      INSERT temp4 INTO TABLE lt_combo.
     ENDDO.
 
     
     view = z2ui5_cl_xml_view=>factory( ).
     
-    CLEAR temp3.
-    temp3-check_view_destroy = abap_true.
+    CLEAR temp5.
+    temp5-check_view_destroy = abap_true.
     
-    CLEAR temp4.
-    temp4-set_size_limit = mv_set_size_limit.
-    
-    temp5 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
+    temp6 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     client->view_display( val = view->shell(
          )->page(
                  title          = 'abap2UI5 - First Example'
-                 navbuttonpress = client->_event( val = 'BACK' s_ctrl = temp3 )
-                 shownavbutton = temp5
+                 navbuttonpress = client->_event( val = 'BACK' s_ctrl = temp5 )
+                 shownavbutton = temp6
              )->simple_form( title = 'Form Title' editable = abap_true
                  )->content( 'form'
                      )->title( 'Input'
@@ -85,12 +93,9 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
                         )->item( key = '{KEY}' text = '{TEXT}'
                         )->get_parent( )->get_parent(
                      )->button(
-                         text  = 'update'
+                         text  = 'Press 2x update'
                          press = client->_event( val = 'UPDATE' )
-*                                )->button(
-*                         text  = 'update model'
-*                         press = client->_event( val = 'UPDATE2' )
-        )->stringify( ) s_config = temp4 ).
+        )->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.
