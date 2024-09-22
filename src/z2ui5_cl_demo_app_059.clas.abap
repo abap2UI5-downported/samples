@@ -120,25 +120,13 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
 
 
   METHOD z2ui5_set_search.
-
-    DATA lt_args TYPE string_table.
-    DATA temp3 TYPE string.
-    DATA temp4 TYPE string.
-    DATA temp5 LIKE LINE OF mt_table.
-    DATA lr_row LIKE REF TO temp5.
+    DATA temp3 LIKE LINE OF mt_table.
+    DATA lr_row LIKE REF TO temp3.
       DATA lv_row TYPE string.
       DATA lv_index TYPE i.
         FIELD-SYMBOLS <field> TYPE any.
-    lt_args = client->get( )-t_event_arg.
-    
-    CLEAR temp3.
-    
-    READ TABLE lt_args INTO temp4 INDEX 1.
-    IF sy-subrc = 0.
-      temp3 = temp4.
-    ENDIF.
-    mv_search_value = temp3.
-    IF mv_search_value IS INITIAL.
+
+    IF client->get_event_arg( 1 ) IS INITIAL.
       RETURN.
     ENDIF.
 
@@ -172,9 +160,9 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA page1 TYPE REF TO z2ui5_cl_xml_view.
     DATA temp1 TYPE xsdboolean.
-    DATA temp6 TYPE z2ui5_if_types=>ty_s_event_control.
-    DATA ls_cnt LIKE temp6.
-    DATA temp7 TYPE string_table.
+    DATA temp4 TYPE z2ui5_if_types=>ty_s_event_control.
+    DATA ls_cnt LIKE temp4.
+    DATA temp5 TYPE string_table.
     DATA lo_box TYPE REF TO z2ui5_cl_xml_view.
     DATA tab TYPE REF TO z2ui5_cl_xml_view.
     DATA lo_columns TYPE REF TO z2ui5_cl_xml_view.
@@ -190,18 +178,18 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
             shownavbutton = temp1 ).
 
     
-    CLEAR temp6.
-    temp6-check_allow_multi_req = abap_true.
+    CLEAR temp4.
+    temp4-check_allow_multi_req = abap_true.
     
-    ls_cnt = temp6.
+    ls_cnt = temp4.
     
-    CLEAR temp7.
-    INSERT `${$source>/value}` INTO TABLE temp7.
+    CLEAR temp5.
+    INSERT `${$source>/value}` INTO TABLE temp5.
     
     lo_box =  page1->vbox( )->text( `Search` )->search_field(
          livechange = client->_event(
             val = 'BUTTON_SEARCH'
-            t_arg = temp7
+            t_arg = temp5
             s_ctrl = ls_cnt
             )
          width  = `17.5rem` ).

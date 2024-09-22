@@ -45,10 +45,6 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_098 IMPLEMENTATION.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_DEMO_APP_097->VIEW_DISPLAY_DETAIL
-* +-------------------------------------------------------------------------------------------------+
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD view_display_detail.
 
     DATA lo_view_nested TYPE REF TO z2ui5_cl_xml_view.
@@ -97,10 +93,6 @@ CLASS Z2UI5_CL_DEMO_APP_098 IMPLEMENTATION.
   ENDMETHOD.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_DEMO_APP_097->VIEW_DISPLAY_DETAIL_DETAIL
-* +-------------------------------------------------------------------------------------------------+
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD view_display_detail_detail.
 
     DATA lo_view_nested TYPE REF TO z2ui5_cl_xml_view.
@@ -130,10 +122,6 @@ CLASS Z2UI5_CL_DEMO_APP_098 IMPLEMENTATION.
   ENDMETHOD.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_DEMO_APP_097->VIEW_DISPLAY_MASTER
-* +-------------------------------------------------------------------------------------------------+
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD view_display_master.
 
     DATA page TYPE REF TO z2ui5_cl_xml_view.
@@ -180,16 +168,9 @@ CLASS Z2UI5_CL_DEMO_APP_098 IMPLEMENTATION.
   ENDMETHOD.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Public Method Z2UI5_CL_DEMO_APP_097->Z2UI5_IF_APP~MAIN
-* +-------------------------------------------------------------------------------------------------+
-* | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD z2ui5_if_app~main.
       DATA temp5 LIKE t_tab.
       DATA temp6 LIKE LINE OF temp5.
-        DATA lt_arg TYPE string_table.
-        DATA ls_arg TYPE string.
         DATA lt_sel LIKE t_tab.
         DATA ls_sel TYPE z2ui5_cl_demo_app_098=>ty_row.
 
@@ -244,13 +225,10 @@ CLASS Z2UI5_CL_DEMO_APP_098 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'ROW_NAVIGATE'.
-        
-        lt_arg = client->get( )-t_event_arg.
-        
-        READ TABLE lt_arg INTO ls_arg INDEX 1.
-        IF ls_arg IS NOT INITIAL.
+
+        IF client->get_event_arg( 1 ) IS NOT INITIAL.
           mv_layout = `ThreeColumnsEndExpanded`.
-          mv_title = ls_arg.
+          mv_title = client->get_event_arg( 1 ).
         ENDIF.
 
         client->nest_view_model_update( ).

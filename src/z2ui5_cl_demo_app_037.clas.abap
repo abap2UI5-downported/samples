@@ -98,9 +98,6 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_event.
-        DATA lt_arg TYPE string_table.
-        DATA temp1 LIKE LINE OF lt_arg.
-        DATA temp2 LIKE sy-tabix.
 
     CASE client->get( )-event.
 
@@ -108,17 +105,7 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
         z2ui5_on_render( ).
 
       WHEN 'POST'.
-        
-        lt_arg = client->get( )-t_event_arg.
-        
-        
-        temp2 = sy-tabix.
-        READ TABLE lt_arg INDEX 1 INTO temp1.
-        sy-tabix = temp2.
-        IF sy-subrc <> 0.
-          ASSERT 1 = 0.
-        ENDIF.
-        client->message_toast_display( temp1 ).
+        client->message_toast_display( client->get_event_arg( 1 ) ).
 
       WHEN 'LOAD_CC'.
         mv_load_cc = abap_true.

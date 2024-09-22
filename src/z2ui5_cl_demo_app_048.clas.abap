@@ -34,17 +34,14 @@ CLASS Z2UI5_CL_DEMO_APP_048 IMPLEMENTATION.
   METHOD Z2UI5_if_app~main.
       DATA temp1 LIKE t_tab.
       DATA temp2 LIKE LINE OF temp1.
-        DATA lt_arg TYPE string_table.
-        DATA lv_row_title LIKE LINE OF lt_arg.
-        DATA temp7 LIKE LINE OF lt_arg.
-        DATA temp8 LIKE sy-tabix.
+        DATA lv_row_title TYPE string.
         DATA lt_sel LIKE t_tab.
         DATA temp3 LIKE LINE OF lt_sel.
         DATA temp4 LIKE sy-tabix.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA temp5 TYPE z2ui5_if_types=>ty_t_name_value.
     DATA temp6 LIKE LINE OF temp5.
-    DATA temp9 TYPE string_table.
+    DATA temp7 TYPE string_table.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
@@ -101,17 +98,7 @@ CLASS Z2UI5_CL_DEMO_APP_048 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'EDIT'.
         
-        lt_arg = client->get( )-t_event_arg.
-        
-        
-        
-        temp8 = sy-tabix.
-        READ TABLE lt_arg INDEX 1 INTO temp7.
-        sy-tabix = temp8.
-        IF sy-subrc <> 0.
-          ASSERT 1 = 0.
-        ENDIF.
-        lv_row_title = temp7.
+        lv_row_title = client->get_event_arg( 1 ).
         client->message_box_display( `EDIT - ` && lv_row_title ).
       WHEN 'SELCHANGE'.
         
@@ -186,15 +173,15 @@ CLASS Z2UI5_CL_DEMO_APP_048 IMPLEMENTATION.
     INSERT temp6 INTO TABLE temp5.
     temp6-n = 'detailPress'.
     
-    CLEAR temp9.
-    INSERT `${TITLE}` INTO TABLE temp9.
-    INSERT `${DESCR}` INTO TABLE temp9.
-    INSERT `${ICON}` INTO TABLE temp9.
-    INSERT `${HIGHLIGHT}` INTO TABLE temp9.
-    INSERT `${INFO}` INTO TABLE temp9.
-    INSERT `${WRAPCHARLIMIT}` INTO TABLE temp9.
-    INSERT `${SELECTED}` INTO TABLE temp9.
-    temp6-v = client->_event( val = 'EDIT' t_arg = temp9 ).
+    CLEAR temp7.
+    INSERT `${TITLE}` INTO TABLE temp7.
+    INSERT `${DESCR}` INTO TABLE temp7.
+    INSERT `${ICON}` INTO TABLE temp7.
+    INSERT `${HIGHLIGHT}` INTO TABLE temp7.
+    INSERT `${INFO}` INTO TABLE temp7.
+    INSERT `${WRAPCHARLIMIT}` INTO TABLE temp7.
+    INSERT `${SELECTED}` INTO TABLE temp7.
+    temp6-v = client->_event( val = 'EDIT' t_arg = temp7 ).
     INSERT temp6 INTO TABLE temp5.
     page->list(
         headertext      = 'List Ouput'
