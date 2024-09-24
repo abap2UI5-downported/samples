@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_283 DEFINITION
+ CLASS z2ui5_cl_demo_app_283 DEFINITION
   PUBLIC
   CREATE PUBLIC.
 
@@ -36,7 +36,13 @@ CLASS z2ui5_cl_demo_app_283 IMPLEMENTATION.
 
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA temp2 TYPE xsdboolean.
-    DATA temp1 TYPE z2ui5_if_types=>ty_s_name_value.
+    DATA temp1 TYPE string_table.
+    DATA temp3 TYPE string_table.
+    DATA temp5 TYPE string_table.
+    DATA temp7 TYPE string_table.
+    DATA temp9 TYPE string_table.
+    DATA temp11 TYPE string_table.
+    DATA temp13 TYPE string_table.
     temp2 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
@@ -56,49 +62,64 @@ CLASS z2ui5_cl_demo_app_283 IMPLEMENTATION.
            target = '_blank'
            href   = base_url && 'sdk/#/entity/sap.m.FeedInput/sample/sap.m.sample.FeedInput' ).
 
+    page->label( text = `Without Icon` class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
     
     CLEAR temp1.
-    temp1-n = `core:require`.
-    temp1-v = `{ MessageToast: 'sap/m/MessageToast' }`.
-    page->_generic_property( temp1 ).
-
-    page->label( text = `Without Icon` class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
+    INSERT `${$source>/value}` INTO TABLE temp1.
     page->feed_input(
-           post =  `MessageToast.show( 'Posted new feed entry: ' + ${$source>/value} )`
+          post = client->_event( val = `onPost` t_arg = temp1 )
            showicon = abap_false ).
 
     page->label( text = `With Icon Placeholder` class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
+    
+    CLEAR temp3.
+    INSERT `${$source>/value}` INTO TABLE temp3.
     page->feed_input(
-           post =  `MessageToast.show( 'Posted new feed entry: ' + ${$source>/value} )`
+           post = client->_event( val = `onPost` t_arg = temp3 )
            showicon = abap_true ).
 
     page->label( text = `With Icon Placeholder` class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
+    
+    CLEAR temp5.
+    INSERT `${$source>/value}` INTO TABLE temp5.
     page->feed_input(
-           post =  `MessageToast.show( 'Posted new feed entry: ' + ${$source>/value} )`
+           post = client->_event( val = `onPost` t_arg = temp5 )
            showicon = abap_true
            icon =  base_url && `test-resources/sap/m/images/george_washington.jpg` ).
 
     page->label( text = `Disabled` class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
+    
+    CLEAR temp7.
+    INSERT `${$source>/value}` INTO TABLE temp7.
     page->feed_input(
-           post =  `MessageToast.show( 'Posted new feed entry: ' + ${$source>/value} )`
+           post = client->_event( val = `onPost` t_arg = temp7 )
            enabled = abap_false
            showicon = abap_true
            icon =  base_url && `test-resources/sap/m/images/george_washington.jpg` ).
 
     page->label( text = `Rows Set to 5` class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
+    
+    CLEAR temp9.
+    INSERT `${$source>/value}` INTO TABLE temp9.
     page->feed_input(
-           post =  `MessageToast.show( 'Posted new feed entry: ' + ${$source>/value} )`
+           post = client->_event( val = `onPost` t_arg = temp9 )
            rows = `5` ).
 
     page->label( text = `With Exceeded Text` class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
+    
+    CLEAR temp11.
+    INSERT `${$source>/value}` INTO TABLE temp11.
     page->feed_input(
-           post =  `MessageToast.show( 'Posted new feed entry: ' + ${$source>/value} )`
+           post = client->_event( val = `onPost` t_arg = temp11 )
            maxlength = `20`
            showexceededtext = abap_true ).
 
     page->label( text = `With Growing` class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
+    
+    CLEAR temp13.
+    INSERT `${$source>/value}` INTO TABLE temp13.
     page->feed_input(
-           post =  `MessageToast.show( 'Posted new feed entry: ' + ${$source>/value} )`
+           post = client->_event( val = `onPost` t_arg = temp13 )
            growing = abap_true ).
 
     client->view_display( page->stringify( ) ).
@@ -113,6 +134,8 @@ CLASS z2ui5_cl_demo_app_283 IMPLEMENTATION.
         client->nav_app_leave( ).
       WHEN 'CLICK_HINT_ICON'.
         z2ui5_display_popover( `button_hint_id` ).
+      WHEN 'onPost'.
+        client->message_toast_display( `Posted new feed entry: ` && client->get_event_arg( 1 ) ).
     ENDCASE.
 
   ENDMETHOD.
