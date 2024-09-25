@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_290 IMPLEMENTATION.
     temp5 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
-            title          = 'abap2UI5 - Object List Item - markers aggregation'
+            title          = 'abap2UI5 - Sample: Object List Item - markers aggregation'
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton  = temp5 ).
 
