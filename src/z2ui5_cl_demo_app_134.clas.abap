@@ -23,15 +23,17 @@ CLASS z2ui5_cl_demo_app_134 DEFINITION PUBLIC.
     DATA selend TYPE string.
     DATA update_focus TYPE abap_bool.
 
-    DATA mt_scroll TYPE z2ui5_cl_cc_scrolling=>ty_t_item.
+    DATA mt_scroll TYPE z2ui5_if_types=>ty_t_name_value.
 
   PROTECTED SECTION.
     METHODS display_view
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
+
     METHODS init
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
+
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -101,7 +103,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
 
 
   METHOD init.
-    DATA temp2 TYPE z2ui5_cl_cc_scrolling=>ty_s_item.
+    DATA temp2 TYPE z2ui5_if_types=>ty_s_name_value.
 
     field_01 = `this is a text`.
     field_02 = `this is another text`.
@@ -110,7 +112,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
 
     
     CLEAR temp2.
-    temp2-id = 'id_page'.
+    temp2-n = 'id_page'.
     INSERT temp2 INTO TABLE mt_scroll.
     display_view( client ).
 
@@ -118,7 +120,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
-        DATA temp3 TYPE z2ui5_cl_cc_scrolling=>ty_s_item.
+        DATA temp3 TYPE z2ui5_if_types=>ty_s_name_value.
         DATA temp4 TYPE i.
         DATA temp1 LIKE LINE OF mt_scroll.
         DATA temp2 LIKE sy-tabix.
@@ -131,7 +133,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
         FIELD-SYMBOLS <temp9> LIKE LINE OF mt_scroll.
         DATA temp10 LIKE sy-tabix.
         DATA temp9 TYPE string.
-        DATA temp11 TYPE z2ui5_cl_cc_scrolling=>ty_s_item.
+        DATA temp11 TYPE z2ui5_if_types=>ty_s_name_value.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
@@ -148,8 +150,8 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
         CLEAR mt_scroll.
         
         CLEAR temp3.
-        temp3-id = 'id_page'.
-        temp3-scrollto = '0'.
+        temp3-n = 'id_page'.
+        temp3-v = '0'.
         INSERT temp3 INTO TABLE mt_scroll.
         mv_scrollupdate = abap_true.
         client->view_model_update( ).
@@ -160,12 +162,12 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
         
         
         temp2 = sy-tabix.
-        READ TABLE mt_scroll WITH KEY id = 'id_page' INTO temp1.
+        READ TABLE mt_scroll WITH KEY n = 'id_page' INTO temp1.
         sy-tabix = temp2.
         IF sy-subrc <> 0.
           ASSERT 1 = 0.
         ENDIF.
-        temp4 = temp1-scrollto.
+        temp4 = temp1-v.
         
         lv_pos = temp4.
         lv_pos = lv_pos - 500.
@@ -175,14 +177,14 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
         
         
         temp6 = sy-tabix.
-        READ TABLE mt_scroll WITH KEY id = 'id_page' ASSIGNING <temp5>.
+        READ TABLE mt_scroll WITH KEY n = 'id_page' ASSIGNING <temp5>.
         sy-tabix = temp6.
         IF sy-subrc <> 0.
           ASSERT 1 = 0.
         ENDIF.
         
         temp5 = lv_pos.
-        <temp5>-scrollto = shift_left( shift_right( temp5 ) ).
+        <temp5>-v = shift_left( shift_right( temp5 ) ).
         mv_scrollupdate = abap_true.
         client->view_model_update( ).
 
@@ -191,12 +193,12 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
         
         
         temp8 = sy-tabix.
-        READ TABLE mt_scroll WITH KEY id = 'id_page' INTO temp7.
+        READ TABLE mt_scroll WITH KEY n = 'id_page' INTO temp7.
         sy-tabix = temp8.
         IF sy-subrc <> 0.
           ASSERT 1 = 0.
         ENDIF.
-        lv_pos = temp7-scrollto.
+        lv_pos = temp7-v.
         lv_pos = lv_pos + 500.
         IF lv_pos < 0.
           lv_pos = 0.
@@ -204,14 +206,14 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
         
         
         temp10 = sy-tabix.
-        READ TABLE mt_scroll WITH KEY id = 'id_page' ASSIGNING <temp9>.
+        READ TABLE mt_scroll WITH KEY n = 'id_page' ASSIGNING <temp9>.
         sy-tabix = temp10.
         IF sy-subrc <> 0.
           ASSERT 1 = 0.
         ENDIF.
         
         temp9 = lv_pos.
-        <temp9>-scrollto = shift_left( shift_right( temp9 ) ).
+        <temp9>-v = shift_left( shift_right( temp9 ) ).
         mv_scrollupdate = abap_true.
         client->view_model_update( ).
 
@@ -219,8 +221,8 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
         CLEAR mt_scroll.
         
         CLEAR temp11.
-        temp11-id = 'id_page'.
-        temp11-scrollto = '99999'.
+        temp11-n = 'id_page'.
+        temp11-v = '99999'.
         INSERT temp11 INTO TABLE mt_scroll.
         mv_scrollupdate = abap_true.
         client->view_model_update( ).

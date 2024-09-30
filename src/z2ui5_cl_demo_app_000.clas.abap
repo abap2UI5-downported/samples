@@ -18,7 +18,7 @@
             built_in        TYPE abap_bool,
           END OF ms_check_expanded.
 
-        DATA mt_scroll TYPE z2ui5_cl_cc_scrolling=>ty_t_item.
+        DATA mt_scroll TYPE z2ui5_if_types=>ty_t_name_value.
         DATA mv_set_scroll TYPE abap_bool.
 
       PROTECTED SECTION.
@@ -34,7 +34,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
       METHOD z2ui5_if_app~main.
 
         DATA ls_get TYPE z2ui5_if_types=>ty_s_get.
-            DATA temp1 TYPE z2ui5_cl_cc_scrolling=>ty_t_item.
+            DATA temp1 TYPE z2ui5_if_types=>ty_t_name_value.
             DATA temp2 LIKE LINE OF temp1.
                 DATA lv_classname TYPE string.
                 DATA li_app TYPE REF TO z2ui5_if_app.
@@ -50,7 +50,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
             
             CLEAR temp1.
             
-            temp2-id = `page`.
+            temp2-n = `page`.
             INSERT temp2 INTO TABLE temp1.
             mt_scroll = temp1.
           ENDIF.
@@ -265,13 +265,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         panel->generic_tile(
         header    = 'Tab Title'
         press     = client->_event( 'z2ui5_cl_demo_app_125' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
-
-        panel->generic_tile(
-        header    = 'Tab Favicon'
-        press     = client->_event( 'z2ui5_cl_demo_app_171' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
@@ -1211,14 +1204,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
              class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
          ).
 
-*        panel->generic_tile(
-*             header    = 'Popover'
-*             subheader = 'Call from Nested Views & Popup'
-*             press     =  client->_event( 'z2ui5_cl_demo_app_147' )
-*             mode      = 'LineMode'
-*             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-*         ).
-
 
         panel = page->panel(
                    expandable = abap_false
@@ -1583,15 +1568,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         ).
 
         panel->generic_tile(
-            header    = 'Nested Views II'
-            subheader = 'Master-Detail Page'
-            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_066' )
-            mode      = 'LineMode'
-            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-        ).
-
-        panel->generic_tile(
-        header    = 'Nested Views III'
+        header    = 'Nested Views II'
         subheader = 'Head & Item Table'
         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_097' )
         mode      = 'LineMode'
@@ -1599,7 +1576,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     ).
 
         panel->generic_tile(
-        header    = 'Nested Views IV'
+        header    = 'Nested Views III'
         subheader = 'Head & Item Table & Detail'
         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_098' )
         mode      = 'LineMode'
@@ -1607,7 +1584,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     ).
 
         panel->generic_tile(
-    header    = 'Nested Views V'
+    header    = 'Nested Views IV'
     subheader = 'Sub-App'
     press     =  client->_event( 'Z2UI5_CL_DEMO_APP_104' )
     mode      = 'LineMode'
@@ -1619,7 +1596,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                    expanded   = abap_true
                    headertext = `Navigation Container`
               ).
-
 
         panel->generic_tile(
         header    = 'Nav Container I'
