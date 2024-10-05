@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_294 DEFINITION
+CLASS z2ui5_cl_demo_app_295 DEFINITION
   PUBLIC
   CREATE PUBLIC.
 
@@ -13,8 +13,8 @@ CLASS z2ui5_cl_demo_app_294 DEFINITION
         value_state_text TYPE string,
       END OF ty_a_data.
 
-    TYPES temp1_2fb714d2bc TYPE STANDARD TABLE OF ty_a_data.
-DATA lt_a_data TYPE temp1_2fb714d2bc.
+    TYPES temp1_cd0137150d TYPE STANDARD TABLE OF ty_a_data.
+DATA lt_a_data TYPE temp1_cd0137150d.
     DATA s_text TYPE string.
     DATA check_initialized TYPE abap_bool.
 
@@ -38,7 +38,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_294 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
 
 
   METHOD display_view.
@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_294 IMPLEMENTATION.
     temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
-            title          = 'abap2UI5 - Date Picker - Value States'
+            title          = 'abap2UI5 - Date Range Selection - Value States'
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton  = temp1 ).
 
@@ -62,13 +62,12 @@ CLASS z2ui5_cl_demo_app_294 IMPLEMENTATION.
        )->link(
            text   = 'UI5 Demo Kit'
            target = '_blank'
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.DatePicker/sample/sap.m.sample.DatePickerValueState' ).
+           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.DateRangeSelection/sample/sap.m.sample.DateRangeSelectionValueState' ).
 
     page->flex_box( items = client->_bind( lt_a_data ) direction = `Column`
              )->vbox( class = `sapUiTinyMargin`
-                 )->label( text = '{LABEL}' labelfor = `SI`
-                 )->date_picker(
-                     id = `DP`
+                 )->label( text = '{LABEL}'
+                 )->date_range_selection(
                      width = `100%`
                      valuestate = '{VALUE_STATE}'
                      valuestatetext = '{VALUE_STATE_TEXT}' )->get_parent(
@@ -99,7 +98,7 @@ CLASS z2ui5_cl_demo_app_294 IMPLEMENTATION.
     view->quick_view( placement = `Bottom` width = `auto`
               )->quick_view_page( pageid = `sampleInformationId`
                                   header = `Sample information`
-                                  description = `This example shows different DatePicker value states.` ).
+                                  description = `This example shows different DateRangeSelection value states.` ).
 
     client->popover_display(
       xml   = view->stringify( )
@@ -125,16 +124,16 @@ CLASS z2ui5_cl_demo_app_294 IMPLEMENTATION.
 
 
   METHOD z2ui5_set_data.
-    DATA temp1 TYPE z2ui5_cl_demo_app_294=>ty_a_data.
-    DATA temp2 TYPE z2ui5_cl_demo_app_294=>ty_a_data.
-    DATA temp3 TYPE z2ui5_cl_demo_app_294=>ty_a_data.
-    DATA temp4 TYPE z2ui5_cl_demo_app_294=>ty_a_data.
-    DATA temp5 TYPE z2ui5_cl_demo_app_294=>ty_a_data.
+    DATA temp1 TYPE z2ui5_cl_demo_app_295=>ty_a_data.
+    DATA temp2 TYPE z2ui5_cl_demo_app_295=>ty_a_data.
+    DATA temp3 TYPE z2ui5_cl_demo_app_295=>ty_a_data.
+    DATA temp4 TYPE z2ui5_cl_demo_app_295=>ty_a_data.
+    DATA temp5 TYPE z2ui5_cl_demo_app_295=>ty_a_data.
 
     CLEAR s_text.
     CLEAR lt_a_data.
 
-    s_text = 'DatePicker with valueState '.
+    s_text = 'DateRangeSelection with valueState '.
 
     " Append entries to the internal table
     
