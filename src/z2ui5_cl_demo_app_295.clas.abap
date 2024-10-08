@@ -124,11 +124,8 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
 
 
   METHOD z2ui5_set_data.
-    DATA temp1 TYPE z2ui5_cl_demo_app_295=>ty_a_data.
-    DATA temp2 TYPE z2ui5_cl_demo_app_295=>ty_a_data.
-    DATA temp3 TYPE z2ui5_cl_demo_app_295=>ty_a_data.
-    DATA temp4 TYPE z2ui5_cl_demo_app_295=>ty_a_data.
-    DATA temp5 TYPE z2ui5_cl_demo_app_295=>ty_a_data.
+    DATA temp1 LIKE lt_a_data.
+    DATA temp2 LIKE LINE OF temp1.
 
     CLEAR s_text.
     CLEAR lt_a_data.
@@ -138,33 +135,24 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
     " Append entries to the internal table
     
     CLEAR temp1.
-    temp1-label = s_text && 'None'.
-    temp1-value_state = 'None'.
-    APPEND temp1 TO lt_a_data.
-
     
-    CLEAR temp2.
+    temp2-label = s_text && 'None'.
+    temp2-value_state = 'None'.
+    INSERT temp2 INTO TABLE temp1.
     temp2-label = s_text && 'Information'.
     temp2-value_state = 'Information'.
-    APPEND temp2 TO lt_a_data.
-
-    
-    CLEAR temp3.
-    temp3-label = s_text && 'Success'.
-    temp3-value_state = 'Success'.
-    APPEND temp3 TO lt_a_data.
-
-    
-    CLEAR temp4.
-    temp4-label = s_text && 'Warning and long valueStateText'.
-    temp4-value_state = 'Warning'.
-    temp4-value_state_text = 'Warning message. This is an extra long text used as a warning message. ' && 'It illustrates how the text wraps into two or more lines without truncation to show the full length of the message.'.
-    APPEND temp4 TO lt_a_data.
-
-    
-    CLEAR temp5.
-    temp5-label = s_text && 'Error'.
-    temp5-value_state = 'Error'.
-    APPEND temp5 TO lt_a_data.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-label = s_text && 'Success'.
+    temp2-value_state = 'Success'.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-label = s_text && 'Warning and long valueStateText'.
+    temp2-value_state = 'Warning'.
+    temp2-value_state_text = 'Warning message. This is an extra long text used as a warning message. ' &&
+'It illustrates how the text wraps into two or more lines without truncation to show the full length of the message.'.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-label = s_text && 'Error'.
+    temp2-value_state = 'Error'.
+    INSERT temp2 INTO TABLE temp1.
+    lt_a_data = temp1.
   ENDMETHOD.
 ENDCLASS.
