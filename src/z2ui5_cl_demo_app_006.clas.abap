@@ -34,14 +34,12 @@ CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
   METHOD refresh_data.
       DATA ls_row TYPE ty_row.
 
-    DO 100 TIMES.
+    DO 10000 TIMES.
       
       ls_row-count = sy-index.
       ls_row-value = 'red'.
-*        info = COND #( WHEN sy-index < 50 THEN 'completed' ELSE 'uncompleted' )
       ls_row-descr = 'this is a description'.
       ls_row-checkbox = abap_true.
-*        percentage = COND #( WHEN sy-index <= 100 THEN sy-index ELSE '100' )
       ls_row-valuecolor = `Good`.
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
