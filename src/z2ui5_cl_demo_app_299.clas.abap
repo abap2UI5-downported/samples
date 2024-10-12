@@ -180,7 +180,7 @@ CLASS z2ui5_cl_demo_app_299 IMPLEMENTATION.
     temp4-Name = 'Select option 5'.
     INSERT temp4 INTO TABLE temp3.
     lt_Product_collection2 = temp3.
-    SORT lt_Product_collection2 BY name.
+    SORT lt_product_collection2 BY name.
 
   ENDMETHOD.
 ENDCLASS.
