@@ -34,8 +34,7 @@ CLASS Z2UI5_CL_DEMO_APP_003 IMPLEMENTATION.
       DATA view TYPE REF TO z2ui5_cl_xml_view.
       DATA page TYPE REF TO z2ui5_cl_xml_view.
       DATA temp5 TYPE xsdboolean.
-        DATA lt_sel LIKE t_tab.
-        DATA temp3 LIKE LINE OF lt_sel.
+        DATA temp3 LIKE LINE OF t_tab.
         DATA temp4 LIKE sy-tabix.
 
     IF check_initialized = abap_false.
@@ -109,12 +108,9 @@ CLASS Z2UI5_CL_DEMO_APP_003 IMPLEMENTATION.
 
       WHEN 'SELCHANGE'.
         
-        lt_sel = t_tab.
-        DELETE lt_sel WHERE selected = abap_false.
-        
         
         temp4 = sy-tabix.
-        READ TABLE lt_sel INDEX 1 INTO temp3.
+        READ TABLE t_tab WITH KEY selected = abap_true INTO temp3.
         sy-tabix = temp4.
         IF sy-subrc <> 0.
           ASSERT 1 = 0.

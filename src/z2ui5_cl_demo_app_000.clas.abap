@@ -40,9 +40,8 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
             DATA temp2 LIKE LINE OF temp1.
                 DATA lv_classname TYPE string.
                 DATA li_app TYPE REF TO z2ui5_if_app.
-        DATA temp3 TYPE z2ui5_if_types=>ty_s_event_control.
         DATA page TYPE REF TO z2ui5_cl_xml_view.
-        DATA temp4 TYPE xsdboolean.
+        DATA temp3 TYPE xsdboolean.
         DATA page2 LIKE page.
         DATA panel TYPE REF TO z2ui5_cl_xml_view.
         ls_get = client->get( ).
@@ -77,17 +76,14 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         ENDCASE.
 
         
-        CLEAR temp3.
-        temp3-check_view_destroy = abap_true.
         
-        
-        temp4 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
+        temp3 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
         page = z2ui5_cl_xml_view=>factory(
             )->shell( )->page(
             id = `page`
             title = c_title
-            navbuttonpress = client->_event( val = 'BACK' s_ctrl = temp3 )
-            shownavbutton = temp4
+            navbuttonpress = client->_event( val = 'BACK'  )
+            shownavbutton = temp3
             )->header_content(
                 )->toolbar_spacer(
                 )->link( text = 'Install with abapGit from GitHub'  target = '_blank' href = 'https://github.com/oblomov-dev/abap2ui5'
@@ -299,24 +295,40 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         ).
 
         panel->generic_tile(
-         header    = 'Message I'
+         header    = 'Basic'
       subheader = 'Toast, Box & Strip'
          press     =  client->_event( 'Z2UI5_CL_DEMO_APP_008' )
          mode      = 'LineMode'
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
 
-        panel->generic_tile(
-          header    = 'Message II'
-            subheader = 'Message View & Popover'
+      panel->generic_tile(
+          header    = 'Message Box'
+          subheader = 'sy, bapiret, cx_root'
+          press     =  client->_event( 'z2ui5_cl_demo_app_187' )
+          mode      = 'LineMode'
+          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+      ).
+
+       panel->generic_tile(
+          header    = 'Popup'
+          subheader = 'Messages & Exception'
+          press     =  client->_event( 'z2ui5_cl_demo_app_154' )
+          mode      = 'LineMode'
+          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+      ).
+
+           panel->generic_tile(
+          header    = 'Message View'
+            subheader = 'Custom Popup, Popover & Ouput'
           press     =  client->_event( 'Z2UI5_CL_DEMO_APP_038' )
           mode      = 'LineMode'
           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
       ).
 
         panel->generic_tile(
-          header    = 'Message III'
-            subheader = 'Message Box & Events'
+          header    = 'Messages'
+            subheader = 'More...'
           press     =  client->_event( 'z2ui5_cl_demo_app_084' )
           mode      = 'LineMode'
           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -1284,12 +1296,12 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
            ).
 
-        panel->generic_tile(
-               header    = 'Popup to Error'
-               press     =  client->_event( 'z2ui5_cl_demo_app_165' )
-               mode      = 'LineMode'
-               class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-           ).
+*        panel->generic_tile(
+*               header    = 'Popup to Error'
+*               press     =  client->_event( 'z2ui5_cl_demo_app_165' )
+*               mode      = 'LineMode'
+*               class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+*           ).
 
         panel->generic_tile(
                header    = 'Popup to Select'
@@ -1298,12 +1310,12 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
            ).
 
-        panel->generic_tile(
-               header    = 'Popup Messages'
-               press     =  client->_event( 'Z2UI5_CL_DEMO_APP_154' )
-               mode      = 'LineMode'
-               class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-           ).
+*        panel->generic_tile(
+*               header    = 'Popup Messages'
+*               press     =  client->_event( 'Z2UI5_CL_DEMO_APP_154' )
+*               mode      = 'LineMode'
+*               class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+*           ).
 
         panel->generic_tile(
                header    = 'Popup Textedit'

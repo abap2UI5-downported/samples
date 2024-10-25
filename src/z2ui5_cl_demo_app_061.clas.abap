@@ -23,28 +23,24 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
-    DATA temp2 TYPE xsdboolean.
+    DATA temp1 TYPE xsdboolean.
     FIELD-SYMBOLS <tab> TYPE table.
-    DATA temp1 TYPE z2ui5_if_types=>ty_s_event_control.
     DATA tab TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory( ).
     
     
-    temp2 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
+    temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = view->shell(
         )->page(
                 title          = 'abap2UI5 - RTTI created Table'
                 navbuttonpress = client->_event( 'BACK' )
-                shownavbutton  = temp2
+                shownavbutton  = temp1
         ).
 
 
     
     ASSIGN  t_tab->* TO <tab>.
 
-    
-    CLEAR temp1.
-    temp1-check_view_destroy = abap_true.
     
     tab = page->table(
             items = client->_bind_edit( <tab> )
@@ -55,7 +51,7 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
                 )->toolbar_spacer(
                 )->button(
                     text  = `server <-> client`
-                    press = client->_event( val = 'SEND' s_ctrl = temp1 )
+                    press = client->_event( val = 'SEND' )
         )->get_parent( )->get_parent( ).
 
     tab->columns(
@@ -79,9 +75,9 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
       FIELD-SYMBOLS <tab> TYPE table.
+      DATA temp1 TYPE z2ui5_t_01.
       DATA temp2 TYPE z2ui5_t_01.
       DATA temp3 TYPE z2ui5_t_01.
-      DATA temp4 TYPE z2ui5_t_01.
 
     me->client = client.
 
@@ -93,26 +89,26 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
       ASSIGN t_tab->* TO <tab>.
 
       
+      CLEAR temp1.
+      temp1-id = 'this is an uuid'.
+      temp1-timestampl = '2023234243'.
+      temp1-id_prev = 'previous'.
+      INSERT temp1
+        INTO TABLE <tab>.
+
+      
       CLEAR temp2.
       temp2-id = 'this is an uuid'.
       temp2-timestampl = '2023234243'.
       temp2-id_prev = 'previous'.
       INSERT temp2
-        INTO TABLE <tab>.
-
+          INTO TABLE <tab>.
       
       CLEAR temp3.
       temp3-id = 'this is an uuid'.
       temp3-timestampl = '2023234243'.
       temp3-id_prev = 'previous'.
       INSERT temp3
-          INTO TABLE <tab>.
-      
-      CLEAR temp4.
-      temp4-id = 'this is an uuid'.
-      temp4-timestampl = '2023234243'.
-      temp4-id_prev = 'previous'.
-      INSERT temp4
           INTO TABLE <tab>.
 
 

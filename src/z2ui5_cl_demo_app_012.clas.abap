@@ -65,37 +65,29 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
 
     DATA lo_main TYPE REF TO z2ui5_cl_xml_view.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
-    DATA temp3 TYPE xsdboolean.
-    DATA temp1 TYPE z2ui5_if_types=>ty_s_event_control.
-    DATA temp2 TYPE z2ui5_if_types=>ty_s_event_control.
+    DATA temp1 TYPE xsdboolean.
     DATA grid TYPE REF TO z2ui5_cl_xml_view.
     lo_main = z2ui5_cl_xml_view=>factory( )->shell( ).
     
     
-    temp3 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
+    temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = lo_main->page(
             title          = 'abap2UI5 - Popups'
             navbuttonpress = client->_event( val = 'BACK' )
-            shownavbutton = temp3
+            shownavbutton = temp1
             ).
 
-    
-    CLEAR temp1.
-    temp1-check_view_destroy = abap_true.
-    
-    CLEAR temp2.
-    temp2-check_view_destroy = abap_true.
     
     grid = page->grid( 'L7 M12 S12' )->content( 'layout'
         )->simple_form( 'Popup in same App' )->content( 'form'
             )->label( 'Demo'
             )->button(
                 text  = 'popup rendering, no background rendering'
-                press = client->_event( val = 'BUTTON_POPUP_01' s_ctrl = temp1 )
+                press = client->_event( val = 'BUTTON_POPUP_01' )
             )->label( 'Demo'
             )->button(
                 text  = 'popup rendering, background destroyed and rerendering'
-                press = client->_event( val = 'BUTTON_POPUP_02' s_ctrl = temp2 )
+                press = client->_event( val = 'BUTTON_POPUP_02' )
             )->label( 'Demo'
             )->button(
                 text  = 'popup, background unchanged (default) - close (no roundtrip)'
@@ -103,7 +95,7 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
             )->label( 'Demo'
             )->button(
                 text  = 'popup, background unchanged (default) - close with server'
-                press = client->_event( val = 'BUTTON_POPUP_04'  )
+                press = client->_event( val = 'BUTTON_POPUP_04' )
         )->get_parent( )->get_parent( ).
 
     grid->simple_form( 'Popup in new App' )->content( 'form'
@@ -122,8 +114,8 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
 
 
   METHOD Z2UI5_if_app~main.
-      DATA temp2 TYPE REF TO z2ui5_cl_demo_app_020.
-      DATA app LIKE temp2.
+      DATA temp1 TYPE REF TO z2ui5_cl_demo_app_020.
+      DATA app LIKE temp1.
 
     me->client = client.
 
@@ -134,9 +126,9 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
     IF mv_check_popup = abap_true.
       mv_check_popup = abap_false.
       
-      temp2 ?= client->get_app( client->get( )-s_draft-id_prev_app ).
+      temp1 ?= client->get_app( client->get( )-s_draft-id_prev_app ).
       
-      app = temp2.
+      app = temp1.
       client->message_toast_display( app->mv_event && ` pressed` ).
     ENDIF.
 
@@ -144,6 +136,7 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
 
       WHEN 'BUTTON_POPUP_01'.
         ui5_popup_decide( ).
+        client->view_destroy( ).
 
       WHEN 'POPUP_DECIDE_CONTINUE'.
         client->popup_destroy( ).

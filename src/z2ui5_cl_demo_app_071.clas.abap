@@ -31,8 +31,7 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
     DATA lt_combo LIKE temp3.
       DATA temp4 TYPE z2ui5_cl_demo_app_071=>s_combobox.
     DATA view TYPE REF TO z2ui5_cl_xml_view.
-    DATA temp5 TYPE z2ui5_if_types=>ty_s_event_control.
-    DATA temp6 TYPE xsdboolean.
+    DATA temp5 TYPE xsdboolean.
 
     CASE client->get( )-event.
       WHEN `UPDATE`.
@@ -72,15 +71,12 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
     
     view = z2ui5_cl_xml_view=>factory( ).
     
-    CLEAR temp5.
-    temp5-check_view_destroy = abap_true.
-    
-    temp6 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
+    temp5 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     client->view_display( val = view->shell(
          )->page(
                  title          = 'abap2UI5 - First Example'
-                 navbuttonpress = client->_event( val = 'BACK' s_ctrl = temp5 )
-                 shownavbutton = temp6
+                 navbuttonpress = client->_event( val = 'BACK' )
+                 shownavbutton = temp5
              )->simple_form( title = 'Form Title' editable = abap_true
                  )->content( 'form'
                      )->title( 'Input'

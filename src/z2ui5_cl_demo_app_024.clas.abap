@@ -61,8 +61,9 @@ CLASS z2ui5_cl_demo_app_024 IMPLEMENTATION.
             DATA temp2 TYPE REF TO z2ui5_cl_demo_app_025.
             DATA lo_called_app LIKE temp2.
 
-    IF client->get( )-check_on_navigated = abap_true.
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       display_view( client ).
+      RETURN.
     ENDIF.
 
     CASE client->get( )-event.
@@ -99,7 +100,7 @@ CLASS z2ui5_cl_demo_app_024 IMPLEMENTATION.
         CASE mv_backend_event.
           WHEN 'CALL_PREVIOUS_APP_INPUT_RETURN'.
             
-            temp2 ?= client->get_app( client->get( )-s_draft-id_prev_app ).
+            temp2 ?= client->get_app_prev( ).
             
             lo_called_app = temp2.
             CLEAR mv_backend_event.

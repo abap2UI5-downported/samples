@@ -21,18 +21,14 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
   METHOD display_view.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
-    DATA temp1 TYPE z2ui5_if_types=>ty_s_event_control.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory( ).
 
     
-    CLEAR temp1.
-    temp1-check_view_destroy = abap_true.
-    
     page = view->shell(
         )->page(
             title          = 'abap2UI5 - Illustrated Messages'
-            navbuttonpress = client->_event( val = 'BACK' s_ctrl = temp1  )
+            navbuttonpress = client->_event( val = 'BACK'  )
               shownavbutton = abap_true
             )->header_content(
                  )->link(
