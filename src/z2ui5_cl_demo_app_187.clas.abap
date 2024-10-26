@@ -39,17 +39,18 @@ CLASS z2ui5_cl_demo_app_187 IMPLEMENTATION.
 
       WHEN 'SY'.
         
-        MESSAGE ID 'NET' TYPE 'I' NUMBER '001' INTO lv_dummy.
+        MESSAGE ID 'NET' TYPE 'E' NUMBER '001' INTO lv_dummy.
         client->message_box_display( sy ).
 
       WHEN 'BAPIRET'.
         
+
 *        CALL FUNCTION 'BAPI_TRANSACTION_COMMIT'
 *          IMPORTING
 *            return = ls_msg.
-         CLEAR ls_msg.
-         ls_msg-id = 'NET'.
-         ls_msg-number = '001'.
+        CLEAR ls_msg.
+        ls_msg-id = 'NET'.
+        ls_msg-number = '001'.
         client->message_box_display( ls_msg ).
 
       WHEN 'CX_ROOT'.
@@ -61,8 +62,10 @@ CLASS z2ui5_cl_demo_app_187 IMPLEMENTATION.
             client->message_box_display( lx ).
         ENDTRY.
 
-    ENDCASE.
+      WHEN 'BACK'.
+        client->nav_app_leave( ).
 
+    ENDCASE.
 
   ENDMETHOD.
 ENDCLASS.
