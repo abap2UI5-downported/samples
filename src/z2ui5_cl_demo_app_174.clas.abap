@@ -31,6 +31,7 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
         DATA temp1 TYPE z2ui5_cl_demo_app_174=>ty_tab.
         DATA temp2 LIKE LINE OF temp1.
         DATA lr TYPE REF TO data.
+        FIELD-SYMBOLS <t> TYPE data.
         DATA temp3 TYPE ty_tab.
         DATA lt3 LIKE temp3.
           DATA temp4 LIKE LINE OF lt3.
@@ -104,7 +105,9 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
         
         lr = client->get( )-r_event_data.
         
-        temp3 = lr->*.
+        ASSIGN lr->* TO <t>.
+        
+        temp3 = <t>.
         
         lt3 = temp3.
         IF mv_multiselect = abap_false.
