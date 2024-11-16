@@ -71,7 +71,7 @@ CLASS Z2UI5_CL_DEMO_APP_097 IMPLEMENTATION.
     lo_columns->ui_column(  sortproperty = 'TITLE'
                                           filterproperty = 'TITLE' )->text( text = `Index` )->ui_template( )->text(   text = `{TITLE}` ).
     lo_columns->ui_column(  sortproperty = 'DESCR' filterproperty = 'DESCR' )->text( text = `DESCR` )->ui_template( )->text(   text = `{DESCR}` ).
-    lo_columns->ui_column(  sortproperty = 'INFO' filterproperty = 'INFO')->text( text = `INFO` )->ui_template( )->text( text = `{INFO}` ).
+    lo_columns->ui_column(  sortproperty = 'INFO' filterproperty = 'INFO' )->text( text = `INFO` )->ui_template( )->text( text = `{INFO}` ).
     
     CLEAR temp1.
     INSERT `${TITLE}` INTO TABLE temp1.
@@ -107,7 +107,7 @@ CLASS Z2UI5_CL_DEMO_APP_097 IMPLEMENTATION.
          )->get_parent( ).
 
     
-    col_layout =  page->flexible_column_layout( layout = client->_bind_edit( mv_layout ) id ='test' ).
+    col_layout =  page->flexible_column_layout( layout = client->_bind_edit( mv_layout ) id = 'test' ).
 
     
     lr_master = col_layout->begin_column_pages( ).
