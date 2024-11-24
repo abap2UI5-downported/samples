@@ -112,7 +112,7 @@ CLASS z2ui5_cl_demo_app_244 IMPLEMENTATION.
                                          )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
                                   )->button( text = `3` width = `150px` type = `Accept` )->get(
                                       )->layout_data(
-                                          )->flex_item_data( growfactor = `1`)->get_parent( )->get_parent( )->get_parent( )->get_parent(
+                                          )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
 
                           )->panel( headertext = `Equal flexibility, different content, width 0` class = `sapUiDemoFlexBoxSizeAdjustments`
                               )->flex_box( alignitems = `Start` class = `sapUiDemoFlexBoxSizeAdjustmentsZeroWidthItems`
@@ -124,7 +124,7 @@ CLASS z2ui5_cl_demo_app_244 IMPLEMENTATION.
                                          )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
                                   )->button( text = `3` width = `100%` type = `Accept` )->get(
                                       )->layout_data(
-                                          )->flex_item_data( growfactor = `1`)->get_parent( )->get_parent( )->get_parent( )->get_parent(
+                                          )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
 
                           )->panel( headertext = `Different flexibility and content, width 0` class = `sapUiDemoFlexBoxSizeAdjustments`
                               )->flex_box( alignitems = `Start` class = `sapUiDemoFlexBoxSizeAdjustmentsZeroWidthItems`
@@ -136,7 +136,7 @@ CLASS z2ui5_cl_demo_app_244 IMPLEMENTATION.
                                          )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
                                   )->button( text = `3` width = `150px` type = `Accept` )->get(
                                       )->layout_data(
-                                          )->flex_item_data( growfactor = `1`)->get_parent(
+                                          )->flex_item_data( growfactor = `1` )->get_parent(
 
                    ).
 
