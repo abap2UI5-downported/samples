@@ -28,7 +28,7 @@ CLASS z2ui5_cl_demo_app_178 DEFINITION
         prodh       TYPE string,
         nodes       TYPE STANDARD TABLE OF ty_prodh_node_level2 WITH DEFAULT KEY,
       END OF ty_prodh_node_level1 .
-    TYPES:
+    TYPES
       ty_prodh_nodes TYPE STANDARD TABLE OF ty_prodh_node_level1 WITH DEFAULT KEY .
 
     DATA prodh_nodes TYPE ty_prodh_nodes .
@@ -53,24 +53,29 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
 
     DATA dialog TYPE REF TO z2ui5_cl_xml_view.
     dialog = z2ui5_cl_xml_view=>factory_popup(
-        )->dialog( title = 'Choose Product here...' contentheight = '50%' contentwidth  = '50%' beforeopen = `setState()` beforeclose = `saveState()` ).
+        )->dialog( title         = 'Choose Product here...'
+                   contentheight = '50%'
+                   contentwidth  = '50%'
+                   beforeopen    = `setState()`
+                   beforeclose   = `saveState()` ).
 
     dialog->tree(
-        id = `tree`
+        id    = `tree`
         mode  = 'SingleSelectMaster'
         items = client->_bind_edit( prodh_nodes )
         )->items(
-            )->standard_tree_item( selected = '{IS_SELECTED}' title = '{TEXT}' ).
+            )->standard_tree_item( selected = '{IS_SELECTED}'
+                                   title    = '{TEXT}' ).
 
     dialog->buttons(
-        )->button( text  = 'Continue'
-               icon  = `sap-icon://accept`
-               type  = `Accept`
-               press = client->_event( 'CONTINUE' )
-        )->button( text  = 'Cancel'
-               icon  = `sap-icon://decline`
-               type  = `Reject`
-               press = client->_event( 'CANCEL' ) ).
+        )->button( text = 'Continue'
+               icon     = `sap-icon://accept`
+               type     = `Accept`
+               press    = client->_event( 'CONTINUE' )
+        )->button( text = 'Cancel'
+               icon     = `sap-icon://decline`
+               type     = `Reject`
+               press    = client->_event( 'CANCEL' ) ).
 
 
     client->popup_display( dialog->stringify( ) ).
@@ -100,16 +105,19 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
 
     
     view = z2ui5_cl_xml_view=>factory( ).
-    view->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_save_state_js ).
-    view->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_reset_state_js ).
+    view->_generic( ns   = `html`
+                    name = `script` )->_cc_plain_xml( lv_save_state_js ).
+    view->_generic( ns   = `html`
+                    name = `script` )->_cc_plain_xml( lv_reset_state_js ).
     
     page = view->shell(
          )->page(
-            title          = 'abap2UI5 - Tree - Open & Close Popup to see the control keeping expanded'
-            navbuttonpress = client->_event( 'BACK' )
+            title           = 'abap2UI5 - Tree - Open & Close Popup to see the control keeping expanded'
+            navbuttonpress  = client->_event( 'BACK' )
               shownavbutton = abap_true ).
 
-    client->view_display( page->button( text = 'Open Popup here...' press = client->_event( 'POPUP_TREE' ) )->stringify( ) ).
+    client->view_display( page->button( text  = 'Open Popup here...'
+                                        press = client->_event( 'POPUP_TREE' ) )->stringify( ) ).
 
   ENDMETHOD.
 
@@ -168,7 +176,7 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
     temp2-nodes = temp5.
     INSERT temp2 INTO TABLE temp1.
     prodh_nodes =
-    temp1.
+      temp1.
   ENDMETHOD.
 
 

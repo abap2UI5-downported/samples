@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_046 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_046 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_row,
@@ -28,7 +28,7 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_046 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
       DATA temp1 LIKE t_tab.
       DATA temp2 LIKE LINE OF temp1.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
@@ -90,34 +90,33 @@ CLASS Z2UI5_CL_DEMO_APP_046 IMPLEMENTATION.
         )->page(
             title          = 'abap2UI5 - Table output in two different Ways - Changing UI without Model'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = abap_true
+            shownavbutton  = abap_true
             )->header_content(
-                )->button( text = 'Display List'  press = client->_event( 'LIST' )
-                )->button( text = 'Display Table' press = client->_event( 'TABLE' )
+                )->button( text  = 'Display List'
+                           press = client->_event( 'LIST' )
+                )->button( text  = 'Display Table'
+                           press = client->_event( 'TABLE' )
                 )->link(
-
-
-            )->get_parent( ).
+      )->get_parent( ).
 
     CASE mv_display.
 
       WHEN 'LIST'.
         page->list(
-            headertext      = 'List Control'
-            items           = client->_bind( t_tab )
+            headertext = 'List Control'
+            items      = client->_bind( t_tab )
             )->standard_list_item(
                 title       = '{TITLE}'
                 description = '{DESCR}'
                 icon        = '{ICON}'
-                info        = '{INFO}'
-                ).
+                info        = '{INFO}' ).
 
       WHEN 'TABLE'.
 
         
         tab = page->table(
-        headertext = 'Table Control'
-        items = client->_bind( t_tab ) ).
+          headertext = 'Table Control'
+          items      = client->_bind( t_tab ) ).
 
         tab->columns(
             )->column(
@@ -137,7 +136,7 @@ CLASS Z2UI5_CL_DEMO_APP_046 IMPLEMENTATION.
 
     ENDCASE.
 
-    client->view_display( page->get_root(  )->xml_get( ) ).
+    client->view_display( page->get_root( )->xml_get( ) ).
 
   ENDMETHOD.
 ENDCLASS.

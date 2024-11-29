@@ -16,8 +16,8 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
     DATA section TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory( ).
     
-    object_page_layout = view->object_page_layout( showTitleInHeaderContent = `Title`
-                                                         upperCaseAnchorBar       = abap_false ).
+    object_page_layout = view->object_page_layout( showtitleinheadercontent = `Title`
+                                                         uppercaseanchorbar       = abap_false ).
 
     
     header_title = object_page_layout->header_title(
@@ -87,7 +87,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                 )->get_parent(
             )->get_parent(
         )->get_parent(
-    )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
+      )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
         )->title( text  = `Contact Information`
                   class = `sapUiTinyMarginBottom`
         )->hbox( class = `sapUiTinyMarginBottom`
@@ -106,14 +106,14 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                      class = `sapUiSmallMarginBegin`
             )->get_parent(
         )->get_parent(
-    )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
+      )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
         )->hbox( class = `sapUiTinyMarginBottom`
             )->label( text  = `Created By:`
                       class = `sapUiSmallMarginEnd`
             )->link( text = `Julie Armstrong`
             )->get_parent(
         )->hbox( class      = `sapUiTinyMarginBottom`
-                 renderType = `Bare`
+                 rendertype = `Bare`
             )->label( text  = `Created On:`
                       class = `sapUiSmallMarginEnd`
             )->text( text = `February 20, 2020`
@@ -129,7 +129,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
             )->text( text = `February 20, 2020`
             )->get_parent(
         )->get_parent(
-    )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
+      )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
         )->title( text  = `Product Description`
                   class = `sapUiTinyMarginBottom`
         )->text(
@@ -137,7 +137,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
             text  = |Top-design high-quality coffee mug - ideal for a comforting moment; Pack: 6; material: | &&
             |Porcelain - durable dishwasher and microwave-safe porcelain that cleans easily and is ideal for everyday service. Comes in two bright colors.|
         )->get_parent(
-    )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
+      )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
         )->title( class = `sapUiTinyMarginBottom` )->get(
             )->link( text = `Status`
             )->get_parent(
@@ -146,7 +146,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                           class = `sapMObjectStatusLarge`
             )->get_parent(
         )->get_parent(
-    )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
+      )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
         )->title( text  = `Delivery Time`
                   class = `sapUiTinyMarginBottom`
         )->object_status( text  = `12 Days`
@@ -154,7 +154,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                           class = `sapMObjectStatusLarge`
             )->get_parent(
         )->get_parent(
-    )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
+      )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
         )->title( text  = `Assembly Option`
                   class = `sapUiTinyMarginBottom`
         )->object_status( text  = `To Be Selected`
@@ -162,14 +162,14 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                           class = `sapMObjectStatusLarge`
             )->get_parent(
         )->get_parent(
-    )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
+      )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
         )->title( text  = `Price`
                   class = `sapUiTinyMarginBottom`
         )->object_status( text  = `579 EUR`
                           class = `sapMObjectStatusLarge`
             )->get_parent(
         )->get_parent(
-    )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
+      )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
         )->title( class = `sapUiTinyMarginBottom` )->get(
             )->link( text = `Average User Rating`
             )->get_parent(
@@ -177,7 +177,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
         )->rating_indicator( value    = `4`
                              iconsize = `16px`
                              )->get_parent(
-        )->vbox( alignItems = `End`
+        )->vbox( alignitems = `End`
             )->text( text = `4.1 out of 5` ).
 
     
@@ -188,7 +188,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                   title          = `2014 Goals Plan`
         )->sub_sections(
             )->object_page_sub_section( id             = `goalsSectionSS1`
-                                        titleUppercase = abap_false
+                                        titleuppercase = abap_false
                 )->blocks(
                     )->simple_form( editable   = abap_false
                                     layout     = `ColumnLayout`
@@ -196,7 +196,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     columnsm   = `2`
                                     columnsl   = `3`
                                     columnsxl  = `4`
-                                    labelSpanL = `12`
+                                    labelspanl = `12`
                         )->label( text = `Evangelize the UI framework across the company`
                         )->text( text = `4 days overdue Cascaded`
                         )->label( text = `Get trained in development management direction`
@@ -209,7 +209,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                   importance     = `Medium`
         )->sub_sections(
             )->object_page_sub_section( id             = `personalSectionSS1`
-                                        titleUppercase = abap_false
+                                        titleuppercase = abap_false
                                         title          = `Connect`
                 )->blocks(
                     )->simple_form( editable   = abap_false
@@ -218,7 +218,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     columnsm   = `2`
                                     columnsl   = `3`
                                     columnsxl  = `4`
-                                    labelSpanL = `12`
+                                    labelspanl = `12`
                         )->title( ns   = `core`
                                   text = `Phone Numbers`
                             )->label( text = `Home`
@@ -232,7 +232,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     columnsm   = `2`
                                     columnsl   = `3`
                                     columnsxl  = `4`
-                                    labelSpanL = `12`
+                                    labelspanl = `12`
                         )->title( ns   = `core`
                                   text = `Social Accounts`
                             )->label( text = `LinkedIn`
@@ -246,7 +246,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     columnsm   = `2`
                                     columnsl   = `3`
                                     columnsxl  = `4`
-                                    labelSpanL = `12`
+                                    labelspanl = `12`
                         )->title( ns   = `core`
                                   text = `Addresses`
                             )->label( text = `Home Address`
@@ -260,7 +260,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     columnsm   = `2`
                                     columnsl   = `3`
                                     columnsxl  = `4`
-                                    labelSpanL = `12`
+                                    labelspanl = `12`
                         )->title( ns   = `core`
                                   text = `Mailing Address`
                             )->label( text = `Work`
@@ -269,7 +269,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                     )->get_parent(
                 )->get_parent(
             )->object_page_sub_section( id             = `personalSectionSS2`
-                                        titleUppercase = abap_false
+                                        titleuppercase = abap_false
                                         title          = `Payment Information`
                 )->blocks(
                     )->simple_form( editable    = abap_false
@@ -278,10 +278,10 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     columnsm    = `1`
                                     columnsl    = `2`
                                     columnsxl   = `3`
-                                    labelSpanS  = `12`
-                                    labelSpanM  = `12`
-                                    labelSpanL  = `12`
-                                    labelSpanXL = `12`
+                                    labelspans  = `12`
+                                    labelspanm  = `12`
+                                    labelspanl  = `12`
+                                    labelspanxl = `12`
                         )->title( ns   = `core`
                                   text = `Main Payment Method`
                         )->label( text = `Bank Transfer`
@@ -295,10 +295,10 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     columnsm    = `1`
                                     columnsl    = `2`
                                     columnsxl   = `3`
-                                    labelSpanS  = `12`
-                                    labelSpanM  = `12`
-                                    labelSpanL  = `12`
-                                    labelSpanXL = `12`
+                                    labelspans  = `12`
+                                    labelspanm  = `12`
+                                    labelspanl  = `12`
+                                    labelspanxl = `12`
                         )->title( ns   = `core`
                                   text = `Payment method for Expenses`
                         )->label( text = `Extra Travel Expenses`
@@ -309,7 +309,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                   title          = `Employment`
         )->sub_sections(
             )->object_page_sub_section( id             = `employmentSectionSS1`
-                                        titleUppercase = abap_false
+                                        titleuppercase = abap_false
                                         title          = `Job information`
                 )->blocks(
                     )->simple_form( id          = `jobinfopart1`
@@ -319,10 +319,10 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     columnsm    = `2`
                                     columnsl    = `3`
                                     columnsxl   = `4`
-                                    labelSpanS  = `12`
-                                    labelSpanM  = `12`
-                                    labelSpanL  = `12`
-                                    labelSpanXL = `12`
+                                    labelspans  = `12`
+                                    labelspanm  = `12`
+                                    labelspanl  = `12`
+                                    labelspanxl = `12`
                         )->label( text = `Job classification`
                         )->text( text = `Senior Ui Developer (UIDEV-SR)`
                         )->label( text = `Pay Grade`
@@ -337,10 +337,10 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     columnsm    = `2`
                                     columnsl    = `3`
                                     columnsxl   = `4`
-                                    labelSpanS  = `12`
-                                    labelSpanM  = `12`
-                                    labelSpanL  = `12`
-                                    labelSpanXL = `12`
+                                    labelspans  = `12`
+                                    labelspanm  = `12`
+                                    labelspanl  = `12`
+                                    labelspanxl = `12`
                         )->label( text = `Employee Class`
                         )->text( text = `Employee`
                         )->label( text = `FTE`
@@ -362,7 +362,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                     )->get_parent(
                 )->get_parent(
             )->object_page_sub_section( id             = `employmentSectionSS2`
-                                        titleUppercase = abap_false
+                                        titleuppercase = abap_false
                                         title          = `Employee Details`
                 )->blocks(
                     )->simple_form( id         = `empdetailpart1`
@@ -372,8 +372,8 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     columnsm   = `1`
                                     columnsl   = `1`
                                     columnsxl  = `2`
-                                    labelSpanS = `12`
-                                    labelSpanL = `12`
+                                    labelspans = `12`
+                                    labelspanl = `12`
                         )->title( ns   = `core`
                                   text = `Termination information`
                             )->label( text = `Ok to return`
@@ -390,8 +390,8 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                         columnsm   = `2`
                                         columnsl   = `3`
                                         columnsxl  = `4`
-                                        labelSpanS = `12`
-                                        labelSpanL = `12`
+                                        labelspans = `12`
+                                        labelspanl = `12`
                             )->label( text = `Start Date`
                             )->text( text = `Jan 01, 2001`
                             )->label( text = `End Date`
@@ -408,8 +408,8 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                         columnsm   = `2`
                                         columnsl   = `3`
                                         columnsxl  = `4`
-                                        labelSpanS = `12`
-                                        labelSpanL = `12`
+                                        labelspans = `12`
+                                        labelspanl = `12`
                             )->label( text = `Payroll End Date`
                             )->text( text = `Jan 01, 2014`
                             )->label( text = `Benefits End Date`
@@ -417,7 +417,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                             )->label( text = `Stock End Date`
                             )->text( text = `Jun 01, 2014`
                             )->label( text = `Eligible for Salary Contribution`
-                            )->text( text = `No`  ).
+                            )->text( text = `No` ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.

@@ -107,10 +107,9 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
     
     temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     view = view->shell( )->page( id = `page_main`
-             title          = 'abap2UI5 - Popup Display Table'
-             navbuttonpress = client->_event( 'BACK' )
-             shownavbutton = temp1
-        ).
+             title                  = 'abap2UI5 - Popup Display Table'
+             navbuttonpress         = client->_event( 'BACK' )
+             shownavbutton          = temp1 ).
 
     
     vbox = view->vbox( ).
@@ -122,7 +121,9 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
              )->overflow_toolbar(
                  )->toolbar_spacer(
 *                 )->button( text = `Filter` press = client->_event( `PREVIEW_FILTER` ) icon = `sap-icon://filter`
-           )->button(  text = `Display Popup` press = client->_event( `BUTTON_START` ) type = `Emphasized`
+           )->button( text  = `Display Popup`
+                      press = client->_event( `BUTTON_START` )
+                      type  = `Emphasized`
             )->get_parent( )->get_parent( ).
 
     

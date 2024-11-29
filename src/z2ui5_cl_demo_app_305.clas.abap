@@ -4,21 +4,16 @@ CLASS z2ui5_cl_demo_app_305 DEFINITION
 
   PUBLIC SECTION.
 
-    INTERFACES if_serializable_object .
-    INTERFACES z2ui5_if_app .
-
+    INTERFACES z2ui5_if_app.
     TYPES:
       BEGIN OF ty_row,
         title TYPE string,
         value TYPE string,
-      END OF ty_row .
-
-    DATA:
-      t_tab TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY.
+      END OF ty_row.
+    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
-
     METHODS set_view.
 
 ENDCLASS.
@@ -40,8 +35,8 @@ CLASS z2ui5_cl_demo_app_305 IMPLEMENTATION.
                       shownavbutton  = abap_true ).
 
     page->_generic(
-            name   = `style`
-            ns     = `html`
+            name = `style`
+            ns   = `html`
        )->_cc_plain_xml(
            `td:has([data-color="red"]){ `
         && `    background-color: red;`
@@ -87,10 +82,13 @@ CLASS z2ui5_cl_demo_app_305 IMPLEMENTATION.
         )->text( text = '{TITLE}'
           )->get(
             )->custom_data(
-              )->core_custom_data( key = 'color' value = '{VALUE}' writetodom = abap_true
+              )->core_custom_data( key        = 'color'
+                                   value      = '{VALUE}'
+                                   writetodom = abap_true
             )->get_parent(
           )->get_parent(
-        )->input( value = '{VALUE}' enabled = abap_true ).
+        )->input( value   = '{VALUE}'
+                  enabled = abap_true ).
 
     client->view_display( view->stringify( ) ).
 

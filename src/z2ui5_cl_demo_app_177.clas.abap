@@ -6,14 +6,14 @@ CLASS z2ui5_cl_demo_app_177 DEFINITION PUBLIC.
 
     TYPES:
       BEGIN OF ty_row,
-        count         TYPE i,
-        value         TYPE string,
-        descr         TYPE string,
-        icon          TYPE string,
-        info          TYPE string,
-        checkbox      TYPE abap_bool,
-        percentage(5) TYPE p DECIMALS 2,
-        valuecolor    TYPE string,
+        count      TYPE i,
+        value      TYPE string,
+        descr      TYPE string,
+        icon       TYPE string,
+        info       TYPE string,
+        checkbox   TYPE abap_bool,
+        percentage TYPE p LENGTH 5 DECIMALS 2,
+        valuecolor TYPE string,
       END OF ty_row.
 
     TYPES temp1_bab4bac0ae TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY.
@@ -57,29 +57,7 @@ CLASS z2ui5_cl_demo_app_177 IMPLEMENTATION.
 
     IF check_initialized = abap_false.
 
-*      IF check_ui5 = abap_false.
-*        check_ui5 = abap_true.
-*        client->nav_app_call( z2ui5_cl_popup_js_loader=>factory_check_open_ui5( ) ).
-*        RETURN.
-*      ENDIF.
 
-*      IF client->get( )-check_on_navigated = abap_true.
-*        TRY.
-*            DATA(lo_app5) = client->get_app( client->get( )-s_draft-id_prev_app ).
-*            DATA lo_app TYPE REF TO z2ui5_cl_popup_js_loader.
-*            lo_app  ?=  lo_app5.
-*            IF lo_app->mv_is_open_ui5 = abap_true.
-*              DATA(lo_app3) = z2ui5_cl_popup_to_inform=>factory( `Sample not supported with OpenUI5, switch bootstrapping first to see this demo` ).
-*              client->nav_app_call( lo_app3 ).
-*              RETURN.
-*            ENDIF.
-*          CATCH cx_root.
-*            DATA(lo_app4) = client->get_app( client->get( )-s_draft-id_prev_app ).
-*            CAST z2ui5_cl_popup_to_inform( lo_app4 ).
-*            client->nav_app_leave( ).
-*            RETURN.
-*        ENDTRY.
-*      ENDIF.
 
       check_initialized = abap_true.
       refresh_data( ).
@@ -121,11 +99,11 @@ CLASS z2ui5_cl_demo_app_177 IMPLEMENTATION.
         )->page(
             title          = 'abap2UI5 - Scroll Container with Table and Toolbar'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = temp1
-        ).
+            shownavbutton  = temp1 ).
 
     
-    tab = page->scroll_container( height = '70%' vertical = abap_true
+    tab = page->scroll_container( height   = '70%'
+                                        vertical = abap_true
         )->table(
             growing             = abap_true
             growingthreshold    = '20'
@@ -143,11 +121,11 @@ CLASS z2ui5_cl_demo_app_177 IMPLEMENTATION.
             )->segmented_button( selected_key = mv_key
                 )->items(
                     )->segmented_button_item(
-                        key = 'BLUE'
+                        key  = 'BLUE'
                         icon = 'sap-icon://accept'
                         text = 'blue'
                     )->segmented_button_item(
-                        key = 'GREEN'
+                        key  = 'GREEN'
                         icon = 'sap-icon://add-favorite'
                         text = 'green'
             )->get_parent( )->get_parent(
@@ -166,10 +144,10 @@ CLASS z2ui5_cl_demo_app_177 IMPLEMENTATION.
             )->get_parent(
             )->toolbar_spacer(
             )->overflow_toolbar_toggle_button(
-                icon = 'sap-icon://sort-descending'
+                icon  = 'sap-icon://sort-descending'
                 press = client->_event( 'SORT_DESCENDING' )
             )->overflow_toolbar_toggle_button(
-                icon = 'sap-icon://sort-ascending'
+                icon  = 'sap-icon://sort-ascending'
                 press = client->_event( 'SORT_ASCENDING' )
 
             )->overflow_toolbar_menu_button(
@@ -177,18 +155,17 @@ CLASS z2ui5_cl_demo_app_177 IMPLEMENTATION.
         type          = `Transparent`
         tooltip       = `Export`
         defaultaction = client->_event( 'MENU_DEFAULT' )
-        icon = `sap-icon://share`
-         buttonmode  = `Split`
-     )->_generic( `menu` )->_generic( `Menu`
+        icon          = `sap-icon://share`
+         buttonmode   = `Split`
+      )->_generic( `menu` )->_generic( `Menu`
         )->menu_item(
-            press  = client->_event( 'MENU_01' )
-            text   = `Export as PDF`
-            icon   = `sap-icon://pdf-attachment`
+            press = client->_event( 'MENU_01' )
+            text  = `Export as PDF`
+            icon  = `sap-icon://pdf-attachment`
       )->menu_item(
-            press  = client->_event( 'MENU_02' )
-            text   = `Export to Excel`
-            icon   = `sap-icon://excel-attachment`
-    ).
+            press = client->_event( 'MENU_02' )
+            text  = `Export to Excel`
+            icon  = `sap-icon://excel-attachment` ).
 
     tab->columns(
         )->column(
@@ -208,9 +185,13 @@ CLASS z2ui5_cl_demo_app_177 IMPLEMENTATION.
        )->text( '{VALUE}'
        )->text( '{INFO}'
        )->text( '{DESCR}'
-       )->checkbox( selected = '{CHECKBOX}' enabled = abap_false
+       )->checkbox( selected = '{CHECKBOX}'
+                    enabled  = abap_false
        )->text( '{COUNT}'
-       )->radial_micro_chart( size = `Responsive` height = `35px` percentage = `{PERCENTAGE}` valuecolor = `{VALUECOLOR}` ).
+       )->radial_micro_chart( size       = `Responsive`
+                              height     = `35px`
+                              percentage = `{PERCENTAGE}`
+                              valuecolor = `{VALUECOLOR}` ).
 
     client->view_display( view->stringify( ) ).
 

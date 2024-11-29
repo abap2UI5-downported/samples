@@ -15,7 +15,7 @@ CLASS z2ui5_cl_demo_app_197 DEFINITION
         storage_location TYPE string,
         quantity         TYPE i,
       END OF ty_s_tab .
-    TYPES:
+    TYPES
       ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH DEFAULT KEY .
 
     DATA mt_table TYPE ty_t_table .
@@ -54,23 +54,31 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
     
     temp2 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = view->page( id = `page_main`
-            title          = 'abap2UI5 - List Report Features'
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = temp2 ).
+            title               = 'abap2UI5 - List Report Features'
+            navbuttonpress      = client->_event( 'BACK' )
+            shownavbutton       = temp2 ).
 
     
     CLEAR temp1.
     INSERT `$event.mParameters.selectedItems` INTO TABLE temp1.
     
-    facet = page->facet_filter( id = `idFacetFilter` type = `Light` showpersonalization = abap_true showreset = abap_true reset = client->_event( val = `RESET` )
-      )->facet_filter_list( title = `Products` mode = `MultiSelect` items = client->_bind( mt_table_products ) listclose = client->_event( val = `FILTER`
+    facet = page->facet_filter( id                  = `idFacetFilter`
+                                      type                = `Light`
+                                      showpersonalization = abap_true
+                                      showreset           = abap_true
+                                      reset               = client->_event( val = `RESET` )
+      )->facet_filter_list( title     = `Products`
+                            mode      = `MultiSelect`
+                            items     = client->_bind( mt_table_products )
+                            listclose = client->_event( val                      = `FILTER`
 *                                                                           t_arg = VALUE #( ( `${$parameters>/selectedAll}` ) ) )
 *                                                                           t_arg = VALUE #( ( `$event.mParameters` ) ) )
                                                                            t_arg = temp1 )
         )->facet_filter_item( text = `{PRODUCT}` ).
 
     
-    tab = page->table( id = `tab` items = client->_bind_edit( val = mt_table ) ).
+    tab = page->table( id    = `tab`
+                             items = client->_bind_edit( val = mt_table ) ).
 
     
     lo_columns = tab->columns( ).
@@ -81,8 +89,10 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
     lo_columns->column( )->text( text = `Quantity` ).
 
     
-    lo_cells = tab->items(  )->column_list_item( ).
-    lo_cells->link( id = `link` text = '{PRODUCT}' press = client->_event( val = `POPOVER_DETAIL` ) ).
+    lo_cells = tab->items( )->column_list_item( ).
+    lo_cells->link( id    = `link`
+                    text  = '{PRODUCT}'
+                    press = client->_event( val = `POPOVER_DETAIL` ) ).
     lo_cells->text( `{CREATE_DATE}` ).
     lo_cells->text( `{CREATE_BY}` ).
     lo_cells->text( `{STORAGE_LOCATION}` ).
@@ -94,7 +104,7 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
-        TYPES temp4 TYPE RANGE OF string.
+    TYPES temp4 TYPE RANGE OF string.
 DATA lt_range TYPE temp4.
         DATA lt_arg TYPE string_table.
         DATA lv_json LIKE LINE OF lt_arg.
@@ -122,7 +132,6 @@ DATA lt_range TYPE temp4.
         client->view_model_update( ).
       WHEN 'FILTER'.
 
-        
 
 
         
@@ -147,7 +156,7 @@ DATA lt_range TYPE temp4.
             
             LOOP AT l_members INTO l_member.
               
-              lv_val =  lo_json->get( '/' && l_member && '/mProperties/text' ).
+              lv_val = lo_json->get( '/' && l_member && '/mProperties/text' ).
 
               
               CLEAR temp3.

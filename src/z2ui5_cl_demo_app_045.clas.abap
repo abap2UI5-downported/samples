@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_045 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_045 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_row,
@@ -14,8 +14,8 @@ CLASS Z2UI5_CL_DEMO_APP_045 DEFINITION PUBLIC.
         checkbox TYPE abap_bool,
       END OF ty_row.
 
-    TYPES temp1_f361827078 TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY.
-DATA t_tab TYPE temp1_f361827078.
+    TYPES temp1_850264c07c TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY.
+DATA t_tab TYPE temp1_850264c07c.
     DATA check_initialized TYPE abap_bool.
     DATA mv_info_filter TYPE string.
     METHODS refresh_data.
@@ -56,7 +56,7 @@ CLASS Z2UI5_CL_DEMO_APP_045 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA temp1 TYPE xsdboolean.
     DATA tab TYPE REF TO z2ui5_cl_xml_view.
@@ -90,24 +90,24 @@ CLASS Z2UI5_CL_DEMO_APP_045 IMPLEMENTATION.
         )->page(
             title          = 'abap2UI5 - Scroll Container with Table and Toolbar'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = temp1
+            shownavbutton  = temp1
             )->header_content(
                 )->link(
+      )->get_parent( ).
 
-
-        )->get_parent( ).
-
-    page->simple_form( title = 'Form Title' editable = abap_true
+    page->simple_form( title    = 'Form Title'
+                       editable = abap_true
                 )->content( 'form'
                     )->title( 'Filter'
                     )->label( 'info'
-                    )->input(  client->_bind( mv_info_filter )
+                    )->input( client->_bind( mv_info_filter )
                     )->button(
                         text  = 'filter'
                         press = client->_event( 'FLTER_INFO' ) ).
 
     
-    tab = page->scroll_container( height = '70%' vertical = abap_true
+    tab = page->scroll_container( height   = '70%'
+                                        vertical = abap_true
         )->table(
             growing             = abap_true
             growingthreshold    = '20'
@@ -135,7 +135,8 @@ CLASS Z2UI5_CL_DEMO_APP_045 IMPLEMENTATION.
        )->text( '{VALUE}'
        )->text( '{INFO}'
        )->text( '{DESCR}'
-       )->checkbox( selected = '{CHECKBOX}' enabled = abap_false
+       )->checkbox( selected = '{CHECKBOX}'
+                    enabled  = abap_false
        )->text( '{COUNT}' ).
 
     client->view_display( page->get_root( )->xml_get( ) ).

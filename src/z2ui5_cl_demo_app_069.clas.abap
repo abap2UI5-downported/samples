@@ -1,11 +1,11 @@
-CLASS Z2UI5_CL_DEMO_APP_069 DEFINITION
+CLASS z2ui5_cl_demo_app_069 DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC .
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app .
+    INTERFACES z2ui5_if_app .
 
     TYPES:
       BEGIN OF ty_t_tree3,
@@ -33,7 +33,7 @@ CLASS Z2UI5_CL_DEMO_APP_069 DEFINITION
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO Z2UI5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS view_display_master.
     METHODS view_display_app_01.
@@ -57,14 +57,14 @@ CLASS Z2UI5_CL_DEMO_APP_069 IMPLEMENTATION.
     
     page = lo_view_nested->page( title = `APP_01` ).
 
-    page->button( text = 'Update this view' press = client->_event( 'UPDATE_DETAIL' ) ).
+    page->button( text  = 'Update this view'
+                  press = client->_event( 'UPDATE_DETAIL' ) ).
 
     client->nest_view_display(
       val            = lo_view_nested->stringify( )
       id             = `test`
       method_insert  = 'addMidColumnPage'
-      method_destroy = 'removeAllMidColumnPages'
-    ).
+      method_destroy = 'removeAllMidColumnPages' ).
 
   ENDMETHOD.
 
@@ -78,31 +78,30 @@ CLASS Z2UI5_CL_DEMO_APP_069 IMPLEMENTATION.
     
     page = lo_view_nested->page( title = `APP_02` ).
 
-    page->button( text = 'Update this view' press = client->_event( 'UPDATE_DETAIL' )
-    )->input( ).
+    page->button( text  = 'Update this view'
+                  press = client->_event( 'UPDATE_DETAIL' )
+      )->input( ).
 
     page->button(
-          text = 'button 01'
+          text    = 'button 01'
           press   = client->_event( `NEST_TEST` )
           enabled = client->_bind( mv_check_enabled_01 ) ).
 
     page->button(
-          text = 'button 01'
+          text    = 'button 01'
           press   = client->_event( `NEST_TEST` )
           enabled = client->_bind( mv_check_enabled_01 ) ).
 
     page->button(
-        text = 'button 02'
+        text    = 'button 02'
         press   = client->_event( `NEST_TEST` )
-        enabled = client->_bind( mv_check_enabled_02 )
-       ).
+        enabled = client->_bind( mv_check_enabled_02 ) ).
 
     client->nest_view_display(
       val            = lo_view_nested->stringify( )
       id             = `test`
       method_insert  = 'addMidColumnPage'
-      method_destroy = 'removeAllMidColumnPages'
-    ).
+      method_destroy = 'removeAllMidColumnPages' ).
 
   ENDMETHOD.
 
@@ -117,32 +116,36 @@ CLASS Z2UI5_CL_DEMO_APP_069 IMPLEMENTATION.
 
     
     page = view->shell( )->page(
-          title          = 'abap2UI5 - Master-Detail View with Nested Views'
-          navbuttonpress = client->_event( 'BACK' )
+          title           = 'abap2UI5 - Master-Detail View with Nested Views'
+          navbuttonpress  = client->_event( 'BACK' )
             shownavbutton = abap_true
           )->header_content(
-             )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1680907265891618817`
+             )->link( text   = 'Demo'
+                      target = '_blank'
+                      href   = `https://twitter.com/abap2UI5/status/1680907265891618817`
              )->link(
          )->get_parent( ).
 
     
-    lr_master = page->flexible_column_layout( layout = 'TwoColumnsBeginExpanded' id ='test' )->begin_column_pages( ).
+    lr_master = page->flexible_column_layout( layout = 'TwoColumnsBeginExpanded'
+                                                    id     ='test' )->begin_column_pages( ).
 
     
     CLEAR temp1.
     INSERT `${TEXT}` INTO TABLE temp1.
     lr_master->tree( items = client->_bind( mt_tree ) )->items(
         )->standard_tree_item(
-            type = 'Active'
-            title = '{TEXT}' press = client->_event( val = `EVENT_ITEM`
-            t_arg = temp1 ) ).
+            type  = 'Active'
+            title = '{TEXT}'
+            press = client->_event( val = `EVENT_ITEM`
+            t_arg                       = temp1 ) ).
 
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
       DATA temp3 TYPE z2ui5_cl_demo_app_069=>ty_t_tree.
       DATA temp4 LIKE LINE OF temp3.
       DATA temp1 TYPE z2ui5_cl_demo_app_069=>ty_t_tree1-nodes.
@@ -213,14 +216,14 @@ CLASS Z2UI5_CL_DEMO_APP_069 IMPLEMENTATION.
       INSERT temp4 INTO TABLE temp3.
       mt_tree = temp3.
 
-      view_display_master(  ).
+      view_display_master( ).
 
     ENDIF.
 
     CASE client->get( )-event.
 
       WHEN `UPDATE_DETAIL`.
-        view_display_app_01(  ).
+        view_display_app_01( ).
 
       WHEN `EVENT_ITEM`.
         
@@ -235,9 +238,9 @@ CLASS Z2UI5_CL_DEMO_APP_069 IMPLEMENTATION.
         ENDIF.
         CASE temp5.
           WHEN 'App_001'.
-            view_display_app_01(  ).
+            view_display_app_01( ).
           WHEN 'App_002'.
-            view_display_app_02(  ).
+            view_display_app_02( ).
         ENDCASE.
 
       WHEN `NEST_TEST`.

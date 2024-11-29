@@ -98,7 +98,9 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
     
     
     LOOP AT mt_t002 REFERENCE INTO line.
-      lo_items->icon_tab_filter( text = line->class count = line->count key = line->id ).
+      lo_items->icon_tab_filter( text  = line->class
+                                 count = line->count
+                                 key   = line->id ).
       lo_items->icon_tab_separator( ).
     ENDLOOP.
 
@@ -123,11 +125,11 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD render_sub_app.
+    FIELD-SYMBOLS <view_display> TYPE any.
 
 
     DATA t002 TYPE REF TO z2ui5_cl_demo_app_117=>ty_s_t002.
             FIELD-SYMBOLS <view> TYPE any.
-    FIELD-SYMBOLS <view_display> TYPE any.
     READ TABLE mt_t002 REFERENCE INTO t002
          WITH KEY id = mv_selectedkey.
 
@@ -168,7 +170,7 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
 
     client->view_model_update( ).
 
-    
+
     ASSIGN mo_app->('MV_VIEW_DISPLAY') TO <view_display>.
 
     IF <view_display> = abap_true.

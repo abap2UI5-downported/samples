@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_009 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_009 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     DATA:
       BEGIN OF screen,
@@ -22,18 +22,18 @@ CLASS Z2UI5_CL_DEMO_APP_009 DEFINITION PUBLIC.
         value TYPE string,
         descr TYPE string,
       END OF s_suggestion_items.
-    TYPES temp1_6d1f103a38 TYPE STANDARD TABLE OF s_suggestion_items WITH DEFAULT KEY.
-DATA mt_suggestion TYPE temp1_6d1f103a38.
-    TYPES temp2_6d1f103a38 TYPE STANDARD TABLE OF s_suggestion_items WITH DEFAULT KEY.
-DATA mt_suggestion_sel TYPE temp2_6d1f103a38.
+    TYPES temp1_eec7b95dcf TYPE STANDARD TABLE OF s_suggestion_items WITH DEFAULT KEY.
+DATA mt_suggestion TYPE temp1_eec7b95dcf.
+    TYPES temp2_eec7b95dcf TYPE STANDARD TABLE OF s_suggestion_items WITH DEFAULT KEY.
+DATA mt_suggestion_sel TYPE temp2_eec7b95dcf.
 
     TYPES:
       BEGIN OF s_suggestion_items_city,
         value TYPE string,
         descr TYPE string,
       END OF s_suggestion_items_city.
-    TYPES temp3_6d1f103a38 TYPE STANDARD TABLE OF s_suggestion_items_city WITH DEFAULT KEY.
-DATA mt_suggestion_city TYPE temp3_6d1f103a38.
+    TYPES temp3_eec7b95dcf TYPE STANDARD TABLE OF s_suggestion_items_city WITH DEFAULT KEY.
+DATA mt_suggestion_city TYPE temp3_eec7b95dcf.
 
     TYPES:
       BEGIN OF s_employee,
@@ -43,30 +43,30 @@ DATA mt_suggestion_city TYPE temp3_6d1f103a38.
         name     TYPE string,
         lastname TYPE string,
       END OF s_employee.
-    TYPES temp4_6d1f103a38 TYPE STANDARD TABLE OF s_employee WITH DEFAULT KEY.
-DATA mt_employees_sel TYPE temp4_6d1f103a38.
-    TYPES temp5_6d1f103a38 TYPE STANDARD TABLE OF s_employee WITH DEFAULT KEY.
-DATA mt_employees TYPE temp5_6d1f103a38.
+    TYPES temp4_eec7b95dcf TYPE STANDARD TABLE OF s_employee WITH DEFAULT KEY.
+DATA mt_employees_sel TYPE temp4_eec7b95dcf.
+    TYPES temp5_eec7b95dcf TYPE STANDARD TABLE OF s_employee WITH DEFAULT KEY.
+DATA mt_employees TYPE temp5_eec7b95dcf.
     DATA check_initialized TYPE abap_bool.
 
 
     DATA mv_view_popup TYPE string.
     METHODS popup_f4_table
       IMPORTING
-        client TYPE REF TO Z2UI5_if_client.
+        client TYPE REF TO z2ui5_if_client.
     METHODS popup_f4_table_custom
       IMPORTING
-        client TYPE REF TO Z2UI5_if_client.
+        client TYPE REF TO z2ui5_if_client.
   PROTECTED SECTION.
 
-    METHODS Z2UI5_on_rendering
+    METHODS z2ui5_on_rendering
       IMPORTING
-        client TYPE REF TO Z2UI5_if_client.
+        client TYPE REF TO z2ui5_if_client.
 
-    METHODS Z2UI5_on_event
+    METHODS z2ui5_on_event
       IMPORTING
-        client TYPE REF TO Z2UI5_if_client.
-    METHODS Z2UI5_on_init.
+        client TYPE REF TO z2ui5_if_client.
+    METHODS z2ui5_on_init.
 
 
   PRIVATE SECTION.
@@ -80,10 +80,10 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
   METHOD popup_f4_table.
 
     DATA popup TYPE REF TO z2ui5_cl_xml_view.
-    popup = Z2UI5_cl_xml_view=>factory_popup( ).
+    popup = z2ui5_cl_xml_view=>factory_popup( ).
 
     popup->dialog( 'abap2UI5 - F4 Value Help'
-    )->table(
+      )->table(
             mode  = 'SingleSelectLeft'
             items = client->_bind_edit( mt_suggestion_sel )
         )->columns(
@@ -97,8 +97,8 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
                 )->cells(
                     )->text( '{VALUE}'
                     )->text( '{DESCR}'
-    )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-    )->buttons(
+      )->get_parent( )->get_parent( )->get_parent( )->get_parent(
+      )->buttons(
             )->button(
                 text  = 'continue'
                 press = client->_event( 'POPUP_TABLE_F4_CONTINUE' )
@@ -112,7 +112,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
 
     DATA popup2 TYPE REF TO z2ui5_cl_xml_view.
     DATA tab TYPE REF TO z2ui5_cl_xml_view.
-    popup2 = Z2UI5_cl_xml_view=>factory_popup( ).
+    popup2 = z2ui5_cl_xml_view=>factory_popup( ).
 
     popup2 = popup2->dialog( 'abap2UI5 - F4 Value Help' ).
 
@@ -124,8 +124,8 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
                 showsuggestion  = abap_true )->get(
             )->suggestion_items( )->get(
                 )->list_item(
-                    text            = '{VALUE}'
-                    additionaltext  = '{DESCR}'
+                    text           = '{VALUE}'
+                    additionaltext = '{DESCR}'
         )->get_parent( )->get_parent(
         )->button(
             text  = 'search...'
@@ -164,22 +164,22 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     CLEAR mv_view_popup.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      Z2UI5_on_init( ).
+      z2ui5_on_init( ).
     ENDIF.
-    Z2UI5_on_event( client ).
+    z2ui5_on_event( client ).
 
-    Z2UI5_on_rendering( client ).
+    z2ui5_on_rendering( client ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_event.
+  METHOD z2ui5_on_event.
         DATA temp1 LIKE mt_employees_sel.
         DATA temp2 LIKE mt_employees_sel.
           DATA temp3 LIKE LINE OF mt_employees_sel.
@@ -265,7 +265,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_init.
+  METHOD z2ui5_on_init.
 
     DATA temp9 LIKE mt_suggestion.
     DATA temp10 LIKE LINE OF temp9.
@@ -582,7 +582,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_rendering.
+  METHOD z2ui5_on_rendering.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
@@ -596,8 +596,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
         )->page(
             title          = 'abap2UI5 - Value Help Examples'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = temp1
-        ).
+            shownavbutton  = temp1 ).
 
     
     form = page->grid( 'L7 M7 S7'
@@ -671,7 +670,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
     ENDCASE.
 
     client->view_display( page->stringify( ) ).
-*    client->popup_display( popup->stringify( ) ).
+
 
   ENDMETHOD.
 ENDCLASS.

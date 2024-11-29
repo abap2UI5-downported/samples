@@ -26,7 +26,7 @@ CLASS Z2UI5_CL_DEMO_APP_149 IMPLEMENTATION.
 
     TRY.
         
-        lo_prev = client->get_app( client->get(  )-s_draft-id_prev_app ).
+        lo_prev = client->get_app( client->get( )-s_draft-id_prev_app ).
         
         temp1 ?= lo_prev.
         
@@ -49,7 +49,7 @@ CLASS Z2UI5_CL_DEMO_APP_149 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Popup HTML'
                 navbuttonpress = client->_event( val = 'BACK' )
-                shownavbutton = temp1
+                shownavbutton  = temp1
            )->button(
             text  = 'Open Popup...'
             press = client->_event( 'POPUP' ) ).
@@ -66,9 +66,9 @@ CLASS Z2UI5_CL_DEMO_APP_149 IMPLEMENTATION.
 
       WHEN 'POPUP'.
         
-        lo_app = z2ui5_cl_pop_html=>factory( `<h2>HTML Links</h2>` && |\n|  &&
-                                                     `<p>HTML links are defined with the a tag:</p>` && |\n|  &&
-                                                     |\n|  &&
+        lo_app = z2ui5_cl_pop_html=>factory( `<h2>HTML Links</h2>` && |\n| &&
+                                                     `<p>HTML links are defined with the a tag:</p>` && |\n| &&
+                                                     |\n| &&
                                                      `<a href="https://www.w3schools.com" target="_blank">This is a link</a>` ).
         client->nav_app_call( lo_app ).
 

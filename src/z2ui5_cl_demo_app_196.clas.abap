@@ -203,7 +203,8 @@ CLASS Z2UI5_CL_DEMO_APP_196 IMPLEMENTATION.
     DATA panel TYPE REF TO z2ui5_cl_xml_view.
     DATA fb TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory( ).
-    view->_generic( ns = `html` name = `style` )->_cc_plain_xml( `.SICursorStyle:hover {` &&
+    view->_generic( ns   = `html`
+                    name = `style` )->_cc_plain_xml( `.SICursorStyle:hover {` &&
                                                                  `  cursor: pointer;` &&
                                                                  `}` &&
                                                                  `.SIBorderStyle {` &&
@@ -219,29 +220,38 @@ CLASS Z2UI5_CL_DEMO_APP_196 IMPLEMENTATION.
     temp2 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = view->shell(
          )->page(
-            showheader       = temp1
+            showheader     = temp1
             title          = 'abap2UI5 - Status Indicators Library'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = temp2
-            ).
+            shownavbutton  = temp2 ).
 
     
-    panel = page->panel( class = `sapUiResponsiveMargin SIPanelStyle` width = `95%` ).
+    panel = page->panel( class = `sapUiResponsiveMargin SIPanelStyle`
+                               width = `95%` ).
     panel->text( text = `Use the slider for adjusting the fill` ).
-    panel->slider( class = `sapUiLargeMarginBottom` enabletickmarks = abap_true
-               value = client->_bind_edit( mv_slider_value ) )->get(
+    panel->slider( class           = `sapUiLargeMarginBottom`
+                   enabletickmarks = abap_true
+               value               = client->_bind_edit( mv_slider_value ) )->get(
        )->responsive_scale( tickmarksbetweenlabels = `10` ).
 
     
-    fb = panel->flex_box( wrap = `Wrap` items = client->_bind( mt_shapes ) ).
+    fb = panel->flex_box( wrap  = `Wrap`
+                                items = client->_bind( mt_shapes ) ).
     fb->items(
-      )->flex_box( direction = `Column` class = `sapUiTinyMargin SIBorderStyle`
+      )->flex_box( direction = `Column`
+                   class     = `sapUiTinyMargin SIBorderStyle`
         )->items(
-          )->status_indicator( value = client->_bind_edit( mv_slider_value ) width = `120px` height = `120px` class = `sapUiTinyMargin SICursorStyle`
+          )->status_indicator( value  = client->_bind_edit( mv_slider_value )
+                               width  = `120px`
+                               height = `120px`
+                               class  = `sapUiTinyMargin SICursorStyle`
             )->property_thresholds(
-              )->property_threshold( fillcolor = `Error` tovalue = `25` )->get_parent(
-              )->property_threshold( fillcolor = `Critical` tovalue = `60` )->get_parent(
-              )->property_threshold( fillcolor = `Good` tovalue = `100` )->get_parent(
+              )->property_threshold( fillcolor = `Error`
+                                     tovalue   = `25` )->get_parent(
+              )->property_threshold( fillcolor = `Critical`
+                                     tovalue   = `60` )->get_parent(
+              )->property_threshold( fillcolor = `Good`
+                                     tovalue   = `100` )->get_parent(
                )->get_parent(
              )->shape_group(
               )->library_shape( shapeid = `{ID}` ).

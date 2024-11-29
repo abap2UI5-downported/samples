@@ -1,27 +1,27 @@
-class Z2UI5_CL_DEMO_APP_201 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_201 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    INTERFACES if_serializable_object .
+    INTERFACES z2ui5_if_app .
 
-  types:
-    BEGIN OF ty_s_currency,
+    TYPES:
+      BEGIN OF ty_s_currency,
         language          TYPE string,
         currency          TYPE string,
         currencyname      TYPE string,
         currencyshortname TYPE string,
       END OF ty_s_currency .
 
-  TYPES temp1_f1dd69a9b5 TYPE STANDARD TABLE OF ty_s_currency.
-data:
-    mt_suggestion_out TYPE temp1_f1dd69a9b5 .
-  TYPES temp2_f1dd69a9b5 TYPE STANDARD TABLE OF ty_s_currency.
-data:
-    mt_suggestion TYPE temp2_f1dd69a9b5 .
-  data INPUT type STRING .
+    TYPES temp1_6794b3f377 TYPE STANDARD TABLE OF ty_s_currency.
+DATA
+      mt_suggestion_out TYPE temp1_6794b3f377 .
+    TYPES temp2_6794b3f377 TYPE STANDARD TABLE OF ty_s_currency.
+DATA
+      mt_suggestion TYPE temp2_6794b3f377 .
+    DATA input TYPE string .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -43,7 +43,7 @@ CLASS Z2UI5_CL_DEMO_APP_201 IMPLEMENTATION.
 * | Instance Protected Method Z2UI5_CL_DEMO_APP_201->SET_DATA
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD SET_DATA.
+  METHOD set_data.
 
     TYPES:
       BEGIN OF ty_s_currency,
@@ -1112,7 +1112,7 @@ CLASS Z2UI5_CL_DEMO_APP_201 IMPLEMENTATION.
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
       DATA lv_script TYPE string.
 
     me->client = client.
@@ -1134,8 +1134,9 @@ CLASS Z2UI5_CL_DEMO_APP_201 IMPLEMENTATION.
       set_data( ).
 
       client->view_display( z2ui5_cl_xml_view=>factory(
-       )->_z2ui5( )->timer(  client->_event( `START` )
-         )->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_script
+        )->_z2ui5( )->timer( client->_event( `START` )
+         )->_generic( ns   = `html`
+                      name = `script` )->_cc_plain_xml( lv_script
          )->stringify( ) ).
 
     ENDIF.
@@ -1151,8 +1152,8 @@ CLASS Z2UI5_CL_DEMO_APP_201 IMPLEMENTATION.
 * | Instance Protected Method Z2UI5_CL_DEMO_APP_201->Z2UI5_ON_EVENT
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD Z2UI5_ON_EVENT.
-        TYPES temp5 TYPE RANGE OF string.
+  METHOD z2ui5_on_event.
+    TYPES temp5 TYPE RANGE OF string.
 DATA lt_range TYPE temp5.
         DATA temp3 LIKE lt_range.
         DATA temp4 LIKE LINE OF temp3.
@@ -1163,7 +1164,6 @@ DATA lt_range TYPE temp5.
         z2ui5_view_display( ).
       WHEN 'ON_SUGGEST'.
 
-        
 
         
         CLEAR temp3.
@@ -1181,11 +1181,7 @@ DATA lt_range TYPE temp5.
           INSERT ls_sugg INTO TABLE mt_suggestion_out.
         ENDLOOP.
 
-*        SELECT FROM i_currencytext
-*          FIELDS *
-*          WHERE currencyname IN @lt_range
-*          AND  language = 'E'
-*          INTO CORRESPONDING FIELDS OF TABLE @mt_suggestion.
+
 
         client->view_model_update( ).
 
@@ -1201,7 +1197,7 @@ DATA lt_range TYPE temp5.
 * | Instance Protected Method Z2UI5_CL_DEMO_APP_201->Z2UI5_VIEW_DISPLAY
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD Z2UI5_VIEW_DISPLAY.
+  METHOD z2ui5_view_display.
 
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA temp1 TYPE xsdboolean.
@@ -1211,7 +1207,7 @@ DATA lt_range TYPE temp5.
     page = z2ui5_cl_xml_view=>factory( )->shell( )->page(
        title          = 'abap2UI5 - Live Suggestion Event'
        navbuttonpress = client->_event( 'BACK' )
-       shownavbutton = temp1 ).
+       shownavbutton  = temp1 ).
 
 
     
@@ -1223,14 +1219,14 @@ DATA lt_range TYPE temp5.
         )->content( 'form'
             )->label( 'Input with value help'
             )->input(
-                    id              = `suggInput`
-                    value           = client->_bind_edit( input )
-                    suggest         = client->_event( 'ON_SUGGEST' )
+                    id                           = `suggInput`
+                    value                        = client->_bind_edit( input )
+                    suggest                      = client->_event( 'ON_SUGGEST' )
                     showtablesuggestionvaluehelp = abap_false
-                    suggestionrows  = client->_bind( mt_suggestion_out )
-                    showsuggestion  = abap_true
-                    valueliveupdate = abap_true
-                    autocomplete    = abap_false
+                    suggestionrows               = client->_bind( mt_suggestion_out )
+                    showsuggestion               = abap_true
+                    valueliveupdate              = abap_true
+                    autocomplete                 = abap_false
                  )->get( ).
 
     input->suggestion_columns(
@@ -1242,7 +1238,8 @@ DATA lt_range TYPE temp5.
             )->label( text = '{CURRENCYNAME}'
             )->label( text = '{CURRENCY}' ).
 
-    page->_generic( name = `script` ns = `html` )->_cc_plain_xml( `setInputFIlter()` ).
+    page->_generic( name = `script`
+                    ns   = `html` )->_cc_plain_xml( `setInputFIlter()` ).
 
     client->view_display( page->stringify( ) ).
 

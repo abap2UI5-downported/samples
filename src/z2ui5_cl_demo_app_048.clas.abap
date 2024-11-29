@@ -1,10 +1,10 @@
-CLASS Z2UI5_CL_DEMO_APP_048 DEFINITION
+CLASS z2ui5_cl_demo_app_048 DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC .
 
   PUBLIC SECTION.
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_row,
@@ -14,7 +14,7 @@ CLASS Z2UI5_CL_DEMO_APP_048 DEFINITION
         icon          TYPE string,
         info          TYPE string,
         highlight     TYPE string,
-        wrapCharLimit TYPE i,
+        wrapcharlimit TYPE i,
         selected      TYPE abap_bool,
         checkbox      TYPE abap_bool,
       END OF ty_row.
@@ -31,7 +31,7 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_048 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
       DATA temp1 LIKE t_tab.
       DATA temp2 LIKE LINE OF temp1.
         DATA lv_row_title TYPE string.
@@ -54,42 +54,42 @@ CLASS Z2UI5_CL_DEMO_APP_048 IMPLEMENTATION.
       temp2-descr = 'this is a description1 1234567890 1234567890'.
       temp2-icon = 'sap-icon://badge'.
       temp2-highlight = 'Information'.
-      temp2-wrapCharLimit = '100'.
+      temp2-wrapcharlimit = '100'.
       INSERT temp2 INTO TABLE temp1.
       temp2-title = 'entry_02'.
       temp2-info = 'Success'.
       temp2-descr = 'this is a description2 1234567890 1234567890'.
       temp2-icon = 'sap-icon://favorite'.
       temp2-highlight = 'Success'.
-      temp2-wrapCharLimit = '10'.
+      temp2-wrapcharlimit = '10'.
       INSERT temp2 INTO TABLE temp1.
       temp2-title = 'entry_03'.
       temp2-info = 'Warning'.
       temp2-descr = 'this is a description3 1234567890 1234567890'.
       temp2-icon = 'sap-icon://employee'.
       temp2-highlight = 'Warning'.
-      temp2-wrapCharLimit = '100'.
+      temp2-wrapcharlimit = '100'.
       INSERT temp2 INTO TABLE temp1.
       temp2-title = 'entry_04'.
       temp2-info = 'Error'.
       temp2-descr = 'this is a description4 1234567890 1234567890'.
       temp2-icon = 'sap-icon://accept'.
       temp2-highlight = 'Error'.
-      temp2-wrapCharLimit = '10'.
+      temp2-wrapcharlimit = '10'.
       INSERT temp2 INTO TABLE temp1.
       temp2-title = 'entry_05'.
       temp2-info = 'None'.
       temp2-descr = 'this is a description5 1234567890 1234567890'.
       temp2-icon = 'sap-icon://activities'.
       temp2-highlight = 'None'.
-      temp2-wrapCharLimit = '10'.
+      temp2-wrapcharlimit = '10'.
       INSERT temp2 INTO TABLE temp1.
       temp2-title = 'entry_06'.
       temp2-info = 'Information'.
       temp2-descr = 'this is a description6 1234567890 1234567890'.
       temp2-icon = 'sap-icon://account'.
       temp2-highlight = 'Information'.
-      temp2-wrapCharLimit = '100'.
+      temp2-wrapcharlimit = '100'.
       INSERT temp2 INTO TABLE temp1.
       t_tab = temp1.
 
@@ -120,17 +120,16 @@ CLASS Z2UI5_CL_DEMO_APP_048 IMPLEMENTATION.
     
     page = z2ui5_cl_xml_view=>factory( )->shell(
         )->page(
-            title          = 'abap2UI5 - List'
-            navbuttonpress = client->_event( 'BACK' )
+            title           = 'abap2UI5 - List'
+            navbuttonpress  = client->_event( 'BACK' )
               shownavbutton = abap_true
             )->header_content(
                   )->link(
-                    text = 'Demo'  target = '_blank'
-                    href = `https://twitter.com/abap2UI5/status/1657279838586109953`
+                    text   = 'Demo'
+                    target = '_blank'
+                    href   = `https://twitter.com/abap2UI5/status/1657279838586109953`
                 )->link(
-
-
-            )->get_parent( ).
+      )->get_parent( ).
 
     
     CLEAR temp5.
@@ -188,8 +187,8 @@ CLASS Z2UI5_CL_DEMO_APP_048 IMPLEMENTATION.
         items           = client->_bind_edit( t_tab )
         mode            = `SingleSelectMaster`
         selectionchange = client->_event( 'SELCHANGE' )
-    )->_generic(
-         name = `StandardListItem`
+      )->_generic(
+         name      = `StandardListItem`
             t_prop = temp5 ).
 
     client->view_display( page->get_root( )->xml_get( ) ).

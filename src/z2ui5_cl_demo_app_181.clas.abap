@@ -77,11 +77,10 @@ CLASS Z2UI5_CL_DEMO_APP_181 IMPLEMENTATION.
     
     temp7 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = view->shell( )->page(
-        title = `Cards Demo`
-        class = `sapUiContentPadding`
+        title          = `Cards Demo`
+        class          = `sapUiContentPadding`
         navbuttonpress = client->_event( 'BACK' )
-        shownavbutton  = temp7
-    ).
+        shownavbutton  = temp7 ).
 
     
     CLEAR temp1.
@@ -132,31 +131,35 @@ CLASS Z2UI5_CL_DEMO_APP_181 IMPLEMENTATION.
     temp6-key = `VN`.
     INSERT temp6 INTO TABLE temp5.
     
-    card_1 = page->card( width = `300px` class = `sapUiMediumMargin`
+    card_1 = page->card( width = `300px`
+                               class = `sapUiMediumMargin`
       )->header( ns = `f`
-        )->card_header( title = `Buy bus ticket on-line`
+        )->card_header( title    = `Buy bus ticket on-line`
                         subtitle = `Buy a single-ride ticket for a date`
-                        iconsrc = `sap-icon://bus-public-transport`
+                        iconsrc  = `sap-icon://bus-public-transport`
                       )->get_parent( )->get_parent(
                     )->content( ns = `f`
-                      )->vbox( height = `110px`
-                               class = `sapUiSmallMargin`
+                      )->vbox( height         = `110px`
+                               class          = `sapUiSmallMargin`
                                justifycontent = `SpaceBetween`
                         )->hbox( justifycontent = `SpaceBetween`
-                          )->combobox( width = `120px`
+                          )->combobox( width       = `120px`
                                        placeholder = `From City`
-                                       items = `{path:'` && client->_bind_local( val = temp1 path = abap_true ) && `', sorter: { path: 'TEXT' } }`
-                                       )->get( )->item( key = `{KEY}` text = `{TEXT}` )->get_parent(
-                          )->combobox( width = `120px`
+                                       items       = `{path:'` && client->_bind_local( val                   = temp1 path = abap_true ) && `', sorter: { path: 'TEXT' } }`
+                                       )->get( )->item( key  = `{KEY}`
+                                                        text = `{TEXT}` )->get_parent(
+                          )->combobox( width       = `120px`
                                        placeholder = `To City`
-                                       items = `{path:'` && client->_bind_local( val = temp5 path = abap_true ) && `', sorter: { path: 'TEXT' } }`
-                                       )->get( )->item( key = `{KEY}` text = `{TEXT}` )->get_parent(
+                                       items       = `{path:'` && client->_bind_local( val                   = temp5 path = abap_true ) && `', sorter: { path: 'TEXT' } }`
+                                       )->get( )->item( key  = `{KEY}`
+                                                        text = `{TEXT}` )->get_parent(
                       )->get_parent(
-                   )->hbox( rendertype = `Bare` justifycontent = `SpaceBetween`
-                    )->date_picker( width = `200px`
+                   )->hbox( rendertype     = `Bare`
+                            justifycontent = `SpaceBetween`
+                    )->date_picker( width       = `200px`
                                     placeholder = `Choose Date ...`
-                    )->button( text = `Book`
-                               type = `Emphasized`
+                    )->button( text  = `Book`
+                               type  = `Emphasized`
                                press = client->_event( `BOOK` )
                                class = `sapUiTinyMarginBegin` ).
 
@@ -183,25 +186,27 @@ CLASS Z2UI5_CL_DEMO_APP_181 IMPLEMENTATION.
     temp4-status_schema = `Warning`.
     INSERT temp4 INTO TABLE temp3.
     
-    card_2 = page->card( width = `300px` class = `sapUiMediumMargin`
+    card_2 = page->card( width = `300px`
+                               class = `sapUiMediumMargin`
                      )->header( ns = `f`
-                       )->card_header( title = `Project Cloud Transformation`
+                       )->card_header( title    = `Project Cloud Transformation`
                                        subtitle = `Revenue per Product | EUR`
                                      )->get_parent( )->get_parent(
                                    )->content( ns = `f`
-                                    )->list( class = `sapUiSmallMarginBottom`
+                                    )->list( class          = `sapUiSmallMarginBottom`
                                              showseparators = `None`
-                                             items = client->_bind_local( temp3 )
+                                             items          = client->_bind_local( temp3 )
                                        )->custom_list_item(
-                                        )->hbox( alignitems = `Center`  justifycontent = `SpaceBetween`
+                                        )->hbox( alignitems     = `Center`
+                                                 justifycontent = `SpaceBetween`
                                           )->vbox( class = `sapUiSmallMarginBegin sapUiSmallMarginTopBottom`
-                                            )->title( text = `{TITLE}` titlestyle = `H3`
+                                            )->title( text       = `{TITLE}`
+                                                      titlestyle = `H3`
                                             )->text( text = `{SUBTITLE}`
                                           )->get_parent(
                                           )->object_status( class = `sapUiTinyMargin sapUiSmallMarginEnd`
-                                                            text = `{REVENUE}`
-                                                            state = `{STATUS_SCHEMA}`
-    ).
+                                                            text  = `{REVENUE}`
+                                                            state = `{STATUS_SCHEMA}` ).
 
     client->view_display( view->stringify( ) ).
 

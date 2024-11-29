@@ -76,17 +76,24 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'BUTTON_MCONFIRM'.
-        client->message_box_display( type = 'confirm' text = 'Confirm MessageBox' ).
+        client->message_box_display( type = 'confirm'
+                                     text = 'Confirm MessageBox' ).
       WHEN 'BUTTON_MALERT'.
-        client->message_box_display( type = 'alert' text = 'Alert MessageBox' ).
+        client->message_box_display( type = 'alert'
+                                     text = 'Alert MessageBox' ).
       WHEN 'BUTTON_MERROR'.
-        client->message_box_display( type = 'error' text = 'Error MessageBox' ).
+        client->message_box_display( type = 'error'
+                                     text = 'Error MessageBox' ).
       WHEN 'BUTTON_MINFO'.
-        client->message_box_display( type = 'information' text = 'Information MessageBox' ).
+        client->message_box_display( type = 'information'
+                                     text = 'Information MessageBox' ).
       WHEN 'BUTTON_MWARNING'.
-        client->message_box_display( type = 'warning' text = 'Warning MessageBox' ).
+        client->message_box_display( type = 'warning'
+                                     text = 'Warning MessageBox' ).
       WHEN 'BUTTON_MSUCCESS'.
-        client->message_box_display( type = 'success' text = 'Success MessageBox' icon = `sap-icon://accept` ).
+        client->message_box_display( type = 'success'
+                                     text = 'Success MessageBox'
+                                     icon = `sap-icon://accept` ).
       WHEN 'BUTTON_SEND'.
         client->message_box_display( 'success - values send to the server' ).
       WHEN 'BUTTON_CLEAR'.
@@ -164,14 +171,14 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
           showheader       = temp1
             title          = 'abap2UI5 - Selection-Screen Example'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = temp2
-            ).
+            shownavbutton  = temp2 ).
 
     
     grid = page->grid( 'L6 M12 S12'
         )->content( 'layout' ).
 
-    grid->simple_form( title = 'Input' editable = abap_true
+    grid->simple_form( title    = 'Input'
+                       editable = abap_true
         )->content( 'form'
             )->label( 'Input with suggestion items'
             )->input(
@@ -182,10 +189,11 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
                     showsuggestion  = abap_true )->get(
                 )->suggestion_items( )->get(
                     )->list_item(
-                        text = '{VALUE}'
+                        text           = '{VALUE}'
                         additionaltext = '{DESCR}' ).
 
-    grid->simple_form( title = 'Time Inputs' editable = abap_true
+    grid->simple_form( title    = 'Time Inputs'
+                       editable = abap_true
         )->content( 'form'
             )->label( 'Date'
             )->date_picker( client->_bind_edit( screen-date )
@@ -199,7 +207,8 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
     
     form = grid->get_parent( )->get_parent( )->grid( 'L12 M12 S12'
         )->content( 'layout'
-            )->simple_form( title = 'Input with select options' editable = abap_true
+            )->simple_form( title    = 'Input with select options'
+                            editable = abap_true
                 )->content( 'form' ).
 
     
@@ -229,7 +238,7 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
           selectedkey = client->_bind_edit( screen-combo_key )
           items       = client->_bind_local( temp3 )
               )->item(
-                  key = '{KEY}'
+                  key  = '{KEY}'
                   text = '{TEXT}'
       )->get_parent( )->get_parent( ).
 
@@ -253,40 +262,39 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
           selectedkey = client->_bind_edit( screen-combo_key2 )
           items       = client->_bind_local( temp5 )
               )->item(
-                  key = '{KEY}'
+                  key  = '{KEY}'
                   text = '{TEXT}'
       )->get_parent( )->get_parent( ).
 
     lv_test->label( 'Segmented Button'
-    )->segmented_button( selected_key = client->_bind_edit( screen-segment_key )
+      )->segmented_button( selected_key = client->_bind_edit( screen-segment_key )
         )->items(
             )->segmented_button_item(
-                key = 'BLUE'
+                key  = 'BLUE'
                 icon = 'sap-icon://accept'
                 text = 'blue'
             )->segmented_button_item(
-                key = 'GREEN'
+                key  = 'GREEN'
                 icon = 'sap-icon://add-favorite'
                 text = 'green'
             )->segmented_button_item(
-                key = 'BLACK'
+                key  = 'BLACK'
                 icon = 'sap-icon://attachment'
                 text = 'black'
-   )->get_parent( )->get_parent(
-
-   )->label( 'Switch disabled'
-   )->switch(
+      )->get_parent( )->get_parent(
+      )->label( 'Switch disabled'
+      )->switch(
         enabled       = abap_false
         customtexton  = 'A'
         customtextoff = 'B'
-   )->label( 'Switch accept/reject'
-   )->switch(
+      )->label( 'Switch accept/reject'
+      )->switch(
         state         = client->_bind_edit( screen-check_switch_01 )
         customtexton  = 'on'
         customtextoff = 'off'
-        type = 'AcceptReject'
-   )->label( 'Switch normal'
-   )->switch(
+        type          = 'AcceptReject'
+      )->label( 'Switch normal'
+      )->switch(
         state         = client->_bind_edit( screen-check_switch_02 )
         customtexton  = 'YES'
         customtextoff = 'NO' ).

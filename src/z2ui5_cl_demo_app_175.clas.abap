@@ -43,28 +43,29 @@ CLASS z2ui5_cl_demo_app_175 IMPLEMENTATION.
     
     temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     lr_view = lr_view->shell( )->page( id = `page_main`
-             title          = 'abap2UI5 - Demo Wizard Control'
-             navbuttonpress = client->_event( 'BACK' )
-             shownavbutton = temp1 ).
+             title                        = 'abap2UI5 - Demo Wizard Control'
+             navbuttonpress               = client->_event( 'BACK' )
+             shownavbutton                = temp1 ).
 
     
     lr_wizard = lr_view->wizard( ).
     
-    lr_wiz_step1 = lr_wizard->wizard_step( title = 'Step1'  validated          = abap_true ).
+    lr_wiz_step1 = lr_wizard->wizard_step( title     = 'Step1'
+                                                 validated = abap_true ).
     lr_wiz_step1->message_strip( text = 'STEP1' ).
     
-    lr_wiz_step2 = lr_wizard->wizard_step( title              = 'Step2'
-                                                 validated          = abap_true ).
+    lr_wiz_step2 = lr_wizard->wizard_step( title     = 'Step2'
+                                                 validated = abap_true ).
 
     lr_wiz_step2->message_strip( text = 'STEP2' ).
     
-    lr_wiz_step3 = lr_wizard->wizard_step( title              = 'Step3'
-                                                 validated          = abap_true ).
+    lr_wiz_step3 = lr_wizard->wizard_step( title     = 'Step3'
+                                                 validated = abap_true ).
 
     lr_wiz_step3->message_strip( text = 'STEP3' ).
     
-    lr_wiz_step4 = lr_wizard->wizard_step( title              = 'Step4'
-                                                 validated          = abap_true ).
+    lr_wiz_step4 = lr_wizard->wizard_step( title     = 'Step4'
+                                                 validated = abap_true ).
 
     lr_wiz_step4->message_strip( text = 'STEP4' ).
 

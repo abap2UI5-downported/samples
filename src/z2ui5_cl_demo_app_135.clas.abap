@@ -48,7 +48,8 @@ CLASS z2ui5_cl_demo_app_135 IMPLEMENTATION.
     DATA temp1 TYPE xsdboolean.
     DATA vbox TYPE REF TO z2ui5_cl_xml_view.
     DATA hbox TYPE REF TO z2ui5_cl_xml_view.
-    set_session_stateful( client = client stateful = abap_true ).
+    set_session_stateful( client   = client
+                          stateful = abap_true ).
 
     
     view = z2ui5_cl_xml_view=>factory( ).
@@ -64,7 +65,7 @@ CLASS z2ui5_cl_demo_app_135 IMPLEMENTATION.
     page->message_strip(
         text    = client->_bind( error-text )
         type    = 'Error'
-        visible = client->_bind( error-flag )  ).
+        visible = client->_bind( error-flag ) ).
 
     
     vbox = page->vbox( ).
@@ -83,11 +84,12 @@ CLASS z2ui5_cl_demo_app_135 IMPLEMENTATION.
       press = client->_event( 'START_SESSION' ) ).
 
     hbox = vbox->hbox( alignitems = 'Center' ).
-    hbox->label( text = 'press button to create lock entry (SM12) in backend session' class = 'sapUiTinyMarginEnd' ).
+    hbox->label( text  = 'press button to create lock entry (SM12) in backend session'
+                 class = 'sapUiTinyMarginEnd' ).
     hbox->button(
       text  = 'Lock'
       press = client->_event( 'LOCK' )
-      type = 'Emphasized' ).
+      type  = 'Emphasized' ).
 
     hbox = vbox->hbox( ).
 
@@ -108,16 +110,19 @@ CLASS z2ui5_cl_demo_app_135 IMPLEMENTATION.
   METHOD on_event.
     CASE client->get( )-event.
       WHEN 'BACK'.
-        set_session_stateful( client = client stateful = abap_false ).
+        set_session_stateful( client   = client
+                              stateful = abap_false ).
         client->nav_app_leave( ).
       WHEN 'LOCK'.
         lcl_locking=>acquire_lock( ).
         client->message_toast_display( `Lock acquired. Press 'Refresh lock counter'` ).
         client->view_model_update( ).
       WHEN 'END_SESSION'.
-        set_session_stateful( client = client stateful = abap_false ).
+        set_session_stateful( client   = client
+                              stateful = abap_false ).
       WHEN 'START_SESSION'.
-        set_session_stateful( client = client stateful = abap_true ).
+        set_session_stateful( client   = client
+                              stateful = abap_true ).
       WHEN 'REFRESH'.
         update_lock_counter( ).
         client->view_model_update( ).

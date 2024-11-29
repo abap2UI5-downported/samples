@@ -44,10 +44,10 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
         client->follow_up_action( client->_event_client(
                                     val   = `SET_SIZE_LIMIT`
                                     t_arg = temp1
-                        )    ).
+                        ) ).
         client->view_model_update( ).
         client->message_toast_display( `SizeLimitUpdated` ).
-*        RETURN.
+
 
       WHEN 'BACK'.
         client->nav_app_leave( ).
@@ -76,15 +76,15 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
          )->page(
                  title          = 'abap2UI5 - First Example'
                  navbuttonpress = client->_event( val = 'BACK' )
-                 shownavbutton = temp5
+                 shownavbutton  = temp5
              )->simple_form( title = 'Form Title' editable = abap_true
                  )->content( 'form'
                      )->title( 'Input'
                      )->label( 'Link'
                      )->label( 'setSizeLimit'
-                     )->input( value =  client->_bind_edit( mv_set_size_limit )
+                     )->input( value = client->_bind_edit( mv_set_size_limit )
                      )->label( 'Number of Entries'
-                     )->input( value =  client->_bind_edit( mv_combo_number )
+                     )->input( value = client->_bind_edit( mv_combo_number )
                      )->label( 'demo'
                      )->combobox( items = client->_bind_local( lt_combo )
                         )->item( key = '{KEY}' text = '{TEXT}'

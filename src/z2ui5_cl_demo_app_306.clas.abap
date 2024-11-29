@@ -8,11 +8,11 @@ CLASS z2ui5_cl_demo_app_306 DEFINITION
 
     TYPES:
       BEGIN OF ty_picture,
-        time TYPE string,
-        id   TYPE string,
-        name TYPE string,
-        data TYPE string,
-        selected type abap_bool,
+        time     TYPE string,
+        id       TYPE string,
+        name     TYPE string,
+        data     TYPE string,
+        selected TYPE abap_bool,
       END OF ty_picture.
 
     TYPES temp1_80bb85a5cb TYPE STANDARD TABLE OF ty_picture WITH DEFAULT KEY.
@@ -52,17 +52,17 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     
     
     temp3 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
-    page = cont->page( title          = 'abap2UI5 - Device Camera Picture'
-               navbuttonpress = client->_event( 'BACK' )
-               shownavbutton = temp3
+    page = cont->page( title = 'abap2UI5 - Device Camera Picture'
+               navbuttonpress      = client->_event( 'BACK' )
+               shownavbutton       = temp3
               )->header_content(
-                  )->link( text = 'Source_Code' target = '_blank'
+                  )->link( text   = 'Source_Code'
+                           target = '_blank'
           )->get_parent( ).
 
     page->_z2ui5( )->camera_picture(
-                      value    = client->_bind_edit( mv_picture_base )
-                      onphoto    = client->_event( 'CAPTURE' )
-                   ).
+                      value   = client->_bind_edit( mv_picture_base )
+                      onphoto = client->_event( 'CAPTURE' ) ).
 
     page->list(
         headertext      = 'List Ouput'
@@ -74,8 +74,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
             description = '{NAME}'
             icon        = '{ICON}'
             info        = '{INFO}'
-            selected    = `{SELECTED}`
-       ).
+            selected    = `{SELECTED}` ).
 
     IF mv_pic_display IS NOT INITIAL.
       
@@ -84,11 +83,14 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
       temp2-n = 'src'.
       temp2-v = mv_pic_display.
       INSERT temp2 INTO TABLE temp1.
-      page->_generic( ns = 'html' name = 'center'
-        )->_generic( ns = 'html' name = 'img' t_prop = temp1  ).
+      page->_generic( ns   = 'html'
+                      name = 'center'
+        )->_generic( ns     = 'html'
+                     name   = 'img'
+                     t_prop = temp1 ).
     ENDIF.
 
-    client->view_display(  view->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
@@ -108,11 +110,8 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     IF mv_check_init = abap_false.
       mv_check_init = abap_true.
 
-           view_display( client ).
-*      client->view_display( z2ui5_cl_xml_view=>factory(
-*       )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_camera_pic=>get_js(  ) )->get_parent(
-*       )->_z2ui5( )->timer( delayms = `200` finished = client->_event( 'START' )
-*       )->stringify( ) ).
+      view_display( client ).
+
 
     ENDIF.
 

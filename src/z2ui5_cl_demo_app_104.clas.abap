@@ -22,9 +22,9 @@ CLASS z2ui5_cl_demo_app_104 DEFINITION
         checkbox TYPE abap_bool,
       END OF ty_row .
 
-    DATA:
+    DATA
       t_tab TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY .
-    DATA:
+    DATA
       t_tab2 TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY .
     DATA mv_layout TYPE string .
     DATA mv_title TYPE string .
@@ -100,17 +100,20 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
     DATA lr_list TYPE REF TO z2ui5_cl_xml_view.
     page = z2ui5_cl_xml_view=>factory(
        )->page(
-          title          = 'abap2UI5 - Master Detail Page with Nested View'
-          navbuttonpress = client->_event( 'BACK' )
+          title           = 'abap2UI5 - Master Detail Page with Nested View'
+          navbuttonpress  = client->_event( 'BACK' )
             shownavbutton = abap_true ).
 
     page->header_content(
-             )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1628701535222865922`
+             )->link( text   = 'Demo'
+                      target = '_blank'
+                      href   = `https://twitter.com/abap2UI5/status/1628701535222865922`
              )->link(
          )->get_parent( ).
 
     
-    col_layout =  page->flexible_column_layout( layout = client->_bind_edit( mv_layout ) id ='test' ).
+    col_layout = page->flexible_column_layout( layout = client->_bind_edit( mv_layout )
+                                                     id     ='test' ).
 
     
     lr_master = col_layout->begin_column_pages( ).
@@ -127,8 +130,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
               icon        = '{ICON}'
               info        = '{INFO}'
               press       = client->_event( 'TEST' )
-              selected    = `{SELECTED}`
-         ).
+              selected    = `{SELECTED}` ).
 
     client->view_display( lr_list->stringify( ) ).
 
@@ -162,8 +164,8 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
       t_tab = temp1.
 
       mv_layout = `OneColumn`.
-      view_display_master(  ).
-      view_display_detail(  ).
+      view_display_master( ).
+      view_display_detail( ).
 
     ENDIF.
 
@@ -186,14 +188,14 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 
         mv_layout = `TwoColumnsMidExpanded`.
         client->view_model_update( ).
-        view_display_detail(  ).
+        view_display_detail( ).
         on_init_sub( ).
 
         client->nest_view_display(
           val            = lo_view_nested->stringify( )
           id             = `test`
           method_insert  = 'addMidColumnPage'
-          method_destroy = 'removeAllMidColumnPages'  ).
+          method_destroy = 'removeAllMidColumnPages' ).
 
       WHEN 'BACK'.
         client->nav_app_leave( ).

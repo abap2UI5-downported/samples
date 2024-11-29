@@ -1,12 +1,12 @@
-class z2ui5_cl_demo_app_215 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_215 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces Z2UI5_IF_APP .
+    INTERFACES z2ui5_if_app .
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
+    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     METHODS display_view
@@ -24,7 +24,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_215 IMPLEMENTATION.
 
 
-  METHOD DISPLAY_VIEW.
+  METHOD display_view.
 
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA temp1 TYPE xsdboolean.
@@ -37,18 +37,22 @@ CLASS z2ui5_cl_demo_app_215 IMPLEMENTATION.
             shownavbutton  = temp1 ).
 
     
-    layout = page->vertical_layout( class  = `sapUiContentPadding` width = `100%` ).
-    layout->busy_indicator( text = `... something is happening` class = `sapUiTinyMarginBottom` ).
-    layout->hbox( justifycontent = `Start` alignitems = `Center`
+    layout = page->vertical_layout( class = `sapUiContentPadding`
+                                          width = `100%` ).
+    layout->busy_indicator( text  = `... something is happening`
+                            class = `sapUiTinyMarginBottom` ).
+    layout->hbox( justifycontent = `Start`
+                  alignitems     = `Center`
              )->busy_indicator( size = `3em` ).
-    layout->busy_indicator( size = `1.6rem` class = `sapUiMediumMarginBegin` ).
+    layout->busy_indicator( size  = `1.6rem`
+                            class = `sapUiMediumMarginBegin` ).
 
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD ON_EVENT.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -58,7 +62,7 @@ CLASS z2ui5_cl_demo_app_215 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.

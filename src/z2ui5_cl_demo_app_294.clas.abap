@@ -54,9 +54,9 @@ CLASS z2ui5_cl_demo_app_294 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `button_hint_id`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'CLICK_HINT_ICON' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'CLICK_HINT_ICON' ) ).
 
     page->header_content(
        )->link(
@@ -64,16 +64,17 @@ CLASS z2ui5_cl_demo_app_294 IMPLEMENTATION.
            target = '_blank'
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.DatePicker/sample/sap.m.sample.DatePickerValueState' ).
 
-    page->flex_box( items = client->_bind( lt_a_data ) direction = `Column`
+    page->flex_box( items     = client->_bind( lt_a_data )
+                    direction = `Column`
              )->vbox( class = `sapUiTinyMargin`
-                 )->label( text = '{LABEL}' labelfor = `SI`
+                 )->label( text     = '{LABEL}'
+                           labelfor = `SI`
                  )->date_picker(
-                     id = `DP`
-                     width = `100%`
-                     valuestate = '{VALUE_STATE}'
+                     id             = `DP`
+                     width          = `100%`
+                     valuestate     = '{VALUE_STATE}'
                      valuestatetext = '{VALUE_STATE_TEXT}' )->get_parent(
-             )->get_parent(
-          ).
+             )->get_parent( ).
 
     client->view_display( page->stringify( ) ).
 
@@ -96,15 +97,15 @@ CLASS z2ui5_cl_demo_app_294 IMPLEMENTATION.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `This example shows different DatePicker value states.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 

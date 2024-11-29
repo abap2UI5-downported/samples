@@ -56,9 +56,9 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
 
     page_01->header_content(
        )->button( id = `button_hint_id`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'CLICK_HINT_ICON' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'CLICK_HINT_ICON' ) ).
 
     page_01->header_content(
        )->link(
@@ -70,62 +70,65 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
               )->content(
                   )->hbox( class = `sapUiMediumMarginBottom`
                       )->label( text = `Error state`
-                          labelfor = `errorSelect`
-                          class = `sapUiTinyMarginEnd sapUiTinyMarginTop`
+                          labelfor   = `errorSelect`
+                          class      = `sapUiTinyMarginEnd sapUiTinyMarginTop`
                       )->select(
-                          id = `errorSelect`
+                          id             = `errorSelect`
                           forceselection = abap_true
-                          selectedkey = client->_bind( selectedproducterrorcollection )
-                          valuestate = `Error`
+                          selectedkey    = client->_bind( selectedproducterrorcollection )
+                          valuestate     = `Error`
                           valuestatetext = `error value state text`
-                          items = client->_bind( lt_a_products )
-                          )->item( key = '{PRODUCT_ID}' text = '{NAME}'
+                          items          = client->_bind( lt_a_products )
+                          )->item( key  = '{PRODUCT_ID}'
+                                   text = '{NAME}'
                       )->get_parent(
                   )->get_parent(
                   )->hbox( class = `sapUiMediumMarginBottom`
                       )->label( text = `Warning state`
-                          labelfor = `warningSelect`
-                          class = `sapUiTinyMarginEnd sapUiTinyMarginTop`
+                          labelfor   = `warningSelect`
+                          class      = `sapUiTinyMarginEnd sapUiTinyMarginTop`
                       )->select(
-                          id = `warningSelect`
+                          id             = `warningSelect`
                           forceselection = abap_true
-                          selectedkey = client->_bind( selectedproductwrnngcollection )
-                          valuestate = `Warning`
+                          selectedkey    = client->_bind( selectedproductwrnngcollection )
+                          valuestate     = `Warning`
                           valuestatetext = `This is a Level 1 explanation. The items Lorem and Ipsum are not recommended from the system.`
-                          items = client->_bind( lt_a_products )
-                          )->item( key = '{PRODUCT_ID}' text = '{NAME}'
+                          items          = client->_bind( lt_a_products )
+                          )->item( key  = '{PRODUCT_ID}'
+                                   text = '{NAME}'
                       )->get_parent(
                   )->get_parent(
                   )->hbox( class = `sapUiMediumMarginBottom`
                       )->label( text = `Success state`
-                          labelfor = `successSelect`
-                          class = `sapUiTinyMarginEnd sapUiTinyMarginTop`
+                          labelfor   = `successSelect`
+                          class      = `sapUiTinyMarginEnd sapUiTinyMarginTop`
                       )->select(
-                          id = `successSelect`
+                          id             = `successSelect`
                           forceselection = abap_true
-                          selectedkey = client->_bind( selectedproductsccsscollection )
-                          valuestate = `Success`
+                          selectedkey    = client->_bind( selectedproductsccsscollection )
+                          valuestate     = `Success`
                           valuestatetext = `success value state text`
-                          items = client->_bind( lt_a_products )
-                          )->item( key = '{PRODUCT_ID}' text = '{NAME}'
+                          items          = client->_bind( lt_a_products )
+                          )->item( key  = '{PRODUCT_ID}'
+                                   text = '{NAME}'
                       )->get_parent(
                   )->get_parent(
                   )->hbox( class = `sapUiMediumMarginBottom`
                       )->label( text = `Information state`
-                          labelfor = `informationSelect`
-                          class = `sapUiTinyMarginEnd sapUiTinyMarginTop`
+                          labelfor   = `informationSelect`
+                          class      = `sapUiTinyMarginEnd sapUiTinyMarginTop`
                       )->select(
-                          id = `informationSelect`
+                          id             = `informationSelect`
                           forceselection = abap_true
-                          selectedkey = client->_bind( selectedproductinforcollection )
-                          valuestate = `Information`
+                          selectedkey    = client->_bind( selectedproductinforcollection )
+                          valuestate     = `Information`
                           valuestatetext = `information value state text`
-                          items = client->_bind( lt_a_products )
-                          )->item( key = '{PRODUCT_ID}' text = '{NAME}'
+                          items          = client->_bind( lt_a_products )
+                          )->item( key  = '{PRODUCT_ID}'
+                                   text = '{NAME}'
                       )->get_parent(
                   )->get_parent(
-              )->get_parent(
-             ).
+              )->get_parent( ).
 
     client->view_display( page_01->stringify( ) ).
 
@@ -148,15 +151,15 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `Visualizes the validation state of the control, for example, Error, Warning and Success.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 

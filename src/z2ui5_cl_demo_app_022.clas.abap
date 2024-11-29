@@ -42,13 +42,14 @@ CLASS z2ui5_cl_demo_app_022 IMPLEMENTATION.
             shownavbutton  = temp1 ).
 
     
-    layout = page->vertical_layout( class = `sapUiContentPadding` width = `100%` ).
+    layout = page->vertical_layout( class = `sapUiContentPadding`
+                                          width = `100%` ).
     layout->label( 'ProgressIndicator'
         )->progress_indicator(
-            percentvalue    = screen-progress_value
-            displayvalue    = '0,44GB of 32GB used'
-            showvalue       = abap_true
-            state           = 'Success' ).
+            percentvalue = screen-progress_value
+            displayvalue = '0,44GB of 32GB used'
+            showvalue    = abap_true
+            state        = 'Success' ).
 
     client->view_display( page->stringify( ) ).
 

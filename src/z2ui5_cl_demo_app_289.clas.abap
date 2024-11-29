@@ -10,7 +10,7 @@ CLASS z2ui5_cl_demo_app_289 DEFINITION
       BEGIN OF ty_product,
         product        TYPE string,
         type           TYPE string,
-        additionalInfo TYPE string,
+        additionalinfo TYPE string,
       END OF ty_product.
 
     DATA check_initialized TYPE abap_bool.
@@ -53,9 +53,9 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `button_hint_id`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'CLICK_HINT_ICON' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'CLICK_HINT_ICON' ) ).
 
     page->header_content(
        )->link(
@@ -67,7 +67,7 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
     CLEAR temp1.
     INSERT `${TYPE}` INTO TABLE temp1.
     page->table( id = `idProductsTable`
-           items = client->_bind( lt_a_data )
+           items    = client->_bind( lt_a_data )
            )->columns(
                )->column(
                    )->text( text = `Products`
@@ -82,13 +82,12 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
                )->object_identifier(
                    text = '{PRODUCT}' )->get_parent(
                )->object_marker(
-                   type = '{TYPE}'
+                   type           = '{TYPE}'
                    additionalinfo = '{ADDITIONALINFO}' )->get_parent(
                )->object_marker(
-                   type = '{TYPE}'
+                   type           = '{TYPE}'
                    additionalinfo = '{ADDITIONALINFO}'
-                   press = client->_event( val = `onPress` t_arg = temp1 )
-          ).
+                   press          = client->_event( val = `onPress` t_arg = temp1 ) ).
 
     client->view_display( page->stringify( ) ).
 
@@ -113,15 +112,15 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `The ObjectMarker is a small building block representing an object by an icon or text and icon. Often it is used in a table.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 

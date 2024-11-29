@@ -86,9 +86,9 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
     
     temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = view->shell( )->page( id = `page_main`
-            title          = 'abap2UI5 - Search with Enter'
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = temp1 ).
+            title                         = 'abap2UI5 - Search with Enter'
+            navbuttonpress                = client->_event( 'BACK' )
+            shownavbutton                 = temp1 ).
 
     
     vbox = page->vbox( ).
@@ -100,9 +100,9 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
 *         livechange = client->__event( 'BUTTON_SEARCH' )
          width  = `17.5rem`
          id     = `SEARCH` )->button(
-        text = `Go`
+        text  = `Go`
         press = client->_event( `BUTTON_START` )
-        type = `Emphasized` ).
+        type  = `Emphasized` ).
 
     
     tab = vbox->table( items = client->_bind( val = mt_table ) ).
@@ -183,8 +183,7 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
         EXPORTING
           val = mv_search_value
         CHANGING
-          tab = mt_table
-      ).
+          tab = mt_table ).
 
     ENDIF.
 

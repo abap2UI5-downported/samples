@@ -54,9 +54,9 @@ CLASS z2ui5_cl_demo_app_297 IMPLEMENTATION.
 
     page_01->header_content(
        )->button( id = `button_hint_id`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'CLICK_HINT_ICON' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'CLICK_HINT_ICON' ) ).
 
     page_01->header_content(
        )->link(
@@ -66,18 +66,19 @@ CLASS z2ui5_cl_demo_app_297 IMPLEMENTATION.
 
     page_01->page(
                 showheader = abap_false
-                class = `sapUiContentPadding`
+                class      = `sapUiContentPadding`
                 )->content(
                       )->select(
                           forceselection = abap_false
-                          selectedkey = client->_bind( selected_product )
-                          items = client->_bind( lt_product_collection )
+                          selectedkey    = client->_bind( selected_product )
+                          items          = client->_bind( lt_product_collection )
                           )->item(
-                          )->list_item( key = '{PRODUCT_ID}' text = '{NAME}' icon = '{ICON}'
+                          )->list_item( key  = '{PRODUCT_ID}'
+                                        text = '{NAME}'
+                                        icon = '{ICON}'
                         )->get_parent(
                     )->get_parent(
-                )->get_parent(
-               ).
+                )->get_parent( ).
 
     client->view_display( page_01->stringify( ) ).
 
@@ -100,15 +101,15 @@ CLASS z2ui5_cl_demo_app_297 IMPLEMENTATION.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `Illustrates the usage of a Select with icons` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 

@@ -81,8 +81,9 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
 
 
       client->view_display( z2ui5_cl_xml_view=>factory(
-       )->_z2ui5( )->timer(  client->_event( `START` )
-         )->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_script
+        )->_z2ui5( )->timer( client->_event( `START` )
+         )->_generic( ns   = `html`
+                      name = `script` )->_cc_plain_xml( lv_script
          )->stringify( ) ).
 
 
@@ -107,21 +108,33 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
         CLEAR temp1.
         INSERT `First Button` INTO TABLE temp1.
         INSERT `Second Button` INTO TABLE temp1.
-        client->message_box_display( type = '' text = 'Custom MessageBox' icon = `SUCCESS`
-                                     title = 'Custom MessageBox' actions = temp1 emphasizedaction = `First Button`
-                                     onclose = `callMessageToast()` details = `<h3>these are details</h3>`).
+        client->message_box_display( type             = ''
+                                     text             = 'Custom MessageBox'
+                                     icon             = `SUCCESS`
+                                     title            = 'Custom MessageBox'
+                                     actions          = temp1
+                                     emphasizedaction = `First Button`
+                                     onclose          = `callMessageToast()`
+                                     details          = `<h3>these are details</h3>`).
       WHEN 'BUTTON_MCONFIRM'.
-        client->message_box_display( type = 'confirm' text = 'Confirm MessageBox' ).
+        client->message_box_display( type = 'confirm'
+                                     text = 'Confirm MessageBox' ).
       WHEN 'BUTTON_MALERT'.
-        client->message_box_display( type = 'alert' text = 'Alert MessageBox' ).
+        client->message_box_display( type = 'alert'
+                                     text = 'Alert MessageBox' ).
       WHEN 'BUTTON_MERROR'.
-        client->message_box_display( type = 'error' text = 'Error MessageBox' ).
+        client->message_box_display( type = 'error'
+                                     text = 'Error MessageBox' ).
       WHEN 'BUTTON_MINFO'.
-        client->message_box_display( type = 'information' text = 'Information MessageBox' ).
+        client->message_box_display( type = 'information'
+                                     text = 'Information MessageBox' ).
       WHEN 'BUTTON_MWARNING'.
-        client->message_box_display( type = 'warning' text = 'Warning MessageBox' ).
+        client->message_box_display( type = 'warning'
+                                     text = 'Warning MessageBox' ).
       WHEN 'BUTTON_MSUCCESS'.
-        client->message_box_display( type = 'success' text = 'Success MessageBox' icon = `sap-icon://accept` ).
+        client->message_box_display( type = 'success'
+                                     text = 'Success MessageBox'
+                                     icon = `sap-icon://accept` ).
       WHEN 'BUTTON_SEND'.
         client->message_box_display( 'success - values send to the server' ).
       WHEN 'BUTTON_CLEAR'.
@@ -183,7 +196,8 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
     DATA temp2 TYPE xsdboolean.
     DATA grid TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory( ).
-    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( `function callMessageToast(sAction) { sap.m.MessageToast.show('Hello there !!'); }` ).
+    view->_generic( name = `script`
+                    ns   = `html` )->_cc_plain_xml( `function callMessageToast(sAction) { sap.m.MessageToast.show('Hello there !!'); }` ).
     
     
     temp1 = boolc( abap_false = client->get( )-check_launchpad_active ).
@@ -194,14 +208,14 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
           showheader       = temp1
             title          = 'abap2UI5 - Selection-Screen Example'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = temp2
-            ).
+            shownavbutton  = temp2 ).
 
     
     grid = page->grid( 'L6 M12 S12'
         )->content( 'layout' ).
 
-    grid->simple_form( title = 'Input' editable = abap_true
+    grid->simple_form( title    = 'Input'
+                       editable = abap_true
         )->content( 'form'
             )->label( 'Input with suggestion items'
             )->input(
@@ -212,7 +226,7 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
                     showsuggestion  = abap_true )->get(
                 )->suggestion_items( )->get(
                     )->list_item(
-                        text = '{VALUE}'
+                        text           = '{VALUE}'
                         additionaltext = '{DESCR}' ).
 
     page->footer( )->overflow_toolbar(
@@ -250,7 +264,8 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
              type  = 'Success' ).
 
 
-    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( `setInputFIlter()` ).
+    view->_generic( name = `script`
+                    ns   = `html` )->_cc_plain_xml( `setInputFIlter()` ).
 
     client->view_display( page->stringify( ) ).
 

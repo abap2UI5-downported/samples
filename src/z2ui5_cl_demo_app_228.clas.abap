@@ -1,12 +1,12 @@
-class z2ui5_cl_demo_app_228 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_228 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces Z2UI5_IF_APP .
+    INTERFACES z2ui5_if_app .
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
+    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     METHODS display_view
@@ -24,7 +24,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_228 IMPLEMENTATION.
 
 
-  METHOD DISPLAY_VIEW.
+  METHOD display_view.
 
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA temp1 TYPE xsdboolean.
@@ -38,29 +38,51 @@ CLASS z2ui5_cl_demo_app_228 IMPLEMENTATION.
 
     
     layout = page->label( text = `Numeric content with margins` ).
-    layout->numeric_content( value = `65.5` scale = `MM` class = `sapUiSmallMargin`
+    layout->numeric_content( value      = `65.5`
+                             scale      = `MM`
+                             class      = `sapUiSmallMargin`
                              withmargin = abap_true ).
-    layout->numeric_content( value = `65.5` scale = `MM`
-                             valueColor = `Good` indicator = `Up` class = `sapUiSmallMargin`
+    layout->numeric_content( value      = `65.5`
+                             scale      = `MM`
+                             valuecolor = `Good`
+                             indicator  = `Up`
+                             class      = `sapUiSmallMargin`
                              withmargin = abap_true ).
-    layout->numeric_content( value = `6666` scale = `MM`
-                             valueColor = `Critical` indicator = `Up` class = `sapUiSmallMargin`
+    layout->numeric_content( value      = `6666`
+                             scale      = `MM`
+                             valuecolor = `Critical`
+                             indicator  = `Up`
+                             class      = `sapUiSmallMargin`
                              withmargin = abap_true ).
-    layout->numeric_content( value = `65.5` scale = `MM`
-                             valueColor = `Error` indicator = `Down` class = `sapUiSmallMargin`
+    layout->numeric_content( value      = `65.5`
+                             scale      = `MM`
+                             valuecolor = `Error`
+                             indicator  = `Down`
+                             class      = `sapUiSmallMargin`
                              withmargin = abap_true ).
 
     layout->label( text = `Numeric content without margins` ).
-    layout->numeric_content( value = `65.5` scale = `MM` class = `sapUiSmallMargin`
+    layout->numeric_content( value      = `65.5`
+                             scale      = `MM`
+                             class      = `sapUiSmallMargin`
                              withmargin = abap_false ).
-    layout->numeric_content( value = `65.5` scale = `MM`
-                             valueColor = `Good` indicator = `Up` class = `sapUiSmallMargin`
+    layout->numeric_content( value      = `65.5`
+                             scale      = `MM`
+                             valuecolor = `Good`
+                             indicator  = `Up`
+                             class      = `sapUiSmallMargin`
                              withmargin = abap_false ).
-    layout->numeric_content( value = `6666` scale = `MM`
-                             valueColor = `Critical` indicator = `Up` class = `sapUiSmallMargin`
+    layout->numeric_content( value      = `6666`
+                             scale      = `MM`
+                             valuecolor = `Critical`
+                             indicator  = `Up`
+                             class      = `sapUiSmallMargin`
                              withmargin = abap_false ).
-    layout->numeric_content( value = `65.5` scale = `MM`
-                             valueColor = `Error` indicator = `Down` class = `sapUiSmallMargin`
+    layout->numeric_content( value      = `65.5`
+                             scale      = `MM`
+                             valuecolor = `Error`
+                             indicator  = `Down`
+                             class      = `sapUiSmallMargin`
                              withmargin = abap_false ).
 
     client->view_display( page->stringify( ) ).
@@ -68,7 +90,7 @@ CLASS z2ui5_cl_demo_app_228 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ON_EVENT.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -78,7 +100,7 @@ CLASS z2ui5_cl_demo_app_228 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.

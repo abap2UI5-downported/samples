@@ -1,12 +1,12 @@
-class z2ui5_cl_demo_app_255 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_255 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces Z2UI5_IF_APP .
+    INTERFACES z2ui5_if_app .
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
+    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -29,7 +29,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_255 IMPLEMENTATION.
 
 
-  METHOD DISPLAY_VIEW.
+  METHOD display_view.
 
     DATA css TYPE string.
     DATA view TYPE REF TO z2ui5_cl_xml_view.
@@ -52,12 +52,10 @@ CLASS z2ui5_cl_demo_app_255 IMPLEMENTATION.
                 `    background-color: #193441;`                 &&
                 `    cursor: pointer;`                           &&
                 `}`                                              &&
-
-                `.navigationExamples .ne-flexbox1 li:hover {`    &&
+      `.navigationExamples .ne-flexbox1 li:hover {`    &&
                 `    background-color: orange;`                  &&
                 `}`                                              &&
-
-                `.navigationExamples .ne-flexbox2 li {`          &&
+      `.navigationExamples .ne-flexbox2 li {`          &&
                 `    margin: 0.5em;`                             &&
                 `    width: 25%;`                                &&
                 `    min-width: 15%;`                            &&
@@ -68,13 +66,11 @@ CLASS z2ui5_cl_demo_app_255 IMPLEMENTATION.
                 `    transition: width 0.5s ease-out, background-color 0.5s ease-out, flex-basis 0.5s ease-out;` &&
                 `    cursor: pointer;`                           &&
                 `}`                                              &&
-
-                `.navigationExamples .ne-flexbox2 li:hover {`    &&
+      `.navigationExamples .ne-flexbox2 li:hover {`    &&
                 `    flex-basis: 35% !important;`                &&
                 `    background-color: orange;`                  &&
                 `}`                                              &&
-
-                `.navigationExamples .ne-flexbox1 li a,`         &&
+      `.navigationExamples .ne-flexbox1 li a,`         &&
                 `.navigationExamples .ne-flexbox2 li a {`        &&
                 `    color: #fff;`                               &&
                 `    text-decoration: none;`                     &&
@@ -84,7 +80,8 @@ CLASS z2ui5_cl_demo_app_255 IMPLEMENTATION.
 
     
     view = z2ui5_cl_xml_view=>factory( ).
-    view->_generic( name = `style` ns = `html` )->_cc_plain_xml( css )->get_parent( ).
+    view->_generic( name = `style`
+                    ns   = `html` )->_cc_plain_xml( css )->get_parent( ).
 
     
     
@@ -97,9 +94,9 @@ CLASS z2ui5_cl_demo_app_255 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `hint_icon`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'POPOVER' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'POPOVER' ) ).
 
     page->header_content(
        )->link(
@@ -109,39 +106,40 @@ CLASS z2ui5_cl_demo_app_255 IMPLEMENTATION.
 
     
     layout = page->vbox( class = `navigationExamples`
-                          )->panel(  headerText = `Variable width`
+                          )->panel( headertext = `Variable width`
                               )->flex_box(
-                                  class = `ne-flexbox1`
-                                  renderType = `List`
-                                  justifyContent = `Center`
-                                  alignItems = `Center`
+                                  class          = `ne-flexbox1`
+                                  rendertype     = `List`
+                                  justifycontent = `Center`
+                                  alignitems     = `Center`
                                   )->html( content = `<a >Item 1</a>` )->get_parent(
                                   )->html( content = `<a >Long item 2</a>` )->get_parent(
                                   )->html( content = `<a >Item 3</a>` )->get_parent( )->get_parent(
-
-                          )->panel(  headerText = `Same width, transition effect`
+      )->panel( headertext = `Same width, transition effect`
                               )->flex_box(
-                                  class = `ne-flexbox2`
-                                  renderType = `List`
-                                  justifyContent = `SpaceBetween`
-                                  alignItems = `Center`
+                                  class          = `ne-flexbox2`
+                                  rendertype     = `List`
+                                  justifycontent = `SpaceBetween`
+                                  alignitems     = `Center`
                                   )->html( content = `<a >Item 1</a>` )->get(
                                       )->layout_data( ns = `core`
-                                          )->flex_item_data( growFactor = `1` baseSize = `25%` )->get_parent( )->get_parent(
+                                          )->flex_item_data( growfactor = `1`
+                                                             basesize   = `25%` )->get_parent( )->get_parent(
                                   )->html( content = `<a >Long item 2</a>` )->get(
                                       )->layout_data( ns = `core`
-                                          )->flex_item_data( growFactor = `1` baseSize = `25%` )->get_parent( )->get_parent(
+                                          )->flex_item_data( growfactor = `1`
+                                                             basesize   = `25%` )->get_parent( )->get_parent(
                                   )->html( content = `<a >Item 3</a>` )->get(
                                       )->layout_data( ns = `core`
-                                          )->flex_item_data( growFactor = `1` baseSize = `25%` )->get_parent( )->get_parent(
-                   ).
+                                          )->flex_item_data( growfactor = `1`
+                                                             basesize   = `25%` )->get_parent( )->get_parent( ).
 
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD ON_EVENT.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -153,24 +151,24 @@ CLASS z2ui5_cl_demo_app_255 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_DISPLAY_POPOVER.
+  METHOD z2ui5_display_popover.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `Here is an example of how you can use navigation items as unordered list items in a Flex Box.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 

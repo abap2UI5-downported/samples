@@ -56,9 +56,9 @@ CLASS z2ui5_cl_demo_app_259 IMPLEMENTATION.
 
     page_01->header_content(
        )->button( id = `button_hint_id`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'CLICK_HINT_ICON' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'CLICK_HINT_ICON' ) ).
 
     page_01->header_content(
        )->link(
@@ -108,80 +108,103 @@ CLASS z2ui5_cl_demo_app_259 IMPLEMENTATION.
                               class = `sapUiContentPadding`
                               )->custom_header(
                                   )->toolbar(
-                                      )->button( type = `Back` press = client->_event( val = `onPress` t_arg = temp1 )
+                                      )->button( type  = `Back`
+                                                 press = client->_event( val = `onPress` t_arg = temp1 )
                                       )->toolbar_spacer(
-                                      )->title( text = `Title` level = `H2`
+                                      )->title( text  = `Title`
+                                                level = `H2`
                                       )->toolbar_spacer(
-                                      )->button( icon = `sap-icon://edit` type = `Transparent` press = client->_event( val = `onPress` t_arg = temp2 ) arialabelledby = `editButtonLabel`
+                                      )->button( icon           = `sap-icon://edit`
+                                                 type           = `Transparent`
+                                                 press          = client->_event( val = `onPress` t_arg = temp2 )
+                                                 arialabelledby = `editButtonLabel`
                                   )->get_parent(
-
-                              )->get_parent(
+      )->get_parent(
                               )->sub_header(
                                   )->toolbar(
                                       )->toolbar_spacer(
-                                      )->button( text = `Default` press = client->_event( val = `onPress` t_arg = temp3 )
-                                      )->button( type = `Reject` text = `Reject` press = client->_event( val = `onPress` t_arg = temp4 )
-                                      )->button( icon = `sap-icon://action` type = `Transparent` press = client->_event( val = `onPress` t_arg = temp5 ) ariaLabelledBy = `actionButtonLabel`
+                                      )->button( text  = `Default`
+                                                 press = client->_event( val = `onPress` t_arg = temp3 )
+                                      )->button( type  = `Reject`
+                                                 text  = `Reject`
+                                                 press = client->_event( val = `onPress` t_arg = temp4 )
+                                      )->button( icon           = `sap-icon://action`
+                                                 type           = `Transparent`
+                                                 press          = client->_event( val = `onPress` t_arg = temp5 )
+                                                 arialabelledby = `actionButtonLabel`
                                       )->toolbar_spacer(
                                   )->get_parent(
-
-                              )->get_parent(
+      )->get_parent(
                               )->content(
                                   )->hbox(
-                                      )->button( text = `Default`
-                                                 press = client->_event( val = `onPress` t_arg = temp6 )
+                                      )->button( text            = `Default`
+                                                 press           = client->_event( val = `onPress` t_arg = temp6 )
                                                  ariadescribedby = `defaultButtonDescription genericButtonDescription`)->get(
                                           )->layout_data(
                                               )->flex_item_data( growfactor = `1`
                                           )->get_parent(
                                       )->get_parent(
-                                      )->button( type = `Accept`
-                                                 text = `Accept`
-                                                 press = client->_event( val = `onPress` t_arg = temp7 )
+                                      )->button( type            = `Accept`
+                                                 text            = `Accept`
+                                                 press           = client->_event( val = `onPress` t_arg = temp7 )
                                                  ariadescribedby = `acceptButtonDescription genericButtonDescription` )->get(
                                           )->layout_data(
                                               )->flex_item_data( growfactor = `1`
                                           )->get_parent(
                                       )->get_parent(
-                                      )->button( type = `Reject`
-                                                 text = `Reject`
-                                                 press = client->_event( val = `onPress` t_arg = temp8 )
+                                      )->button( type            = `Reject`
+                                                 text            = `Reject`
+                                                 press           = client->_event( val = `onPress` t_arg = temp8 )
                                                  ariadescribedby = `rejectButtonDescription genericButtonDescription` )->get(
                                           )->layout_data(
                                               )->flex_item_data( growfactor = `1`
                                           )->get_parent(
                                       )->get_parent(
-                                      )->button( text = `Coming Soon`
-                                                 press = client->_event( val = `onPress` t_arg = temp9 )
+                                      )->button( text            = `Coming Soon`
+                                                 press           = client->_event( val = `onPress` t_arg = temp9 )
                                                  ariadescribedby = `comingSoonButtonDescription genericButtonDescription`
-                                                 enabled = abap_false )->get(
+                                                 enabled         = abap_false )->get(
                                           )->layout_data(
                                               )->flex_item_data( growfactor = `1`
                                           )->get_parent(
                                       )->get_parent(
-
-                                  )->get_parent(
-
-                                  " Collection of labels (some of which are invisible) used to provide ARIA descriptions for the buttons
-                                  )->label( id = `genericButtonDescription` text = `Note: The buttons in this sample display MessageToast when pressed.`
-
-                                  )->invisible_text( ns = `core` id = `defaultButtonDescription` text = `Description of default button goes here.` )->get_parent(
-                                  )->invisible_text( ns = `core` id = `acceptButtonDescription` text = `Description of accept button goes here.` )->get_parent(
-                                  )->invisible_text( ns = `core` id = `rejectButtonDescription` text = `Description of reject button goes here.` )->get_parent(
-                                  )->invisible_text( ns = `core` id = `comingSoonButtonDescription` text = `This feature is not active just now.` )->get_parent(
+      )->get_parent(
+" Collection of labels (some of which are invisible) used to provide ARIA descriptions for the buttons
+                                  )->label( id   = `genericButtonDescription`
+                                            text = `Note: The buttons in this sample display MessageToast when pressed.`
+      )->invisible_text( ns   = `core`
+                         id   = `defaultButtonDescription`
+                         text = `Description of default button goes here.` )->get_parent(
+                                  )->invisible_text( ns   = `core`
+                                                     id   = `acceptButtonDescription`
+                                                     text = `Description of accept button goes here.` )->get_parent(
+                                  )->invisible_text( ns   = `core`
+                                                     id   = `rejectButtonDescription`
+                                                     text = `Description of reject button goes here.` )->get_parent(
+                                  )->invisible_text( ns   = `core`
+                                                     id   = `comingSoonButtonDescription`
+                                                     text = `This feature is not active just now.` )->get_parent(
                                   " These labels exist only to provide targets for the ARIA label on the Edit and Action buttons
-                                  )->invisible_text( ns = `core` id = `editButtonLabel` text = `Edit Button Label` )->get_parent(
-                                  )->invisible_text( ns = `core` id = `actionButtonLabel` text = `Action Button Label` )->get_parent(
+                                  )->invisible_text( ns   = `core`
+                                                     id   = `editButtonLabel`
+                                                     text = `Edit Button Label` )->get_parent(
+                                  )->invisible_text( ns   = `core`
+                                                     id   = `actionButtonLabel`
+                                                     text = `Action Button Label` )->get_parent(
                               )->get_parent(
                               )->footer(
                                   )->toolbar(
                                       )->toolbar_spacer(
-                                      )->button( type = `Emphasized` text = `Emphasized` press = client->_event( val = `onPress` t_arg = temp10 )
-                                      )->button( text = `Default` press = client->_event( val = `onPress` t_arg = temp11 )
-                                      )->button( icon = `sap-icon://action` type = `Transparent` press = client->_event( val = `onPress` t_arg = temp12 ) )->get_parent(
+                                      )->button( type  = `Emphasized`
+                                                 text  = `Emphasized`
+                                                 press = client->_event( val = `onPress` t_arg = temp10 )
+                                      )->button( text  = `Default`
+                                                 press = client->_event( val = `onPress` t_arg = temp11 )
+                                      )->button( icon  = `sap-icon://action`
+                                                 type  = `Transparent`
+                                                 press = client->_event( val = `onPress` t_arg = temp12 ) )->get_parent(
                                   )->get_parent(
-                              )->get_parent(
-                             ).
+                              )->get_parent( ).
 
     client->view_display( page_02->stringify( ) ).
 
@@ -206,15 +229,15 @@ CLASS z2ui5_cl_demo_app_259 IMPLEMENTATION.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `Buttons trigger user actions and come in a variety of shapes and colors. Placing a button on a page header or footer changes its appearance.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 

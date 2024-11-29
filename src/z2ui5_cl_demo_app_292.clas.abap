@@ -50,9 +50,9 @@ CLASS Z2UI5_CL_DEMO_APP_292 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `button_hint_id`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'CLICK_HINT_ICON' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'CLICK_HINT_ICON' ) ).
 
     page->header_content(
        )->link(
@@ -86,17 +86,23 @@ CLASS Z2UI5_CL_DEMO_APP_292 IMPLEMENTATION.
             width = `100%`
            )->title( text = `Breadcrumbs with current page aggregation set`
            )->breadcrumbs(
-               )->link( text = `Home`   press = client->_event( val = `onPress` t_arg = temp1 )
-               )->link( text = `Page 1` press = client->_event( val = `onPress` t_arg = temp2 )
-               )->link( text = `Page 2` press = client->_event( val = `onPress` t_arg = temp3 )
-               )->link( text = `Page 3` press = client->_event( val = `onPress` t_arg = temp4 )
-               )->link( text = `Page 4` press = client->_event( val = `onPress` t_arg = temp5 )
-               )->link( text = `Page 5` press = client->_event( val = `onPress` t_arg = temp6 )
+               )->link( text  = `Home`
+                        press = client->_event( val = `onPress` t_arg = temp1 )
+               )->link( text  = `Page 1`
+                        press = client->_event( val = `onPress` t_arg = temp2 )
+               )->link( text  = `Page 2`
+                        press = client->_event( val = `onPress` t_arg = temp3 )
+               )->link( text  = `Page 3`
+                        press = client->_event( val = `onPress` t_arg = temp4 )
+               )->link( text  = `Page 4`
+                        press = client->_event( val = `onPress` t_arg = temp5 )
+               )->link( text  = `Page 5`
+                        press = client->_event( val = `onPress` t_arg = temp6 )
                )->current_location(
-                   )->link( text = `Page 6` press = client->_event( val = `onPress` t_arg = temp7 )
+                   )->link( text  = `Page 6`
+                            press = client->_event( val = `onPress` t_arg = temp7 )
                )->get_parent(
-           )->get_parent(
-          ).
+           )->get_parent( ).
 
     client->view_display( page->stringify( ) ).
 
@@ -121,15 +127,15 @@ CLASS Z2UI5_CL_DEMO_APP_292 IMPLEMENTATION.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `Breadcrumbs sample with current page set as aggregation, resulting in a link` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 

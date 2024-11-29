@@ -1,12 +1,12 @@
-class z2ui5_cl_demo_app_261 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_261 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces Z2UI5_IF_APP .
+    INTERFACES z2ui5_if_app .
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
+    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -28,7 +28,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_261 IMPLEMENTATION.
 
 
-  METHOD DISPLAY_VIEW.
+  METHOD display_view.
 
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA temp1 TYPE xsdboolean.
@@ -39,30 +39,30 @@ CLASS z2ui5_cl_demo_app_261 IMPLEMENTATION.
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton  = temp1 ).
 
-        page->header_content(
+    page->header_content(
             )->button( id = `hint_icon`
-                icon = `sap-icon://hint`
-                tooltip = `Sample information`
-                press = client->_event( 'POPOVER' ) ).
+                icon      = `sap-icon://hint`
+                tooltip   = `Sample information`
+                press     = client->_event( 'POPOVER' ) ).
 
-         page->header_content(
+    page->header_content(
             )->link(
                 text   = 'UI5 Demo Kit'
                 target = '_blank'
                 href   = 'https://sapui5.hana.ondemand.com/#/entity/sap.m.NewsContent/sample/sap.m.sample.NewsContent' ).
 
-        page->tile_content( class = `sapUiSmallMargin`
+    page->tile_content( class = `sapUiSmallMargin`
                )->content(
                    )->news_content(
                        contenttext = `SAP Unveils Powerful New Player Comparison Tool Exclusively on NFL.com`
-                       subheader = `August 21, 2013` press = client->_event( 'NEWS_CONTENT_PRESS' )
-              ).
+                       subheader   = `August 21, 2013`
+                       press       = client->_event( 'NEWS_CONTENT_PRESS' ) ).
 
     client->view_display( page->stringify( ) ).
   ENDMETHOD.
 
 
-  METHOD ON_EVENT.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -76,24 +76,24 @@ CLASS z2ui5_cl_demo_app_261 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_DISPLAY_POPOVER.
+  METHOD z2ui5_display_popover.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `This control is used to display the news content text and subheader in a tile.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 

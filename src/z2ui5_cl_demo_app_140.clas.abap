@@ -12,14 +12,14 @@ CLASS z2ui5_cl_demo_app_140 DEFINITION
         key  TYPE string,
         text TYPE string,
       END OF s_combobox .
-    TYPES:
+    TYPES
       ty_t_combo TYPE STANDARD TABLE OF s_combobox WITH DEFAULT KEY .
 
     DATA client TYPE REF TO z2ui5_if_client .
     DATA check_initialized TYPE abap_bool .
-    DATA: gt_multi TYPE ty_t_combo.
-    DATA: gt_sel_multi TYPE ty_t_combo.
-    DATA: gt_sel_multi2 TYPE string_table.
+    DATA gt_multi TYPE ty_t_combo.
+    DATA gt_sel_multi TYPE ty_t_combo.
+    DATA gt_sel_multi2 TYPE string_table.
     METHODS ui5_on_init .
     METHODS ui5_on_event .
     METHODS ui5_view_main_display .
@@ -45,12 +45,13 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
         ok_code = client->get( )-event.
         CASE ok_code.
           WHEN 'FILTERBAR'.
-*            gt_sel_multi2[] = gt_sel_multi[].
+
             client->view_model_update( ).
         ENDCASE.
         
       CATCH cx_root INTO x.
-        client->message_box_display( text = x->get_text( ) type = `error` ).
+        client->message_box_display( text = x->get_text( )
+                                     type = `error` ).
     ENDTRY.
 
   ENDMETHOD.
@@ -108,17 +109,18 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
             )->page(
                     title          = 'abap2UI5 - Multi Combo Box'
                     navbuttonpress = client->_event( val = 'BACK' )
-                    shownavbutton = temp1
-               )->simple_form( title = 'Form Title' editable = abap_true
+                    shownavbutton  = temp1
+               )->simple_form( title    = 'Form Title'
+                               editable = abap_true
                     )->content( 'form'
                   )->multi_combobox(
 *                            name = 'Multi'
-                           name = 'MultiComboBox'
-                    selectedkeys = client->_bind_edit( gt_sel_multi2 )
+                           name          = 'MultiComboBox'
+                    selectedkeys         = client->_bind_edit( gt_sel_multi2 )
 *                            selecteditems = client->_bind_edit( gt_sel_multi )
                                    items = client->_bind_edit( val = gt_multi )
                                    )->item(
-                                      key = '{KEY}'
+                                      key  = '{KEY}'
                                       text = '{TEXT}'
                                   )->get_parent(
                   )->button(

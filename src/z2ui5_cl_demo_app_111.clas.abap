@@ -16,7 +16,7 @@ CLASS z2ui5_cl_demo_app_111 DEFINITION
         storage_location TYPE string,
         quantity         TYPE i,
       END OF ty_s_tab .
-    TYPES:
+    TYPES
       ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH DEFAULT KEY .
 
     DATA mv_search_value TYPE string .
@@ -182,50 +182,80 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
 *        )->_cc_plain_xml( `<html:script>` && lv_script && `</html:script>`
-      )->_generic( ns = `html` name = `script` )->_cc_plain_xml( `sap.z2ui5.InitSvm();`
+      )->_generic( ns   = `html`
+                   name = `script` )->_cc_plain_xml( `sap.z2ui5.InitSvm();`
       )->stringify( ) ).
 
-*    view->_cc_plain_xml( `<html:script> sap.z2ui5.InitSvm(); </html:script>` ).
+
 
     
     
     temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page1 = view->page( id = `page_main`
-            title          = 'abap2UI5 - List Report Features'
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = temp1 ).
+            title                = 'abap2UI5 - List Report Features'
+            navbuttonpress       = client->_event( 'BACK' )
+            shownavbutton        = temp1 ).
 
     
-    page = page1->dynamic_page( headerexpanded = abap_true headerpinned = abap_true ).
+    page = page1->dynamic_page( headerexpanded = abap_true
+                                      headerpinned   = abap_true ).
 
     
-    header_title = page->title( ns = 'f'  )->get( )->dynamic_page_title( ).
-    header_title->heading( ns = 'f' )->smart_variant_management( id = `svm` showexecuteonselection = abap_true ).
+    header_title = page->title( ns = 'f' )->get( )->dynamic_page_title( ).
+    header_title->heading( ns = 'f' )->smart_variant_management( id                     = `svm`
+                                                                 showexecuteonselection = abap_true ).
     header_title->expanded_content( 'f' ).
     header_title->snapped_content( ns = 'f' ).
 
     
     lo_fb = page->header( )->dynamic_page_header( pinnable = abap_true ).
 
-    lo_fb->filter_bar( id = `fbar` persistencykey = `myPersKey` usetoolbar = abap_false search = `sap.z2ui5.onSearch();`
+    lo_fb->filter_bar( id             = `fbar`
+                       persistencykey = `myPersKey`
+                       usetoolbar     = abap_false
+                       search         = `sap.z2ui5.onSearch();`
       )->filter_group_items(
-        )->filter_group_item( name = `PRODUCT` label = `Product` groupname = `group1` visibleinfilterbar = abap_true
+        )->filter_group_item( name               = `PRODUCT`
+                              label              = `Product`
+                              groupname          = `group1`
+                              visibleinfilterbar = abap_true
           )->fb_control(
-            )->input( value = client->_bind_edit( mv_product ) suggest = abap_true suggestionitems = `{/EDIT/MT_TABLE}` change = `sap.z2ui5.onChange();`
+            )->input( value           = client->_bind_edit( mv_product )
+                      suggest         = abap_true
+                      suggestionitems = `{/EDIT/MT_TABLE}`
+                      change          = `sap.z2ui5.onChange();`
               )->get( )->suggestion_items( )->item( text = `{PRODUCT}`
-            )->get_parent(  )->get_parent( )->get_parent( )->get_parent(
-        )->filter_group_item( name = `CREATE_DATE` label = `Create Date` groupname = `group1` visibleinfilterbar = abap_true
+            )->get_parent( )->get_parent( )->get_parent( )->get_parent(
+        )->filter_group_item( name               = `CREATE_DATE`
+                              label              = `Create Date`
+                              groupname          = `group1`
+                              visibleinfilterbar = abap_true
           )->fb_control(
-            )->input( value = client->_bind_edit( mv_create_date ) change = `sap.z2ui5.onChange();` )->get_parent(  )->get_parent(
-        )->filter_group_item( name = `CREATE_BY` label = `Create By` groupname = `group1` visibleinfilterbar = abap_true
+            )->input( value  = client->_bind_edit( mv_create_date )
+                      change = `sap.z2ui5.onChange();` )->get_parent( )->get_parent(
+        )->filter_group_item( name               = `CREATE_BY`
+                              label              = `Create By`
+                              groupname          = `group1`
+                              visibleinfilterbar = abap_true
           )->fb_control(
-            )->input( value = client->_bind_edit( mv_create_by ) change = `sap.z2ui5.onChange();`  )->get_parent(  )->get_parent(
-        )->filter_group_item( name = `STORAGE_LOCATION` label = `Storage Location` groupname = `group1` visibleinfilterbar = abap_true
+            )->input( value  = client->_bind_edit( mv_create_by )
+                      change = `sap.z2ui5.onChange();` )->get_parent( )->get_parent(
+        )->filter_group_item( name               = `STORAGE_LOCATION`
+                              label              = `Storage Location`
+                              groupname          = `group1`
+                              visibleinfilterbar = abap_true
           )->fb_control(
-            )->input( value = client->_bind_edit( mv_storage_location ) change = `sap.z2ui5.onChange();` )->get_parent( )->get_parent(
-        )->filter_group_item( name = `QUANTITY` label = `Quantity` groupname = `group1` visibleinfilterbar = abap_true
+            )->input( value  = client->_bind_edit( mv_storage_location )
+                      change = `sap.z2ui5.onChange();` )->get_parent( )->get_parent(
+        )->filter_group_item( name               = `QUANTITY`
+                              label              = `Quantity`
+                              groupname          = `group1`
+                              visibleinfilterbar = abap_true
           )->fb_control(
-            )->input( suggest = abap_true suggestionitems = `{/EDIT/MT_TABLE}` value = client->_bind_edit( mv_quantity ) change = `sap.z2ui5.onChange($event);`
+            )->input( suggest         = abap_true
+                      suggestionitems = `{/EDIT/MT_TABLE}`
+                      value           = client->_bind_edit( mv_quantity )
+                      change          = `sap.z2ui5.onChange($event);`
               )->get( )->suggestion_items( )->item( text = `{QUANTITY}`
             )->get_parent( )->get_parent( )->get_parent( ).
 
@@ -233,7 +263,8 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
     cont = page->content( ns = 'f' ).
 
     
-    tab = cont->table( id = `table1` items = client->_bind_edit( val = mt_table ) ).
+    tab = cont->table( id    = `table1`
+                             items = client->_bind_edit( val = mt_table ) ).
 
     
     lo_columns = tab->columns( ).

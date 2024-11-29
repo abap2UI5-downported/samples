@@ -52,8 +52,7 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Binding Cell Level'
                 navbuttonpress = client->_event( 'BACK' )
-                shownavbutton = temp10
-        ).
+                shownavbutton  = temp10 ).
 
 
     
@@ -73,10 +72,10 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
             )->overflow_toolbar(
                 )->title( 'title of the table'
         )->get_parent( )->get_parent(
-    )->columns(
+      )->columns(
         )->column( )->text( 'Title' )->get_parent(
         )->column( )->text( 'Value' )->get_parent( )->get_parent(
-    )->items( )->column_list_item( selected = '{SELKZ}'
+      )->items( )->column_list_item( selected = '{SELKZ}'
       )->cells(
           )->input( value = '{TITLE}'
           )->input( value = '{VALUE}' ).
@@ -145,7 +144,7 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
         INSERT temp11 INTO TABLE temp10.
         t_tab = temp10.
       ENDDO.
-      set_view(  ).
+      set_view( ).
     ENDIF.
 
     CASE client->get( )-event.

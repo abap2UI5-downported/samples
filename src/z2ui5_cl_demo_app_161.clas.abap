@@ -35,7 +35,8 @@ CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
          )->content( ).
 
     
-    content = dialog->button( text = `Open 2nd popup` press = client->_event( 'GOTO_2ND' ) ).
+    content = dialog->button( text  = `Open 2nd popup`
+                                    press = client->_event( 'GOTO_2ND' ) ).
 
     dialog->get_parent( )->buttons(
                   )->button(
@@ -85,7 +86,7 @@ CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Popup To Popup'
                 navbuttonpress = client->_event( val = 'BACK' )
-                shownavbutton = temp1
+                shownavbutton  = temp1
            )->button(
             text  = 'Open Popup...'
             press = client->_event( 'POPUP' ) ).
@@ -102,11 +103,11 @@ CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
         simple_popup2( ).
 
       WHEN 'BTN_OK_2ND'.
-        client->popup_destroy(  ).
+        client->popup_destroy( ).
         simple_popup1( ).
 
       WHEN 'BTN_OK_1ND'.
-        client->popup_destroy(  ).
+        client->popup_destroy( ).
 
       WHEN 'POPUP'.
         simple_popup1( ).

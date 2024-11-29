@@ -1113,8 +1113,7 @@ CLASS Z2UI5_CL_DEMO_APP_060 IMPLEMENTATION.
                   `function setInputFIlter(){` && |\n| &&
                   ` var inp = sap.z2ui5.oView.byId('suggInput');` && |\n| &&
                   ` inp.setFilterFunction(function(sValue, oItem){` && |\n| &&
-
-                  `   var aSplit = sValue.split(" ");` && |\n| &&
+        `   var aSplit = sValue.split(" ");` && |\n| &&
                   `   if (aSplit.length > 0) {` && |\n| &&
                   `     var sTermNew = aSplit.slice(-1)[0];` && |\n| &&
                   `     sTermNew.trim();` && |\n| &&
@@ -1133,8 +1132,9 @@ CLASS Z2UI5_CL_DEMO_APP_060 IMPLEMENTATION.
       set_data( ).
 
       client->view_display( z2ui5_cl_xml_view=>factory(
-       )->_z2ui5( )->timer(  client->_event( `START` )
-         )->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_script
+        )->_z2ui5( )->timer( client->_event( `START` )
+         )->_generic( ns   = `html`
+                      name = `script` )->_cc_plain_xml( lv_script
          )->stringify( ) ).
 
 
@@ -1148,7 +1148,7 @@ CLASS Z2UI5_CL_DEMO_APP_060 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_event.
-        TYPES temp5 TYPE RANGE OF string.
+    TYPES temp5 TYPE RANGE OF string.
 DATA lt_range TYPE temp5.
         DATA temp3 LIKE lt_range.
         DATA temp4 LIKE LINE OF temp3.
@@ -1159,7 +1159,6 @@ DATA lt_range TYPE temp5.
         z2ui5_view_display( ).
       WHEN 'ON_SUGGEST'.
 
-        
 
         
         CLEAR temp3.
@@ -1177,11 +1176,7 @@ DATA lt_range TYPE temp5.
           INSERT ls_sugg INTO TABLE mt_suggestion_out.
         ENDLOOP.
 
-*        SELECT FROM i_currencytext
-*          FIELDS *
-*          WHERE currencyname IN @lt_range
-*          AND  language = 'E'
-*          INTO CORRESPONDING FIELDS OF TABLE @mt_suggestion.
+
 
         client->view_model_update( ).
 
@@ -1203,7 +1198,7 @@ DATA lt_range TYPE temp5.
     page = z2ui5_cl_xml_view=>factory( )->shell( )->page(
        title          = 'abap2UI5 - Live Suggestion Event'
        navbuttonpress = client->_event( 'BACK' )
-       shownavbutton = temp1 ).
+       shownavbutton  = temp1 ).
 
     
     grid = page->grid( 'L6 M12 S12'
@@ -1214,14 +1209,14 @@ DATA lt_range TYPE temp5.
         )->content( 'form'
             )->label( 'Input with value help'
             )->input(
-                    id              = `suggInput`
-                    value           = client->_bind_edit( input )
-                    suggest         = client->_event( 'ON_SUGGEST' )
+                    id                           = `suggInput`
+                    value                        = client->_bind_edit( input )
+                    suggest                      = client->_event( 'ON_SUGGEST' )
                     showtablesuggestionvaluehelp = abap_false
-                    suggestionrows  = client->_bind( mt_suggestion_out )
-                    showsuggestion  = abap_true
-                    valueliveupdate = abap_true
-                    autocomplete    = abap_false
+                    suggestionrows               = client->_bind( mt_suggestion_out )
+                    showsuggestion               = abap_true
+                    valueliveupdate              = abap_true
+                    autocomplete                 = abap_false
                  )->get( ).
 
     input->suggestion_columns(
@@ -1233,7 +1228,8 @@ DATA lt_range TYPE temp5.
             )->label( text = '{CURRENCYNAME}'
             )->label( text = '{CURRENCY}' ).
 
-    page->_generic( name = `script` ns = `html` )->_cc_plain_xml( `setInputFIlter()` ).
+    page->_generic( name = `script`
+                    ns   = `html` )->_cc_plain_xml( `setInputFIlter()` ).
 
     client->view_display( page->stringify( ) ).
 

@@ -1,5 +1,5 @@
 CLASS z2ui5_cl_demo_app_080 DEFINITION
-PUBLIC
+  PUBLIC
   CREATE PUBLIC .
 
   PUBLIC SECTION.
@@ -67,7 +67,7 @@ CLASS Z2UI5_CL_DEMO_APP_080 IMPLEMENTATION.
     DATA lo_planningcalendar TYPE REF TO z2ui5_cl_xml_view.
     DATA lo_rows TYPE REF TO z2ui5_cl_xml_view.
     DATA lo_planningcalendarrow TYPE REF TO z2ui5_cl_xml_view.
-    lv_s_date =  '2023-04-22T08:15:00'.
+    lv_s_date = '2023-04-22T08:15:00'.
     
     view = z2ui5_cl_xml_view=>factory( ).
 
@@ -81,10 +81,10 @@ CLASS Z2UI5_CL_DEMO_APP_080 IMPLEMENTATION.
     
     temp3 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = view->page( id = `page_main`
-            title          = 'abap2UI5 - Planning Calendar'
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = temp3
-            class = 'sapUiContentPadding' ).
+            title               = 'abap2UI5 - Planning Calendar'
+            navbuttonpress      = client->_event( 'BACK' )
+            shownavbutton       = temp3
+            class               = 'sapUiContentPadding' ).
 
     
     lo_vbox = page->vbox( class ='sapUiSmallMargin' ).
@@ -94,41 +94,39 @@ CLASS Z2UI5_CL_DEMO_APP_080 IMPLEMENTATION.
     INSERT `${$parameters>/appointment/mProperties/title}` INTO TABLE temp2.
     
     lo_planningcalendar = lo_vbox->planning_calendar(
-                                                          startdate = `{= Helper.DateCreateObject($` && client->_bind_local( lv_s_date ) && ') }'
-                                                          rows = `{path: '` && client->_bind_local( val = mt_people path = abap_true ) && `'}`
+                                                          startdate         = `{= Helper.DateCreateObject($` && client->_bind_local( lv_s_date ) && ') }'
+                                                          rows              = `{path: '` && client->_bind_local( val = mt_people path = abap_true ) && `'}`
                                                           appointmentselect = client->_event( val = 'AppSelected' t_arg = temp2 )
-                                                          showweeknumbers = abap_true ).
+                                                          showweeknumbers   = abap_true ).
 
 
     
     lo_rows = lo_planningcalendar->rows( ).
     
     lo_planningcalendarrow = lo_rows->planning_calendar_row(
-                                                     appointments = `{path:'APPOINTMENTS', templateShareable: false}`
-                                                     icon =  '{PIC}'
-                                                     title = '{NAME}'
-                                                     text = '{ROLE}'
-                                                     intervalheaders = `{path:'HEADERS', templateShareable: false}`
-                                                     ).
+                                                     appointments    = `{path:'APPOINTMENTS', templateShareable: false}`
+                                                     icon            = '{PIC}'
+                                                     title           = '{NAME}'
+                                                     text            = '{ROLE}'
+                                                     intervalheaders = `{path:'HEADERS', templateShareable: false}` ).
     lo_planningcalendarrow->appointments( )->calendar_appointment(
                                                                   startdate = `{= Helper.DateCreateObject(${START} ) }`
                                                                   enddate   = `{= Helper.DateCreateObject(${END} ) }`
-                                                                  icon = '{PIC}'
-                                                                  title = '{TITLE}'
-                                                                  text = '{INFO}'
-                                                                  type = '{TYPE}'
+                                                                  icon      = '{PIC}'
+                                                                  title     = '{TITLE}'
+                                                                  text      = '{INFO}'
+                                                                  type      = '{TYPE}'
                                                                   tentative = '{TENTATIVE}' ).
 
     lo_planningcalendarrow->interval_headers( )->calendar_appointment(
                                                                       startdate = `{= Helper.DateCreateObject(${START} ) }`
                                                                       enddate   = `{= Helper.DateCreateObject(${END} ) }`
-                                                                      icon = '{PIC}'
-                                                                      title = '{TITLE}'
-                                                                      text = '{INFO}'
-                                                                      type = '{TYPE}'
-                                                        ).
+                                                                      icon      = '{PIC}'
+                                                                      title     = '{TITLE}'
+                                                                      text      = '{INFO}'
+                                                                      type      = '{TYPE}' ).
 
-    client->view_display( view->stringify(  ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
@@ -156,7 +154,7 @@ CLASS Z2UI5_CL_DEMO_APP_080 IMPLEMENTATION.
         DATA temp4 LIKE LINE OF ls_client-t_event_arg.
         DATA temp5 LIKE sy-tabix.
     CASE client->get( )-event.
-      WHEN 'AppSelected' .
+      WHEN 'AppSelected'.
         
         ls_client = client->get( ).
         
@@ -167,7 +165,7 @@ CLASS Z2UI5_CL_DEMO_APP_080 IMPLEMENTATION.
         IF sy-subrc <> 0.
           ASSERT 1 = 0.
         ENDIF.
-        client->message_toast_display( |Event AppSelected with appointment {  temp4 }| ).
+        client->message_toast_display( |Event AppSelected with appointment { temp4 }| ).
       WHEN 'BACK'.
         client->nav_app_leave( ).
     ENDCASE.
@@ -283,6 +281,6 @@ CLASS Z2UI5_CL_DEMO_APP_080 IMPLEMENTATION.
     INSERT temp10 INTO TABLE temp9.
     temp7-headers = temp9.
     INSERT temp7 INTO TABLE temp6.
-    mt_people = temp6 .
+    mt_people = temp6.
   ENDMETHOD.
 ENDCLASS.

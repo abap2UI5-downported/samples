@@ -1,12 +1,12 @@
-class Z2UI5_CL_DEMO_APP_213 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_213 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces Z2UI5_IF_APP .
+    INTERFACES z2ui5_if_app .
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
+    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     METHODS display_view
@@ -24,7 +24,7 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_213 IMPLEMENTATION.
 
 
-  METHOD DISPLAY_VIEW.
+  METHOD display_view.
 
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA temp1 TYPE xsdboolean.
@@ -37,10 +37,12 @@ CLASS Z2UI5_CL_DEMO_APP_213 IMPLEMENTATION.
             shownavbutton  = temp1 ).
 
     
-    layout = page->vertical_layout( class  = `sapUiContentPadding` width = `100%` ).
-    layout->label( text = `Password` labelfor = `passwordInput` ).
-    layout->input( id = `passwordInput`
-                   type = `Password`
+    layout = page->vertical_layout( class = `sapUiContentPadding`
+                                          width = `100%` ).
+    layout->label( text     = `Password`
+                   labelfor = `passwordInput` ).
+    layout->input( id          = `passwordInput`
+                   type        = `Password`
                    placeholder = `Enter password` ).
 
     client->view_display( page->stringify( ) ).
@@ -48,7 +50,7 @@ CLASS Z2UI5_CL_DEMO_APP_213 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ON_EVENT.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -58,7 +60,7 @@ CLASS Z2UI5_CL_DEMO_APP_213 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.

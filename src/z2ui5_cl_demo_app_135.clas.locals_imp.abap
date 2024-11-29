@@ -62,7 +62,7 @@ CLASS lcl_locking IMPLEMENTATION.
 
 
   METHOD get_lock_counter.
-    DATA: enqueue_table TYPE STANDARD TABLE OF ty_seqg3.
+    DATA enqueue_table TYPE STANDARD TABLE OF ty_seqg3.
 
     DATA argument TYPE c LENGTH 150.
     DATA lv_fm TYPE c LENGTH 12.

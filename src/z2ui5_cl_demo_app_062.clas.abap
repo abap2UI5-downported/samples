@@ -37,7 +37,8 @@ CLASS z2ui5_cl_demo_app_062 IMPLEMENTATION.
             shownavbutton  = temp1 ).
 
     
-    layout = page->vertical_layout( class = `sapUiContentPadding` width = `100%` ).
+    layout = page->vertical_layout( class = `sapUiContentPadding`
+                                          width = `100%` ).
     layout->generic_tag(
             arialabelledby = 'genericTagLabel'
             text           = 'Project Cost'

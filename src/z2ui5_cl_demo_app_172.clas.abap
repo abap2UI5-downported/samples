@@ -120,10 +120,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
         CONCATENATE 'Link in row' lv_tab_index 'clicked' INTO lv_message SEPARATED BY space.
         client->message_toast_display( lv_message ).
 
-*      WHEN 'INPUT_CHANGE'.
-*        client->view_model_update( ).
-*
-*        RETURN.
+
 
       WHEN 'INPUT_CHANGE'.
 
@@ -178,7 +175,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
         ENDIF.
         lv_column = temp11.
 
-        me->calculate_sum( lv_column ).
+        calculate_sum( lv_column ).
 
       WHEN 'BACK'.
 
@@ -213,35 +210,47 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
     
     temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = view->shell(
-    )->page(
-        id = `page`
-        title          = 'abap2UI5 - Demo ui.table'
-        navbuttonpress = client->_event( 'BACK' )
+      )->page(
+        id              = `page`
+        title           = 'abap2UI5 - Demo ui.table'
+        navbuttonpress  = client->_event( 'BACK' )
           shownavbutton = temp1
         )->header_content(
         )->link(
         )->get_parent( ).
 
-     page->_generic( name = `script` ns = `html` )->_cc_plain_xml( `sap.z2ui5.afterBE = () => {  setTimeout( () => { let input = document.activeElement.childNodes[0].childNodes[0].childNodes[0].childNodes[0]; input.focus( ); input.select(); } , 100 ); }`
-).
+    page->_generic( name = `script`
+                    ns   = `html` )->_cc_plain_xml( `sap.z2ui5.afterBE = () => {  setTimeout( () => { let input = document.activeElement.childNodes[0].childNodes[0].childNodes[0].childNodes[0]; input.focus( ); input.select(); } , 100 ); }` ).
 
     
-    table = page->ui_table( id = `tab` alternaterowcolors = 'true' visiblerowcountmode = 'Auto'
-         fixedrowcount = '1' selectionmode = 'None'  rows = client->_bind_edit( val = output ) ).
+    table = page->ui_table( id                  = `tab`
+                                  alternaterowcolors  = 'true'
+                                  visiblerowcountmode = 'Auto'
+         fixedrowcount                                = '1'
+                                  selectionmode       = 'None'
+                                  rows                = client->_bind_edit( val = output ) ).
     
     columns = table->ui_columns( ).
 
-    columns->ui_column( width = '8rem' sortproperty = 'TEXT' filterproperty = 'TEXT' )->text( text = 'Text Column' )->ui_template( )->text( text = `{TEXT}` ).
+    columns->ui_column( width          = '8rem'
+                        sortproperty   = 'TEXT'
+                        filterproperty = 'TEXT' )->text( text = 'Text Column' )->ui_template( )->text( text = `{TEXT}` ).
     
     CLEAR temp5.
     INSERT `${INDEX}` INTO TABLE temp5.
-    columns->ui_column( width = '8rem' sortproperty = 'LINK' filterproperty = 'LINK' )->text( text = 'Link Column' )->ui_template( )->link( text = `{LINK}`
-      press = client->_event( val = 'LINK_CLICK' t_arg = temp5 ) ).
-    columns->ui_column( width = '8rem' sortproperty = 'CURRENCY' filterproperty = 'CURRENCY' )->text( text = 'Currency Column' )->ui_template( )->text(
-     text = `{ parts: [ 'CURRENCY', 'WAERS'],  type: 'sap.ui.model.type.Currency', formatOptions: { currencyCode: false } }` ).
+    columns->ui_column( width          = '8rem'
+                        sortproperty   = 'LINK'
+                        filterproperty = 'LINK' )->text( text = 'Link Column' )->ui_template( )->link( text = `{LINK}`
+      press                                                                                                 = client->_event( val = 'LINK_CLICK' t_arg = temp5 ) ).
+    columns->ui_column( width          = '8rem'
+                        sortproperty   = 'CURRENCY'
+                        filterproperty = 'CURRENCY' )->text( text = 'Currency Column' )->ui_template( )->text(
+      text = `{ parts: [ 'CURRENCY', 'WAERS'],  type: 'sap.ui.model.type.Currency', formatOptions: { currencyCode: false } }` ).
     "Formatting of currency is language dependant, f.e. add the parameter &sap-language=DE o your URL to move the euro sign behind the number
 
-    columns->ui_column( width = '8rem' sortproperty = 'PERCENT1' filterproperty = 'PERCENT1' )->text( text = 'Percentage' )->ui_template( )->text( text = `{PERCENT1} %` ).
+    columns->ui_column( width          = '8rem'
+                        sortproperty   = 'PERCENT1'
+                        filterproperty = 'PERCENT1' )->text( text = 'Percentage' )->ui_template( )->text( text = `{PERCENT1} %` ).
 
     
     CLEAR temp7.
@@ -249,8 +258,13 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
     INSERT `${INDEX}` INTO TABLE temp7.
     INSERT `$event.oSource.oParent.sId` INTO TABLE temp7.
     INSERT `INPUT1` INTO TABLE temp7.
-    columns->ui_column( width = '8rem' sortproperty = 'INPUT1' filterproperty = 'INPUT1' )->text( text = 'Input Column' )->ui_template( )->input(
-      value = `{INPUT1}` enabled = `{BOOL}` change = client->_event( val = 'INPUT_CHANGE' t_arg = temp7 ) editable = abap_true type = 'Number' ).
+    columns->ui_column( width          = '8rem'
+                        sortproperty   = 'INPUT1'
+                        filterproperty = 'INPUT1' )->text( text = 'Input Column' )->ui_template( )->input(
+      value           = `{INPUT1}`
+      enabled         = `{BOOL}`
+      change          = client->_event( val = 'INPUT_CHANGE' t_arg = temp7 ) editable = abap_true
+      type            = 'Number' ).
 
     
     CLEAR temp9.
@@ -258,16 +272,18 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
     INSERT `${INDEX}` INTO TABLE temp9.
     INSERT `$event.oSource.oParent.sId` INTO TABLE temp9.
     INSERT `INPUT2` INTO TABLE temp9.
-    columns->ui_column( width = '8rem' sortproperty = 'INPUT2' filterproperty = 'INPUT2' )->text( text = 'Input Column'
-     )->ui_template(
+    columns->ui_column( width          = '8rem'
+                        sortproperty   = 'INPUT2'
+                        filterproperty = 'INPUT2' )->text( text = 'Input Column'
+      )->ui_template(
       )->input(
-      value = `{INPUT2}`
-      enabled = `{BOOL}`
-      change = client->_event( val = 'INPUT_CHANGE'
-        t_arg = temp9 )
-       submit = client->_event( val = 'INPUT_SUBMIT' )
+      value     = `{INPUT2}`
+      enabled   = `{BOOL}`
+      change    = client->_event( val = 'INPUT_CHANGE'
+        t_arg                         = temp9 )
+       submit   = client->_event( val = 'INPUT_SUBMIT' )
        editable = abap_true
-       type = 'Number' ).
+       type     = 'Number' ).
 
     
     CLEAR temp11.
@@ -275,8 +291,13 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
     INSERT `${INDEX}` INTO TABLE temp11.
     INSERT `$event.oSource.oParent.sId` INTO TABLE temp11.
     INSERT `INPUT3` INTO TABLE temp11.
-    columns->ui_column( width = '8rem' sortproperty = 'INPUT3' filterproperty = 'INPUT3' )->text( text = 'Input Column' )->ui_template( )->input(
-      value = `{INPUT3}` enabled = `{BOOL}` change = client->_event( val = 'INPUT_CHANGE' t_arg = temp11 ) editable = abap_true type = 'Number' ).
+    columns->ui_column( width          = '8rem'
+                        sortproperty   = 'INPUT3'
+                        filterproperty = 'INPUT3' )->text( text = 'Input Column' )->ui_template( )->input(
+      value           = `{INPUT3}`
+      enabled         = `{BOOL}`
+      change          = client->_event( val = 'INPUT_CHANGE' t_arg = temp11 ) editable = abap_true
+      type            = 'Number' ).
 
     client->view_display( view->stringify( ) ).
 
@@ -296,11 +317,11 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
       check_initialized = abap_true.
 
       load_output_table( ).
-      render_main_screen(  ).
+      render_main_screen( ).
       RETURN.
     ENDIF.
 
-    on_event(  ).
+    on_event( ).
 
   ENDMETHOD.
 
@@ -312,20 +333,20 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD calculate_sum.
 
-    DATA: lv_sum TYPE i.
+    DATA lv_sum TYPE i.
 
     FIELD-SYMBOLS: <f_output> LIKE LINE OF output,
                    <f_input>  TYPE any.
 
     LOOP AT output ASSIGNING <f_output> WHERE index > 1.
 
-      ASSIGN COMPONENT i_column OF STRUCTURE <f_output> TO  <f_input>.
+      ASSIGN COMPONENT i_column OF STRUCTURE <f_output> TO <f_input>.
       lv_sum = lv_sum + <f_input>.
 
     ENDLOOP.
 
     READ TABLE output INDEX 1 ASSIGNING <f_output>.
-    ASSIGN COMPONENT i_column OF STRUCTURE <f_output> TO  <f_input>.
+    ASSIGN COMPONENT i_column OF STRUCTURE <f_output> TO <f_input>.
     <f_input> = lv_sum.
 
 

@@ -227,58 +227,58 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
     INSERT `${$parameters>/droppedControl/oParent}.indexOfItem(${$parameters>/droppedControl})` INTO TABLE temp3.
     INSERT `${$parameters>/dropPosition}` INTO TABLE temp3.
     view->panel( id               = `panelForGridList`
-                 backgroundDesign = `Transparent`
+                 backgrounddesign = `Transparent`
         )->header_toolbar(
             )->toolbar( height = `3rem`
                 )->title( text = `Grid List with Drag and Drop`
             )->get_parent(
         )->get_parent(
         )->grid_list( id         = `gridList`
-                      headerText = `GridList header`
+                      headertext = `GridList header`
                       items      = client->_bind_edit( items )
             )->drag_drop_config(
-                )->drag_info( sourceAggregation = `items`
+                )->drag_info( sourceaggregation = `items`
                 )->grid_drop_info(
-                    targetAggregation = `items`
-                    dropPosition      = `Between`
-                    dropLayout        = `Horizontal`
+                    targetaggregation = `items`
+                    dropposition      = `Between`
+                    droplayout        = `Horizontal`
                     drop              = client->_event(
                         val   = 'onDrop'
                         t_arg = temp3 )
             )->get_parent(
             )->custom_layout( ns = 'f'
-                )->grid_box_layout( boxMinWidth = `17rem`
+                )->grid_box_layout( boxminwidth = `17rem`
             )->get_parent(
             )->grid_list_item( counter   = '{COUNTER}'
                                highlight = '{HIGHLIGHT}'
                                type      = '{TYPE}'
                                unread    = '{UNREAD}'
                 )->vbox( height = `100%`
-                    )->VBox( class = `sapUiSmallMargin`
-                        )->layout_Data(
-                            )->Flex_Item_Data( growFactor   = `1`
-                                               shrinkFactor = `0`
+                    )->vbox( class = `sapUiSmallMargin`
+                        )->layout_data(
+                            )->flex_item_data( growfactor   = `1`
+                                               shrinkfactor = `0`
                         )->get_parent(
                         )->title( text     = '{TITLE}'
                                   wrapping = abap_true
-                        )->Label( text     = '{SUBTITLE}'
+                        )->label( text     = '{SUBTITLE}'
                                   wrapping = abap_true ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.
-        DATA onDropParameters TYPE string_table.
+        DATA ondropparameters TYPE string_table.
             DATA temp5 TYPE i.
-            DATA temp1 LIKE LINE OF onDropParameters.
+            DATA temp1 LIKE LINE OF ondropparameters.
             DATA temp2 LIKE sy-tabix.
             DATA drag_position TYPE i.
             DATA temp6 TYPE i.
-            DATA temp3 LIKE LINE OF onDropParameters.
+            DATA temp3 LIKE LINE OF ondropparameters.
             DATA temp4 LIKE sy-tabix.
             DATA drop_position TYPE i.
-            DATA insert_position LIKE LINE OF onDropParameters.
-            DATA temp7 LIKE LINE OF onDropParameters.
+            DATA insert_position LIKE LINE OF ondropparameters.
+            DATA temp7 LIKE LINE OF ondropparameters.
             DATA temp8 LIKE sy-tabix.
             DATA item LIKE LINE OF items.
             DATA temp9 LIKE LINE OF items.
@@ -286,13 +286,13 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'onDrop'.
         
-        onDropParameters = client->get( )-t_event_arg.
+        ondropparameters = client->get( )-t_event_arg.
         TRY.
             
             
             
             temp2 = sy-tabix.
-            READ TABLE onDropParameters INDEX 1 INTO temp1.
+            READ TABLE ondropparameters INDEX 1 INTO temp1.
             sy-tabix = temp2.
             IF sy-subrc <> 0.
               ASSERT 1 = 0.
@@ -304,7 +304,7 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
             
             
             temp4 = sy-tabix.
-            READ TABLE onDropParameters INDEX 2 INTO temp3.
+            READ TABLE ondropparameters INDEX 2 INTO temp3.
             sy-tabix = temp4.
             IF sy-subrc <> 0.
               ASSERT 1 = 0.
@@ -316,7 +316,7 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
             
             
             temp8 = sy-tabix.
-            READ TABLE onDropParameters INDEX 3 INTO temp7.
+            READ TABLE ondropparameters INDEX 3 INTO temp7.
             sy-tabix = temp8.
             IF sy-subrc <> 0.
               ASSERT 1 = 0.

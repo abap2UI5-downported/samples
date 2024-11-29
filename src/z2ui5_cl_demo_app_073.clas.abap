@@ -40,12 +40,13 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
           )->page(
                   title          = 'abap2UI5 - First Example'
                   navbuttonpress = client->_event( val = 'BACK' )
-                  shownavbutton = temp3
+                  shownavbutton  = temp3
              )->_z2ui5( )->timer(
                   checkactive = client->_bind( mv_check_timer_active )
-                  finished    = client->_event_client( val   = client->cs_event-open_new_tab
+                  finished    = client->_event_client( val     = client->cs_event-open_new_tab
                                                          t_arg = temp1 )
-              )->simple_form( title = 'Form Title' editable = abap_true
+              )->simple_form( title    = 'Form Title'
+                              editable = abap_true
                   )->content( 'form'
                       )->button(
                           text  = 'open new tab'
@@ -73,7 +74,7 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
         client->view_model_update( ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
     ENDCASE.
 

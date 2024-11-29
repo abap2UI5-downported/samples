@@ -20,7 +20,7 @@ CLASS z2ui5_cl_demo_app_192 DEFINITION PUBLIC.
            END OF ty_s_merged_data,
            ty_t_merged_data TYPE STANDARD TABLE OF ty_s_merged_data WITH DEFAULT KEY.
 
-*    DATA mt_new_data TYPE ty_t_merged_data.
+
 
     DATA mt_new_data2 TYPE STANDARD TABLE OF REF TO z2ui5_cl_demo_app_193 WITH DEFAULT KEY.
 
@@ -83,15 +83,15 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD get_data.
-
-    DATA temp1 TYPE z2ui5_cl_demo_app_192=>ty_t_out.
-    DATA temp2 LIKE LINE OF temp1.
-    DATA kopf LIKE REF TO mt_out.
     DATA lr_structdescr TYPE REF TO cl_abap_structdescr.
     DATA lr_tabdescr TYPE REF TO cl_abap_tabledescr.
     FIELD-SYMBOLS <fs_s_head> TYPE any.
     FIELD-SYMBOLS <fs_t_head_new> TYPE STANDARD TABLE.
     FIELD-SYMBOLS <fs_s_head_new> TYPE any.
+
+    DATA temp1 TYPE z2ui5_cl_demo_app_192=>ty_t_out.
+    DATA temp2 LIKE LINE OF temp1.
+    DATA kopf LIKE REF TO mt_out.
       DATA lo_new_data TYPE REF TO z2ui5_cl_demo_app_193.
     CLEAR temp1.
     
@@ -108,12 +108,7 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
     
     GET REFERENCE OF mt_out INTO kopf.
 
-    
-    
 
-    
-    
-    
 
     LOOP AT kopf->* ASSIGNING <fs_s_head>.
 

@@ -162,19 +162,18 @@ CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
     page = lo_view->shell( )->page(
              title          = 'Timeline'
              navbuttonpress = client->_event( 'BACK' )
-             shownavbutton = temp1
-           ).
+             shownavbutton  = temp1 ).
 
     
     timeline = page->timeline(
           content = client->_bind( mt_feed ) ).
 
     timeline->content( ns = `commons` )->timeline_item(
-        datetime          = `{DATETIME}`
-        title             = `{TITLE}`
-        userpicture       = `{AUTHORPIC}`
-        text              = `{TEXT}`
-        username          = `{AUTHOR}` ).
+        datetime    = `{DATETIME}`
+        title       = `{TITLE}`
+        userpicture = `{AUTHORPIC}`
+        text        = `{TEXT}`
+        username    = `{AUTHOR}` ).
 
     client->view_display( lo_view->stringify( ) ).
 

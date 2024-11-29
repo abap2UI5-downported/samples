@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_003 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_003 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_row,
@@ -15,8 +15,8 @@ CLASS Z2UI5_CL_DEMO_APP_003 DEFINITION PUBLIC.
         checkbox TYPE abap_bool,
       END OF ty_row.
 
-    TYPES temp1_6fb236e7f3 TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY.
-DATA t_tab TYPE temp1_6fb236e7f3.
+    TYPES temp1_dd5da6e718 TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY.
+DATA t_tab TYPE temp1_dd5da6e718.
     DATA check_initialized TYPE abap_bool.
 
   PROTECTED SECTION.
@@ -28,7 +28,7 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_003 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
       DATA temp1 LIKE t_tab.
       DATA temp2 LIKE LINE OF temp1.
       DATA view TYPE REF TO z2ui5_cl_xml_view.
@@ -82,8 +82,8 @@ CLASS Z2UI5_CL_DEMO_APP_003 IMPLEMENTATION.
       temp5 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
       page = view->shell(
           )->page(
-              title          = 'abap2UI5 - List'
-              navbuttonpress = client->_event( 'BACK' )
+              title           = 'abap2UI5 - List'
+              navbuttonpress  = client->_event( 'BACK' )
                 shownavbutton = temp5 ).
 
       page->list(
@@ -97,8 +97,7 @@ CLASS Z2UI5_CL_DEMO_APP_003 IMPLEMENTATION.
               icon        = '{ICON}'
               info        = '{INFO}'
               press       = client->_event( 'TEST' )
-              selected    = `{SELECTED}`
-         ).
+              selected    = `{SELECTED}` ).
 
       client->view_display( view->stringify( ) ).
 

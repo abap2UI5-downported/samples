@@ -74,7 +74,7 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
     
     table = page->table( growing = 'true'
                                width   = 'auto'
-                               items   = client->_bind_edit( <tab> )  ).
+                               items   = client->_bind_edit( <tab> ) ).
 
     
     columns = table->columns( ).
@@ -112,25 +112,26 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
       on_init( ).
     ENDIF.
 
-    
+
     ASSIGN mt_table->* TO <tab>.
     IF mv_counter <> lines( <tab> ) AND mv_counter IS NOT INITIAL.
-      client->message_box_display( text = 'Frontend Lines <> Backend!' type = 'error' ).
+      client->message_box_display( text = 'Frontend Lines <> Backend!'
+                                   type = 'error' ).
     ENDIF.
 
     on_event( ).
-    mv_counter = lines( <tab>  ).
+    mv_counter = lines( <tab> ).
 
   ENDMETHOD.
 
   METHOD refresh_data.
-        FIELD-SYMBOLS <table> TYPE STANDARD TABLE.
-        TYPES ty_t_01 TYPE STANDARD TABLE OF z2ui5_t_01.
+    FIELD-SYMBOLS <table> TYPE STANDARD TABLE.
+    TYPES ty_t_01 TYPE STANDARD TABLE OF z2ui5_t_01.
 
     TRY.
 
-        
-        
+
+
         CREATE DATA mt_table TYPE ty_t_01.
         ASSIGN mt_table->* TO <table>.
         mt_comp = z2ui5_cl_util=>rtti_get_t_attri_by_any( <table> ).

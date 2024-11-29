@@ -42,16 +42,18 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
     DATA lo_popover TYPE REF TO z2ui5_cl_xml_view.
     lo_popover = z2ui5_cl_xml_view=>factory_popup( ).
 
-    lo_popover->popover( placement = `Right` title = `abap2UI5 - Popover - ` && mv_product  contentwidth = `50%`
+    lo_popover->popover( placement    = `Right`
+                         title        = `abap2UI5 - Popover - ` && mv_product
+                         contentwidth = `50%`
       )->simple_form( editable = abap_true
       )->content( 'form'
           )->label( 'Product'
-          )->text(  mv_product
+          )->text( mv_product
           )->label( 'info2'
-          )->text(  `this is a text`
+          )->text( `this is a text`
           )->label( 'info3'
-          )->text(  `this is a text`
-          )->text(  `this is a text`
+          )->text( `this is a text`
+          )->text( `this is a text`
         )->get_parent( )->get_parent(
         )->footer(
          )->overflow_toolbar(
@@ -60,7 +62,8 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
                 text  = 'details'
                 press = client->_event( 'BUTTON_DETAILS' )
                 type  = 'Emphasized' ).
-    client->popover_display( xml = lo_popover->stringify( )  by_id = id ).
+    client->popover_display( xml   = lo_popover->stringify( )
+                             by_id = id ).
 
   ENDMETHOD.
 
@@ -81,17 +84,18 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
     
     temp2 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = view->page( id = `page_main`
-            title          = 'abap2UI5 - List Report Features'
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = temp2
-       ).
+            title               = 'abap2UI5 - List Report Features'
+            navbuttonpress      = client->_event( 'BACK' )
+            shownavbutton       = temp2 ).
 
-    page = page->dynamic_page( headerexpanded = abap_true  headerpinned = abap_true ).
+    page = page->dynamic_page( headerexpanded = abap_true
+                               headerpinned   = abap_true ).
 
     
     cont = page->content( ns = 'f' ).
     
-    tab = cont->table( id = `tab` items = client->_bind_edit( val = mt_table ) ).
+    tab = cont->table( id    = `tab`
+                             items = client->_bind_edit( val = mt_table ) ).
 
     
     lo_columns = tab->columns( ).
@@ -102,12 +106,14 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
     lo_columns->column( )->text( text = `Quantity` ).
 
     
-    lo_cells = tab->items(  )->column_list_item( ).
+    lo_cells = tab->items( )->column_list_item( ).
     
     CLEAR temp1.
     INSERT `${$source>/id}` INTO TABLE temp1.
     INSERT `${PRODUCT}` INTO TABLE temp1.
-    lo_cells->link( id = `link` text = '{PRODUCT}' press = client->_event( val = `POPOVER_DETAIL` t_arg = temp1  ) ).
+    lo_cells->link( id    = `link`
+                    text  = '{PRODUCT}'
+                    press = client->_event( val = `POPOVER_DETAIL` t_arg = temp1 ) ).
     lo_cells->text( `{CREATE_DATE}` ).
     lo_cells->text( `{CREATE_BY}` ).
     lo_cells->text( `{STORAGE_LOCATION}` ).

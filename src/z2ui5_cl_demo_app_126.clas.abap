@@ -25,7 +25,7 @@ CLASS z2ui5_cl_demo_app_126 DEFINITION
     METHODS on_init.
     METHODS on_event.
 
-    METHODS Render_main.
+    METHODS render_main.
 
   PRIVATE SECTION.
     METHODS get_data.
@@ -41,7 +41,7 @@ CLASS Z2UI5_CL_DEMO_APP_126 IMPLEMENTATION.
 
 
   METHOD get_comp.
-        DATA index TYPE int4.
+    DATA index TYPE int4.
             DATA typedesc TYPE REF TO cl_abap_typedescr.
             DATA temp1 TYPE REF TO cl_abap_structdescr.
             DATA structdesc LIKE temp1.
@@ -54,13 +54,13 @@ CLASS Z2UI5_CL_DEMO_APP_126 IMPLEMENTATION.
         DATA component LIKE temp2.
     TRY.
 
-        
+
 
         TRY.
 
             
             cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = 'Z2UI5_T_UTIL_01'
-                                                 RECEIVING  p_descr_ref    = typedesc
+                                                 RECEIVING p_descr_ref     = typedesc
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
 
@@ -131,7 +131,7 @@ CLASS Z2UI5_CL_DEMO_APP_126 IMPLEMENTATION.
 
         ASSIGN mt_table->* TO <table>.
 
-        SELECT * FROM Z2UI5_T_01
+        SELECT * FROM z2ui5_t_01
           INTO CORRESPONDING FIELDS OF TABLE <table>
           UP TO 100 ROWS.
 
@@ -157,8 +157,8 @@ CLASS Z2UI5_CL_DEMO_APP_126 IMPLEMENTATION.
 
 
   METHOD on_init.
-    get_Data( ).
-    Render_main( ).
+    get_data( ).
+    render_main( ).
   ENDMETHOD.
 
 

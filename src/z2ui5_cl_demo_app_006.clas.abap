@@ -6,14 +6,14 @@ CLASS z2ui5_cl_demo_app_006 DEFINITION PUBLIC.
 
     TYPES:
       BEGIN OF ty_row,
-        count         TYPE i,
-        value         TYPE string,
-        descr         TYPE string,
-        icon          TYPE string,
-        info          TYPE string,
-        checkbox      TYPE abap_bool,
-        percentage(5) TYPE p DECIMALS 2,
-        valuecolor    TYPE string,
+        count      TYPE i,
+        value      TYPE string,
+        descr      TYPE string,
+        icon       TYPE string,
+        info       TYPE string,
+        checkbox   TYPE abap_bool,
+        percentage TYPE p LENGTH 5 DECIMALS 2,
+        valuecolor TYPE string,
       END OF ty_row.
 
     TYPES temp1_9d87ec7b26 TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY.
@@ -82,11 +82,11 @@ CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
         )->page(
             title          = 'abap2UI5 - Scroll Container with Table and Toolbar'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = temp1
-        ).
+            shownavbutton  = temp1 ).
 
     
-    tab = page->scroll_container( height = '70%' vertical = abap_true
+    tab = page->scroll_container( height   = '70%'
+                                        vertical = abap_true
         )->table(
             growing             = abap_true
             growingthreshold    = '20'
@@ -104,22 +104,21 @@ CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
             )->segmented_button( selected_key = mv_key
                 )->items(
                     )->segmented_button_item(
-                        key = 'BLUE'
+                        key  = 'BLUE'
                         icon = 'sap-icon://accept'
                         text = 'blue'
                     )->segmented_button_item(
-                        key = 'GREEN'
+                        key  = 'GREEN'
                         icon = 'sap-icon://add-favorite'
                         text = 'green'
             )->get_parent( )->get_parent(
             )->toolbar_spacer(
             )->button(
-                icon = 'sap-icon://sort-descending'
+                icon  = 'sap-icon://sort-descending'
                 press = client->_event( 'SORT_DESCENDING' )
             )->button(
-                icon = 'sap-icon://sort-ascending'
-                press = client->_event( 'SORT_ASCENDING' )
-        ).
+                icon  = 'sap-icon://sort-ascending'
+                press = client->_event( 'SORT_ASCENDING' ) ).
 
     tab->columns(
         )->column(
@@ -139,9 +138,9 @@ CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
        )->text( '{VALUE}'
        )->text( '{INFO}'
        )->text( '{DESCR}'
-       )->checkbox( selected = '{CHECKBOX}' enabled = abap_false
-       )->text( '{COUNT}'
-        ).
+       )->checkbox( selected = '{CHECKBOX}'
+                    enabled  = abap_false
+       )->text( '{COUNT}' ).
 
     client->view_display( view->stringify( ) ).
 

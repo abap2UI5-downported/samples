@@ -43,19 +43,21 @@ CLASS z2ui5_cl_demo_app_041 IMPLEMENTATION.
             shownavbutton  = temp1 ).
 
     
-    layout = page->vertical_layout( class  = `sapUiContentPadding` width = `100%` ).
+    layout = page->vertical_layout( class = `sapUiContentPadding`
+                                          width = `100%` ).
     layout->label( 'StepInput'
         )->step_input(
             value = client->_bind_edit( screen-step_val_01 )
-            step = '2'
-            min = '0'
-            max = '20'
+            step  = '2'
+            min   = '0'
+            max   = '20'
         )->step_input(
             value = client->_bind_edit( screen-step_val_02 )
-            step = '10'
-            min = '0'
-            max = '100'
-        )->button( text = `OK` press = client->_event( `POST` ) ).
+            step  = '10'
+            min   = '0'
+            max   = '100'
+        )->button( text  = `OK`
+                   press = client->_event( `POST` ) ).
 
     client->view_display( page->stringify( ) ).
 

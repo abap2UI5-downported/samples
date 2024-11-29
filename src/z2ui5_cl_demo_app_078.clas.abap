@@ -48,28 +48,26 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
       
       temp2 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
       view = view->shell( )->page( id = `page_main`
-               title          = 'abap2UI5 - Select-Options'
-               navbuttonpress = client->_event( 'BACK' )
-               shownavbutton = temp2
-        ).
+               title                  = 'abap2UI5 - Select-Options'
+               navbuttonpress         = client->_event( 'BACK' )
+               shownavbutton          = temp2 ).
 
       view->_z2ui5( )->multiinput_ext(
-                            addedtokens      = client->_bind_edit( mt_tokens_added )
-                            removedtokens    = client->_bind_edit( mt_tokens_removed )
-                            change    = client->_event( 'UPDATE_BACKEND' )
-                            MultiInputId    = `test`  ).
+                            addedtokens   = client->_bind_edit( mt_tokens_added )
+                            removedtokens = client->_bind_edit( mt_tokens_removed )
+                            change        = client->_event( 'UPDATE_BACKEND' )
+                            multiinputid  = `test` ).
 
       view->multi_input(
-                            id = `test`
-                           tokens           = client->_bind_edit( mt_token )
-                            showclearicon    = abap_true
+                            id            = `test`
+                           tokens         = client->_bind_edit( mt_token )
+                            showclearicon = abap_true
                        )->tokens(
                            )->token( key      = `{KEY}`
                                      text     = `{TEXT}`
                                      visible  = `{VISIBLE}`
                                      selected = `{SELKZ}`
-                                     editable = `{EDITABLE}`
-                                      ).
+                                     editable = `{EDITABLE}` ).
 
       
       tab = view->table(
@@ -77,15 +75,17 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
         mode  = 'MultiSelect' ).
 
       tab->columns(
-       )->column(
+        )->column(
            )->text( 'KEY' )->get_parent(
-       )->column(
+        )->column(
            )->text( 'TEXT' ).
 
       tab->items( )->column_list_item( selected = '{SELKZ}'
         )->cells(
-            )->input( value = '{KEY}' enabled = `{EDITABLE}`
-            )->input( value = '{TEXT}' enabled = `{EDITABLE}`).
+            )->input( value   = '{KEY}'
+                      enabled = `{EDITABLE}`
+            )->input( value   = '{TEXT}'
+                      enabled = `{EDITABLE}`).
 
       client->view_display( view->stringify( ) ).
 

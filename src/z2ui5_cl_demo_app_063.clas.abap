@@ -37,12 +37,13 @@ CLASS z2ui5_cl_demo_app_063 IMPLEMENTATION.
             shownavbutton  = temp1 ).
 
     
-    layout = page->vertical_layout( class = `sapUiContentPadding` width = `100%` ).
+    layout = page->vertical_layout( class = `sapUiContentPadding`
+                                          width = `100%` ).
     layout->button(
-                text    = 'Emphasized Button with Badge'
-                type    = 'Emphasized'
-                class   = 'sapUiTinyMarginBeginEnd'
-                icon    = 'sap-icon://cart' )->get(
+                text  = 'Emphasized Button with Badge'
+                type  = 'Emphasized'
+                class = 'sapUiTinyMarginBeginEnd'
+                icon  = 'sap-icon://cart' )->get(
                 )->custom_data(
                     )->badge_custom_data(
                         key     = 'badge'

@@ -1,23 +1,23 @@
-class z2ui5_cl_demo_app_264 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_264 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces Z2UI5_IF_APP .
+    INTERFACES z2ui5_if_app .
 
-  types:
-    BEGIN OF ty_a_data,
-           label      TYPE string,
+    TYPES:
+      BEGIN OF ty_a_data,
+           label       TYPE string,
            value_state TYPE string,
          END OF ty_a_data .
 
-  TYPES temp1_389dcc5619 TYPE STANDARD TABLE OF ty_a_data.
-data:
-    lt_a_data TYPE temp1_389dcc5619 .
-  data LS_A_DATA type TY_A_DATA .
-  data S_TEXT type STRING .
-  data CHECK_INITIALIZED type ABAP_BOOL .
+    TYPES temp1_389dcc5619 TYPE STANDARD TABLE OF ty_a_data.
+DATA
+      lt_a_data TYPE temp1_389dcc5619 .
+    DATA ls_a_data TYPE ty_a_data .
+    DATA s_text TYPE string .
+    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -40,7 +40,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
 
 
-  METHOD DISPLAY_VIEW.
+  METHOD display_view.
 
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA temp1 TYPE xsdboolean.
@@ -53,9 +53,9 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `hint_icon`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'POPOVER' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'POPOVER' ) ).
 
     page->header_content(
        )->link(
@@ -63,13 +63,15 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
            target = '_blank'
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.StepInput/sample/sap.m.sample.StepInputValueState' ).
 
-     page->flex_box( items = client->_bind( lt_a_data ) direction = `Column`
+    page->flex_box( items     = client->_bind( lt_a_data )
+                    direction = `Column`
               )->vbox( class = `sapUiTinyMargin`
-                  )->label( text = '{LABEL}' labelfor = `SI`
+                  )->label( text     = '{LABEL}'
+                            labelfor = `SI`
                   )->step_input(
-                      id = `SI`
-                      width = `100%`
-                      value = `5`
+                      id         = `SI`
+                      width      = `100%`
+                      value      = `5`
                       valuestate = '{VALUE_STATE}' ).
 
     client->view_display( page->stringify( ) ).
@@ -77,7 +79,7 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ON_EVENT.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -89,27 +91,27 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_DISPLAY_POPOVER.
+  METHOD z2ui5_display_popover.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `This example shows different StepInput value states.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
+    FIELD-SYMBOLS <fs_a_data> TYPE ty_a_data.
       DATA temp1 LIKE lt_a_data.
       DATA temp2 LIKE LINE OF temp1.
-      FIELD-SYMBOLS <fs_a_data> TYPE ty_a_data.
 
     me->client = client.
 
@@ -135,7 +137,7 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
       lt_a_data = temp1.
 
       " Use field symbols to concatenate the string and store it in the label column
-      
+
 
       LOOP AT lt_a_data ASSIGNING <fs_a_data>.
         <fs_a_data>-label = s_text && ` ` && <fs_a_data>-value_state.

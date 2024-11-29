@@ -1,12 +1,12 @@
-class z2ui5_cl_demo_app_229 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_229 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces Z2UI5_IF_APP .
+    INTERFACES z2ui5_if_app .
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
+    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     METHODS display_view
@@ -24,7 +24,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_229 IMPLEMENTATION.
 
 
-  METHOD DISPLAY_VIEW.
+  METHOD display_view.
 
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA temp1 TYPE xsdboolean.
@@ -37,18 +37,23 @@ CLASS z2ui5_cl_demo_app_229 IMPLEMENTATION.
             shownavbutton  = temp1 ).
 
     
-    layout = page->vertical_layout( class  = `sapUiContentPadding` width = `100%` ).
-    layout->label( text = `Product` labelfor = `wrappingComboBox` ).
+    layout = page->vertical_layout( class = `sapUiContentPadding`
+                                          width = `100%` ).
+    layout->label( text     = `Product`
+                   labelfor = `wrappingComboBox` ).
     layout->combobox( id = `wrappingComboBox`
-             )->item( key = `1` text = `Wireless DSL/ Repeater and Print Server Lorem ipsum dolar st amet, consetetur sadipscing elitr, ` &&
+             )->item( key  = `1`
+                      text = `Wireless DSL/ Repeater and Print Server Lorem ipsum dolar st amet, consetetur sadipscing elitr, ` &&
                                        `sed diam nonumy eirmod tempor incidunt ut labore et dolore magna aliquyam erat, diam nonumy eirmod tempor individunt ` &&
                                        `ut labore et dolore magna aliquyam erat, sed justo et ea rebum.`
-             )->item( key = `2` text = `7" Widescreen Portable DVD Player w MP3, consetetur sadipscing, sed diam nonumy eirmod tempor ` &&
+             )->item( key  = `2`
+                      text = `7" Widescreen Portable DVD Player w MP3, consetetur sadipscing, sed diam nonumy eirmod tempor ` &&
                                        `invidunt ut labore et dolore et dolore magna aliquyam erat, sed diam voluptua.` &&
                                        `At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergen, no sea takimata. ` &&
                                        `Tortor pretium viverra suspendisse potenti nullam. Congue quisque egestas diam in arcu cursus. ` &&
                                        `Rutrum tellus pellentesque eu tincidunt tortor. Nec tincidunt praesent semper feugiat nibh sed.`
-             )->item( key = `3` text = `Portable DVD Player with 9" LCD Monitor`
+             )->item( key  = `3`
+                      text = `Portable DVD Player with 9" LCD Monitor`
             ).
 
     client->view_display( page->stringify( ) ).
@@ -56,7 +61,7 @@ CLASS z2ui5_cl_demo_app_229 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ON_EVENT.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -66,7 +71,7 @@ CLASS z2ui5_cl_demo_app_229 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.

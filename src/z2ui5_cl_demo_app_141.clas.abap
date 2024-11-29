@@ -110,19 +110,20 @@ CLASS Z2UI5_CL_DEMO_APP_141 IMPLEMENTATION.
 
     DATA popup TYPE REF TO z2ui5_cl_xml_view.
     DATA dialog TYPE REF TO z2ui5_cl_xml_view.
-     DATA temp3 TYPE z2ui5_if_types=>ty_t_name_value.
-     DATA temp4 LIKE LINE OF temp3.
+    DATA temp3 TYPE z2ui5_if_types=>ty_t_name_value.
+    DATA temp4 LIKE LINE OF temp3.
     popup = z2ui5_cl_xml_view=>factory_popup( ).
 
     
     dialog = popup->dialog(
        contentheight = '500px'
        contentwidth  = '500px'
-       title = 'Title' ).
+       title         = 'Title' ).
 
-       dialog->content(
+    dialog->content(
            )->simple_form(
-               )->label( text = 'Input1'  id = 'lbl1'
+               )->label( text = 'Input1'
+                         id   = 'lbl1'
                )->input( client->_bind_edit( ms_popup_input-value1 )
                )->label( 'Input2'
                )->input( client->_bind_edit( ms_popup_input-value2 )
@@ -131,8 +132,8 @@ CLASS Z2UI5_CL_DEMO_APP_141 IMPLEMENTATION.
                    selected = client->_bind_edit( ms_popup_input-check_is_active )
                    text     = 'this is a checkbox'
                    enabled  = abap_true
-       )->get_parent( )->get_parent(
-       )->footer( )->overflow_toolbar(
+         )->get_parent( )->get_parent(
+         )->footer( )->overflow_toolbar(
            )->toolbar_spacer(
            )->button(
                text  = 'Cancel'
@@ -142,16 +143,18 @@ CLASS Z2UI5_CL_DEMO_APP_141 IMPLEMENTATION.
                press = client->_event_client( client->cs_event-popup_close )
                type  = 'Emphasized' ).
 
-     
-     CLEAR temp3.
-     
-     temp4-n = `content`.
-     temp4-v = `<script> sap.z2ui5.setBlackColor();  </script>`.
-     INSERT temp4 INTO TABLE temp3.
-     temp4-n = `preferDOM`.
-     temp4-v = `true`.
-     INSERT temp4 INTO TABLE temp3.
-     dialog->_generic( name = `HTML` ns = `core` t_prop = temp3 )->get_parent( ).
+    
+    CLEAR temp3.
+    
+    temp4-n = `content`.
+    temp4-v = `<script> sap.z2ui5.setBlackColor();  </script>`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-n = `preferDOM`.
+    temp4-v = `true`.
+    INSERT temp4 INTO TABLE temp3.
+    dialog->_generic( name   = `HTML`
+                      ns     = `core`
+                      t_prop = temp3 )->get_parent( ).
 
     client->popup_display( popup->stringify( ) ).
 
@@ -180,8 +183,10 @@ CLASS Z2UI5_CL_DEMO_APP_141 IMPLEMENTATION.
 
     
     view = z2ui5_cl_xml_view=>factory( ).
-    view->_generic( name = `style` ns = `html` )->_cc_plain_xml( css )->get_parent( ).
-    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( script )->get_parent( ).
+    view->_generic( name = `style`
+                    ns   = `html` )->_cc_plain_xml( css )->get_parent( ).
+    view->_generic( name = `script`
+                    ns   = `html` )->_cc_plain_xml( script )->get_parent( ).
     
     
     temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
@@ -189,8 +194,7 @@ CLASS Z2UI5_CL_DEMO_APP_141 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Popups'
                 navbuttonpress = client->_event( val = 'BACK' )
-                shownavbutton = temp1
-            ).
+                shownavbutton  = temp1 ).
 
     
     grid = page->grid( 'L8 M12 S12' )->content( 'layout' ).

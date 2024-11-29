@@ -69,7 +69,7 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
             INTO TABLE t_tab.
 
         IF mv_counter = 3.
-           mv_check_active = abap_false.
+          mv_check_active = abap_false.
           client->message_toast_display( `timer deactivated` ).
         ENDIF.
 
@@ -111,9 +111,9 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
     lo_view = z2ui5_cl_xml_view=>factory( ).
 
     lo_view->_z2ui5( )->timer(
-        finished = client->_event( 'TIMER_FINISHED' )
-        delayms  = `2000`
-        checkactive = client->_bind( mv_check_active )  ).
+        finished    = client->_event( 'TIMER_FINISHED' )
+        delayms     = `2000`
+        checkactive = client->_bind( mv_check_active ) ).
 
     
     
@@ -121,8 +121,7 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
     page = lo_view->shell( )->page(
              title          = 'abap2UI5 - CL_GUI_TIMER - Monitor'
              navbuttonpress = client->_event( 'BACK' )
-             shownavbutton = temp1
-         ).
+             shownavbutton  = temp1 ).
 
     page->list(
          headertext = 'Data auto refresh (2 sec)'

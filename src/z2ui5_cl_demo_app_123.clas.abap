@@ -22,17 +22,17 @@ DATA mt_spot TYPE temp1_d73221ca3a.
     DATA check_initialized TYPE abap_bool.
 
     TYPES:
-      BEGIN OF ty_ROUTE,
+      BEGIN OF ty_route,
         position    TYPE string,
         routetype   TYPE string,
-        lineDash    TYPE string,
+        linedash    TYPE string,
         color       TYPE string,
         colorborder TYPE string,
         linewidth   TYPE string,
       END OF ty_route .
 
- TYPES temp2_d73221ca3a TYPE TABLE OF ty_ROUTE.
-DATA:
+    TYPES temp2_d73221ca3a TYPE TABLE OF ty_route.
+DATA
       mt_route TYPE temp2_d73221ca3a .
 
     TYPES: BEGIN OF ty_s_legend,
@@ -53,11 +53,11 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
       DATA temp1 LIKE mt_spot.
       DATA temp2 LIKE LINE OF temp1.
- DATA temp3 LIKE mt_route.
- DATA temp4 LIKE LINE OF temp3.
+      DATA temp3 LIKE mt_route.
+      DATA temp4 LIKE LINE OF temp3.
       DATA temp5 LIKE mt_legend.
       DATA temp6 LIKE LINE OF temp5.
-       DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA temp7 TYPE xsdboolean.
     DATA map TYPE REF TO z2ui5_cl_xml_view.
@@ -95,17 +95,17 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
       INSERT temp2 INTO TABLE temp1.
       mt_spot = temp1.
 
- 
- CLEAR temp3.
- 
- temp4-position = '2.3522219;48.856614;0; -74.0059731;40.7143528;0'.
- temp4-routetype = 'Geodesic'.
- temp4-lineDash = '10;5'.
- temp4-color = '92,186,230'.
- temp4-colorBorder = 'rgb(255,255,255)'.
- temp4-linewidth = '25'.
- INSERT temp4 INTO TABLE temp3.
- mt_route = temp3.
+      
+      CLEAR temp3.
+      
+      temp4-position = '2.3522219;48.856614;0; -74.0059731;40.7143528;0'.
+      temp4-routetype = 'Geodesic'.
+      temp4-linedash = '10;5'.
+      temp4-color = '92,186,230'.
+      temp4-colorborder = 'rgb(255,255,255)'.
+      temp4-linewidth = '25'.
+      INSERT temp4 INTO TABLE temp3.
+      mt_route = temp3.
 
 
       
@@ -123,26 +123,25 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
         RETURN.
 
     ENDCASE.
 
 
-       
-       view = z2ui5_cl_xml_view=>factory( ).
+    
+    view = z2ui5_cl_xml_view=>factory( ).
     
     
     temp7 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
-    page =   view->shell(
+    page = view->shell(
             )->page(
                     title          = 'abap2UI5 - Map Container'
                     navbuttonpress = client->_event( val = 'BACK' )
-                    shownavbutton = temp7
-                ).
+                    shownavbutton  = temp7 ).
 
     
-    map =  page->map_container(  autoadjustheight = abap_true
+    map = page->map_container( autoadjustheight = abap_true
          )->content( ns = `vk`
              )->container_content(
                title = `Analytic Map`
@@ -150,8 +149,7 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
                  )->content( ns = `vk`
                      )->analytic_map(
                        initialposition = `9.933573;50;0`
-                       initialzoom = `6`
-                     )  .
+                       initialzoom     = `6` ).
 
 
 
@@ -160,24 +158,21 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
       )->spot(
         position      = `{POS}`
         contentoffset = `{CONTENTOFFSET}`
-        type          =  `{TYPE}`
-        scale         =  `{SCALE}`
-        tooltip       =  `{TOOLTIP}`
-).
+        type          = `{TYPE}`
+        scale         = `{SCALE}`
+        tooltip       = `{TOOLTIP}` ).
 
 
     map->routes( client->_bind( mt_route ) )->route(
-      EXPORTING
-*        id        =
-        position  = `{POSITION}`
-        routetype = `{ROUTETYPE}`
-        lineDash = '{LINEDASH}'
-        color = '{COLOR}'
-        colorBorder = '{COLORBORDER}'
-   linewidth = '{LINEWIDTH}'
+      position      = `{POSITION}`
+        routetype   = `{ROUTETYPE}`
+        linedash    = '{LINEDASH}'
+        color       = '{COLOR}'
+        colorborder = '{COLORBORDER}'
+      linewidth     = '{LINEWIDTH}'
 *      RECEIVING
 *        result    =
-    ).
+      ).
 
 
     map->legend_area( )->legend(
@@ -187,15 +182,13 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
         caption = 'Legend'
 *      RECEIVING
 *        result  =
-    )->legenditem(
-      EXPORTING
-*        id     =
-        text   = '{TEXT}'
-        color  = '{COLOR}'
+      )->legenditem(
+      text    = '{TEXT}'
+        color = '{COLOR}'
 *      RECEIVING
 *        result =
-    ).
-    client->view_display(  page->stringify( ) ).
+      ).
+    client->view_display( page->stringify( ) ).
 
 
   ENDMETHOD.

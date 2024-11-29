@@ -59,24 +59,26 @@ CLASS Z2UI5_CL_DEMO_APP_180 IMPLEMENTATION.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA temp1 TYPE xsdboolean.
     view = z2ui5_cl_xml_view=>factory( ).
-    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( `sap.z2ui5.afterBE = () => { alert("afterBE triggered !!"); }` ).
+    view->_generic( name = `script`
+                    ns   = `html` )->_cc_plain_xml( `sap.z2ui5.afterBE = () => { alert("afterBE triggered !!"); }` ).
 
     
     
     temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = view->shell( )->page(
-        title = `Client->FOLLOW_UP_ACTION use cases`
-        class = `sapUiContentPadding`
+        title          = `Client->FOLLOW_UP_ACTION use cases`
+        class          = `sapUiContentPadding`
         navbuttonpress = client->_event( 'BACK' )
-        shownavbutton  = temp1
-    ).
+        shownavbutton  = temp1 ).
     page = page->vbox( ).
-    page->button( text = `call frontend event from backend event` press = client->_event( `CALL_EF` ) ).
-    page->label( text =  `MV_URL was set AFTER backend event and model update to:` ).
-    page->label( text =  client->_bind_edit( mv_url ) ).
+    page->button( text  = `call frontend event from backend event`
+                  press = client->_event( `CALL_EF` ) ).
+    page->label( text = `MV_URL was set AFTER backend event and model update to:` ).
+    page->label( text = client->_bind_edit( mv_url ) ).
 
     page->get_parent( )->hbox( class = `sapUiSmallMargin` ).
-    page->button( text = `call custom JS from EB` press = client->_event( 'CUSTOM_JS_FROM_EB' ) ).
+    page->button( text  = `call custom JS from EB`
+                  press = client->_event( 'CUSTOM_JS_FROM_EB' ) ).
 
     client->view_display( view->stringify( ) ).
 

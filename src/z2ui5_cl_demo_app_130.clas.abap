@@ -15,11 +15,11 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION
         selkz    TYPE abap_bool,
         editable TYPE abap_bool,
       END OF ty_s_token .
-    TYPES:
+    TYPES
       ty_t_token TYPE STANDARD TABLE OF ty_s_token WITH DEFAULT KEY .
-    TYPES:
+    TYPES
       ty_t_range    TYPE RANGE OF string .
-    TYPES:
+    TYPES
       ty_s_range    TYPE LINE OF ty_t_range .
     TYPES:
       BEGIN OF ty_s_filter_pop,
@@ -28,7 +28,7 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION
         high   TYPE string,
         key    TYPE string,
       END OF ty_s_filter_pop .
-    TYPES:
+    TYPES
       ty_t_filter_pop TYPE STANDARD TABLE OF ty_s_filter_pop WITH DEFAULT KEY .
     TYPES:
       BEGIN OF ty_s_fieldsdb,
@@ -36,14 +36,14 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION
         field       TYPE char10,
         field_doma  TYPE char10,
       END OF ty_s_fieldsdb .
-    TYPES:
+    TYPES
       ty_t_fieldsdb TYPE STANDARD TABLE OF ty_s_fieldsdb WITH DEFAULT KEY .
-    TYPES:
+    TYPES
       BEGIN OF ty_s_fields.
         INCLUDE TYPE ty_s_fieldsdb.
-        TYPES: t_token  TYPE ty_t_token,
-        t_filter TYPE ty_t_filter_pop,
-      END OF ty_s_fields .
+    TYPES: t_token  TYPE ty_t_token,
+          t_filter TYPE ty_t_filter_pop,
+          END OF ty_s_fields .
     TYPES:
       BEGIN OF ty_s_var_val,
         screen_name TYPE char10,
@@ -55,7 +55,7 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION
         low         TYPE char255,
         high        TYPE char255,
       END OF ty_s_var_val .
-    TYPES:
+    TYPES
       ty_t_var_val TYPE STANDARD TABLE OF ty_s_var_val WITH DEFAULT KEY .
     TYPES:
       BEGIN OF ty_s_variants,
@@ -63,13 +63,13 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION
         var         TYPE char10,
         descr       TYPE string,
       END OF ty_s_variants .
-    TYPES:
+    TYPES
       ty_t_variants TYPE STANDARD TABLE OF ty_s_variants WITH DEFAULT KEY .
-    TYPES:
+    TYPES
       BEGIN OF ty_s_var_pop.
         INCLUDE TYPE ty_s_variants.
-        TYPES: selkz TYPE xfeld,
-      END OF ty_s_var_pop .
+    TYPES: selkz TYPE xfeld,
+          END OF ty_s_var_pop .
     TYPES:
       BEGIN OF ty_s_screens,
         screen_name TYPE char10,
@@ -77,17 +77,17 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION
       END OF ty_s_screens .
 
     TYPES temp1_279441b868 TYPE STANDARD TABLE OF ty_s_filter_pop WITH DEFAULT KEY.
-DATA:
+DATA
       mt_filter       TYPE temp1_279441b868 .
     DATA mt_mapping TYPE z2ui5_if_types=>ty_t_name_value .
     TYPES temp2_279441b868 TYPE STANDARD TABLE OF ty_s_screens WITH DEFAULT KEY.
-DATA:
+DATA
       mt_screens      TYPE temp2_279441b868 .
     TYPES temp3_279441b868 TYPE STANDARD TABLE OF ty_s_variants WITH DEFAULT KEY.
-DATA:
+DATA
       mt_variants     TYPE temp3_279441b868 .
     TYPES temp4_279441b868 TYPE STANDARD TABLE OF ty_s_var_pop WITH DEFAULT KEY.
-DATA:
+DATA
       mt_variants_pop TYPE temp4_279441b868 .
     DATA mv_activ_elemnt TYPE string .
     DATA mv_screen TYPE string .
@@ -220,7 +220,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     
     db_fields = temp1.
 
-    CLEAR: mt_fields.
+    CLEAR mt_fields.
     
     
     LOOP AT db_fields REFERENCE INTO lr_fields WHERE screen_name = mv_screen.
@@ -254,11 +254,11 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     DATA temp5 LIKE LINE OF temp4.
     DATA l_variants LIKE temp4.
     DATA var TYPE ty_t_variants.
+    DATA var_val TYPE ty_t_var_val.
     DATA a LIKE LINE OF l_variants.
     DATA temp6 TYPE ty_t_var_val.
     DATA temp7 LIKE LINE OF temp6.
     DATA var_vall_all LIKE temp6.
-    DATA var_val TYPE ty_t_var_val.
     DATA b LIKE LINE OF var_vall_all.
     DATA temp8 LIKE LINE OF mt_fields.
     DATA field LIKE REF TO temp8.
@@ -285,8 +285,9 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
     
     
+    
     LOOP AT l_variants INTO a  WHERE screen_name = mv_screen
-                                     AND   var         = mv_variant.
+                                     AND var         = mv_variant.
 
       APPEND a TO var.
       mv_description = a-descr.
@@ -375,12 +376,11 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     
     var_vall_all = temp6.
 
-    
 
 
     
     LOOP AT var_vall_all INTO b WHERE screen_name = mv_screen
-        AND   var         = mv_variant.
+        AND var         = mv_variant.
 
       APPEND b TO var_val.
     ENDLOOP.
@@ -389,13 +389,13 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     
     LOOP AT mt_fields REFERENCE INTO field.
 
-      CLEAR: field->t_filter.
-      CLEAR: field->t_token.
+      CLEAR field->t_filter.
+      CLEAR field->t_token.
 
       
       
-      LOOP AT  var_val REFERENCE INTO val
-      WHERE field = field->field.
+      LOOP AT var_val REFERENCE INTO val
+          WHERE field = field->field.
 
         
         CLEAR temp10.
@@ -440,7 +440,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
   METHOD on_event.
 
-    varaint_page(  ).
+    varaint_page( ).
 
   ENDMETHOD.
 
@@ -523,7 +523,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
     DATA lr_field TYPE REF TO z2ui5_cl_demo_app_130=>ty_s_fields.
     READ TABLE mt_fields REFERENCE INTO lr_field
-    WITH KEY field = mv_activ_elemnt.
+      WITH KEY field = mv_activ_elemnt.
 
     IF sy-subrc = 0.
 
@@ -531,7 +531,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
       lr_field->t_filter = mt_filter.
 
-      CLEAR: lr_field->t_token.
+      CLEAR lr_field->t_token.
 
       set_token( CHANGING field = lr_field ).
 
@@ -567,7 +567,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
                )->page(
                   title          = get_txt( '/SCWM/DE_TW_COND_CHECK_SELECT' )
                   navbuttonpress = client->_event( 'BACK' )
-                  shownavbutton = abap_true ).
+                  shownavbutton  = abap_true ).
 
     ELSE.
 
@@ -584,41 +584,40 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     grid = page->grid( 'L6 M12 S12'
         )->content( 'layout' ).
 
-    grid->simple_form(  get_txt( 'BU_DYNID' )
+    grid->simple_form( get_txt( 'BU_DYNID' )
         )->content( 'form'
-            )->label( text     =  get_txt( 'BU_DYNID' )
+            )->label( text = get_txt( 'BU_DYNID' )
              )->combobox(
-             change = client->_event( val = 'INPUT_SCREEN_CHANGE'  )
-             items  = client->_bind_edit( mt_screens )
+             change      = client->_event( val = 'INPUT_SCREEN_CHANGE' )
+             items       = client->_bind_edit( mt_screens )
              selectedkey = client->_bind_edit( mv_screen )
                  )->item(
-                     key = '{SCREEN_NAME}'
+                     key  = '{SCREEN_NAME}'
                      text = '{SCREEN_NAME} - {DESCR}'
-         )->get_parent(  )->label( text     =  get_txt( 'DESCR_40'  )
+         )->get_parent( )->label( text = get_txt( 'DESCR_40' )
             )->input(
-            value            = client->_bind_edit( mv_screen_descr )
-            showvaluehelp    = abap_false
+            value         = client->_bind_edit( mv_screen_descr )
+            showvaluehelp = abap_false
 *            editable         = abap_false
-            enabled          = abap_false ) .
+            enabled       = abap_false ).
 
 
-    grid->simple_form(  get_txt( '/SCWM/WB_VARIANT' )
+    grid->simple_form( get_txt( '/SCWM/WB_VARIANT' )
             )->content( 'form'
-                )->label( text =  get_txt( '/SCWM/WB_VARIANT'  )
+                )->label( text = get_txt( '/SCWM/WB_VARIANT' )
             )->input(
             value            = client->_bind_edit( mv_variant )
             showvaluehelp    = abap_true
             valuehelprequest = client->_event( 'CALL_POPUP_VARIANT' )
             submit           = client->_event( 'INPUT_VARIANT_CHANGE' )
-            )->label( text   =  get_txt( 'DESCR_40' )
+            )->label( text = get_txt( 'DESCR_40' )
             )->input(
-            value            = client->_bind_edit( mv_description )
-            showvaluehelp    = abap_false ) .
+            value         = client->_bind_edit( mv_description )
+            showvaluehelp = abap_false ).
 
     
-    content = grid->simple_form(  get_txt( 'CLASSFEL' )
-         )->content( 'form'
-             ).
+    content = grid->simple_form( get_txt( 'CLASSFEL' )
+         )->content( 'form' ).
 
     IF mt_fields IS NOT INITIAL.
 
@@ -637,11 +636,11 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
         temp1 = lr_tab->field.
         INSERT temp1 INTO TABLE temp19.
         content->label( text = scrtext
-         )->multi_input(
-                   tokens            = client->_bind_local( lr_tab->t_token )
-                   showclearicon     = abap_true
-                   id                = lr_tab->field
-                   valuehelprequest  = client->_event( val = 'CALL_POPUP_FILTER' t_arg = temp19 )
+          )->multi_input(
+                   tokens           = client->_bind_local( lr_tab->t_token )
+                   showclearicon    = abap_true
+                   id               = lr_tab->field
+                   valuehelprequest = client->_event( val = 'CALL_POPUP_FILTER' t_arg = temp19 )
                )->item(
                        key  = `{KEY}`
                        text = `{TEXT}`
@@ -651,8 +650,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
                        text     = `{TEXT}`
                        visible  = `{VISIBLE}`
                        selected = `{SELKZ}`
-                       editable = `{EDITABLE}`
-           ).
+                       editable = `{EDITABLE}` ).
 
       ENDLOOP.
 
@@ -661,7 +659,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     page->footer( )->overflow_toolbar(
                  )->toolbar_spacer(
                  )->button(
-                     text    =  get_txt( '/SCWM/DE_HUDEL'  )
+                     text    = get_txt( '/SCWM/DE_HUDEL' )
                      press   = client->_event( 'BUTTON_DELETE' )
                      type    = 'Reject'
                      icon    = 'sap-icon://delete'
@@ -672,10 +670,10 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
                      type    = 'Default'
                      enabled = mv_button_active
                   )->button(
-                     text    =  get_txt( '/SCWM/DE_LM_LOGSAVE' )
+                     text    = get_txt( '/SCWM/DE_LM_LOGSAVE' )
                      press   = client->_event( 'BUTTON_SAVE' )
                      type    = 'Success'
-                     enabled =  mv_button_active ).
+                     enabled = mv_button_active ).
 
     IF mo_parent_view IS INITIAL.
 
@@ -701,7 +699,8 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       title         = get_txt_l( '/SCWM/DE_TW_COND_CHECK_COND' ) ).
 
     
-    vbox = lo_popup->vbox( height = `100%` justifycontent = 'SpaceBetween' ).
+    vbox = lo_popup->vbox( height         = `100%`
+                                 justifycontent = 'SpaceBetween' ).
 
     
     item = vbox->list(
@@ -720,31 +719,30 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
                  selectedkey = `{OPTION}`
                  items       = client->_bind_edit( mt_mapping )
              )->item(
-                     key = '{N}'
+                     key  = '{N}'
                      text = '{N}'
              )->get_parent(
              )->input( value = `{LOW}`
-             )->input( value = `{HIGH}`  visible = `{= ${OPTION} === 'BT' }`
+             )->input( value   = `{HIGH}`
+                       visible = `{= ${OPTION} === 'BT' }`
              )->button( icon = 'sap-icon://decline'
-             type = `Transparent`
-             press = client->_event( val = `POPUP_FILTER_DELETE`
-             t_arg = temp21 )
-             ).
+             type            = `Transparent`
+             press           = client->_event( val = `POPUP_FILTER_DELETE`
+             t_arg                                 = temp21 ) ).
 
     lo_popup->footer( )->overflow_toolbar(
         )->button( text = get_txt( 'FC_DELALL' )
-                  icon = 'sap-icon://delete'
-                  type = `Transparent`
+                  icon  = 'sap-icon://delete'
+                  type  = `Transparent`
                   press = client->_event( val = `POPUP_FILTER_DELETE_ALL` )
-        )->button( text = get_txt( 'RSLPO_GUI_ADDPART' )
-                   icon = `sap-icon://add`
+        )->button( text  = get_txt( 'RSLPO_GUI_ADDPART' )
+                   icon  = `sap-icon://add`
                    press = client->_event( val = `POPUP_FILTER_ADD` )
         )->toolbar_spacer(
         )->button(
             text  = get_txt( 'MSSRCF_ACTION' )
             press = client->_event( 'POPUP_FILTER_OK' )
-            type  = 'Emphasized'
-       ).
+            type  = 'Emphasized' ).
 
     client->popup_display( lo_popup->stringify( ) ).
 
@@ -756,8 +754,9 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     DATA popup TYPE REF TO z2ui5_cl_xml_view.
     popup = z2ui5_cl_xml_view=>factory_popup( ).
 
-    popup->dialog( title = get_txt( '/SCWM/WB_VARIANT' ) contentwidth = '30%'
-    )->table(
+    popup->dialog( title        = get_txt( '/SCWM/WB_VARIANT' )
+                   contentwidth = '30%'
+      )->table(
             mode  = 'SingleSelectLeft'
             items = client->_bind_edit( mt_variants_pop )
         )->columns(
@@ -771,8 +770,8 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
                 )->cells(
                     )->text( '{VAR}'
                     )->text( '{DESCR}'
-    )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-    )->footer(
+      )->get_parent( )->get_parent( )->get_parent( )->get_parent(
+      )->footer(
         )->overflow_toolbar(
             )->toolbar_spacer(
             )->button(
@@ -794,27 +793,27 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       contentwidth  = `50%`
       title         = get_txt( '/SCWM/DE_COPY_NUMBER' ) ).
 
-    lo_popup->simple_form(  get_txt( '/SCWM/WB_VARIANT'  )
+    lo_popup->simple_form( get_txt( '/SCWM/WB_VARIANT' )
                )->content( 'form'
                    )->label( text = get_txt( '/SCWM/WB_VARIANT' )
                )->input(
-               value            = client->_bind_edit( mv_variant_copy )
-               showvaluehelp    = abap_false
-               )->label( text     = get_txt( 'DESCR_40' )
+               value         = client->_bind_edit( mv_variant_copy )
+               showvaluehelp = abap_false
+               )->label( text = get_txt( 'DESCR_40' )
                )->input(
-               value            = client->_bind_edit( mv_description_copy )
-               showvaluehelp    = abap_false ) .
+               value         = client->_bind_edit( mv_description_copy )
+               showvaluehelp = abap_false ).
 
     lo_popup->footer( )->overflow_toolbar(
         )->toolbar_spacer(
         )->button(
             text  = get_txt( 'XEXIT' )
             press = client->_event( 'POPUP_COPY_EXIT' )
-            type    = 'Reject'
+            type  = 'Reject'
        )->button(
-            text  = get_txt( '/SCWM/DE_LM_LOGSAVE' )
-            press = client->_event( 'POPUP_COPY_SAVE' )
-            type  = 'Emphasized'
+            text    = get_txt( '/SCWM/DE_LM_LOGSAVE' )
+            press   = client->_event( 'POPUP_COPY_SAVE' )
+            type    = 'Emphasized'
             enabled = `{= ${MV_VARIANT_COPY} !== "" }`
        ).
 
@@ -893,8 +892,8 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
         get_fields( ).
 
-        CLEAR: mv_variant.
-        CLEAR: mv_description.
+        CLEAR mv_variant.
+        CLEAR mv_description.
 
         get_variants( ).
 
@@ -902,13 +901,13 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
       WHEN `INPUT_VARIANT_CHANGE`.
 
-        get_values(  ).
+        get_values( ).
 
         render_main( ).
 
       WHEN `POPUP_FILTER_OK`.
 
-        popup_filter_ok(  ).
+        popup_filter_ok( ).
 
       WHEN `POPUP_FILTER_ADD`.
 
@@ -959,12 +958,12 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
         
         READ TABLE mt_fields REFERENCE INTO lr_field
-        WITH KEY field = mv_activ_elemnt.
+          WITH KEY field = mv_activ_elemnt.
 
         " vorhanden werte übertragen
         mt_filter = lr_field->t_filter.
 
-        render_popup_filter(  ).
+        render_popup_filter( ).
 
       WHEN 'CALL_POPUP_VARIANT'.
 
@@ -991,7 +990,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
         client->popup_destroy( ).
 
-        get_values(  ).
+        get_values( ).
 
         render_main( ).
 
@@ -1008,7 +1007,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
       WHEN 'BUTTON_COPY'.
 
-        render_pop_copy(  ).
+        render_pop_copy( ).
 
         render_main( ).
 
@@ -1018,7 +1017,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
       WHEN 'POPUP_COPY_SAVE'.
 
-        popup_copy_save(  ).
+        popup_copy_save( ).
 
         client->popup_destroy( ).
 
@@ -1047,7 +1046,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     temp1 = boolc( mv_screen IS NOT INITIAL AND mv_variant IS NOT INITIAL ).
     mv_button_active = temp1.
 
-    client->view_model_update(  ).
+    client->view_model_update( ).
 
   ENDMETHOD.
 ENDCLASS.

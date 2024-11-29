@@ -43,7 +43,7 @@ CLASS Z2UI5_CL_DEMO_APP_150 IMPLEMENTATION.
 
     TRY.
         
-        lo_prev = client->get_app( client->get(  )-s_draft-id_prev_app ).
+        lo_prev = client->get_app( client->get( )-s_draft-id_prev_app ).
         
         temp1 ?= lo_prev.
         
@@ -65,7 +65,7 @@ CLASS Z2UI5_CL_DEMO_APP_150 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Popup To Confirm'
                 navbuttonpress = client->_event( val = 'BACK' )
-                shownavbutton = temp1
+                shownavbutton  = temp1
            )->button(
             text  = 'Open Popup...'
             press = client->_event( 'POPUP' ) ).

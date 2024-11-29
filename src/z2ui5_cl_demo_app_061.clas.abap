@@ -34,12 +34,11 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - RTTI created Table'
                 navbuttonpress = client->_event( 'BACK' )
-                shownavbutton  = temp1
-        ).
+                shownavbutton  = temp1 ).
 
 
     
-    ASSIGN  t_tab->* TO <tab>.
+    ASSIGN t_tab->* TO <tab>.
 
     
     tab = page->table(
@@ -74,7 +73,7 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
-      FIELD-SYMBOLS <tab> TYPE table.
+    FIELD-SYMBOLS <tab> TYPE table.
       DATA temp1 TYPE z2ui5_t_01.
       DATA temp2 TYPE z2ui5_t_01.
       DATA temp3 TYPE z2ui5_t_01.
@@ -85,7 +84,7 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
       check_initialized = abap_true.
 
       CREATE DATA t_tab TYPE STANDARD TABLE OF ('Z2UI5_T_01').
-      
+
       ASSIGN t_tab->* TO <tab>.
 
       
@@ -120,7 +119,7 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
 
     ENDCASE.
 
-    set_view(  ).
+    set_view( ).
 
   ENDMETHOD.
 ENDCLASS.

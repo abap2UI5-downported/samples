@@ -42,8 +42,8 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
     
     page = view->shell(
         )->page(
-                title          = 'abap2UI5 - Tables and editable'
-                navbuttonpress = client->_event( 'BACK' )
+                title           = 'abap2UI5 - Tables and editable'
+                navbuttonpress  = client->_event( 'BACK' )
                   shownavbutton = abap_true ).
 
     
@@ -92,11 +92,16 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
 
     tab->items( )->column_list_item( selected = '{SELKZ}'
       )->cells(
-          )->input( value = '{TITLE}' enabled = `{EDITABLE}`
-          )->input( value = '{VALUE}' enabled = `{EDITABLE}`
-          )->input( value = '{INFO}' enabled = `{EDITABLE}`
-          )->input( value = '{DESCR}' enabled = `{EDITABLE}`
-          )->checkbox( selected = '{CHECKBOX}' enabled = `{EDITABLE}` ).
+          )->input( value   = '{TITLE}'
+                    enabled = `{EDITABLE}`
+          )->input( value   = '{VALUE}'
+                    enabled = `{EDITABLE}`
+          )->input( value   = '{INFO}'
+                    enabled = `{EDITABLE}`
+          )->input( value   = '{DESCR}'
+                    enabled = `{EDITABLE}`
+          )->checkbox( selected = '{CHECKBOX}'
+                       enabled  = `{EDITABLE}` ).
 
     client->view_display( view->stringify( ) ).
 

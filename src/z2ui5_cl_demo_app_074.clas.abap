@@ -69,7 +69,8 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
 
         
       CATCH cx_root INTO x.
-        client->message_box_display( text = x->get_text( ) type = `error` ).
+        client->message_box_display( text = x->get_text( )
+                                     type = `error` ).
     ENDTRY.
 
   ENDMETHOD.
@@ -77,12 +78,9 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
 
   METHOD ui5_view_init_display.
 
-       ui5_view_main_display( ).
+    ui5_view_main_display( ).
 
-*    client->view_display( z2ui5_cl_xml_view=>factory( client
-*         )->_z2ui5( )->timer( client->_event( `START` )
-*         )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_file_uploader=>get_js( )
-*         )->stringify( ) ).
+
 
   ENDMETHOD.
 
@@ -92,7 +90,7 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA temp3 TYPE xsdboolean.
-      FIELD-SYMBOLS <tab> TYPE table.
+    FIELD-SYMBOLS <tab> TYPE table.
       DATA temp1 TYPE string.
       DATA tab TYPE REF TO z2ui5_cl_xml_view.
       DATA lr_fields TYPE abap_component_tab.
@@ -108,12 +106,12 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
     page = view->shell( )->page(
             title          = 'abap2UI5 - CSV to ABAP internal Table'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = temp3
-       ).
+            shownavbutton  = temp3 ).
+    
 
     IF mr_table IS NOT INITIAL.
 
-      
+
       ASSIGN mr_table->* TO <tab>.
 
       

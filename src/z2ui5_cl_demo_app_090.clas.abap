@@ -12,7 +12,7 @@ CLASS z2ui5_cl_demo_app_090 DEFINITION
              visible   TYPE abap_bool,
              index     TYPE i,
            END OF t_items2.
-    TYPES: tt_items2 TYPE STANDARD TABLE OF t_items2 WITH DEFAULT KEY.
+    TYPES tt_items2 TYPE STANDARD TABLE OF t_items2 WITH DEFAULT KEY.
 
     TYPES: BEGIN OF t_items3,
              columnkey     TYPE string,
@@ -21,11 +21,11 @@ CLASS z2ui5_cl_demo_app_090 DEFINITION
              key           TYPE string,
              text          TYPE string,
            END OF t_items3.
-    TYPES: tt_items3 TYPE STANDARD TABLE OF t_items3 WITH DEFAULT KEY.
+    TYPES tt_items3 TYPE STANDARD TABLE OF t_items3 WITH DEFAULT KEY.
 
-    DATA: mt_columns TYPE tt_items2.
-    DATA: mt_columns1 TYPE tt_items2.
-    DATA: mt_groups TYPE tt_items3.
+    DATA mt_columns TYPE tt_items2.
+    DATA mt_columns1 TYPE tt_items2.
+    DATA mt_groups TYPE tt_items3.
 
     "P13N
     TYPES: BEGIN OF t_items22,
@@ -33,7 +33,7 @@ CLASS z2ui5_cl_demo_app_090 DEFINITION
              name    TYPE string,
              label   TYPE string,
            END OF t_items22.
-    TYPES: tt_items22 TYPE STANDARD TABLE OF t_items22 WITH DEFAULT KEY.
+    TYPES tt_items22 TYPE STANDARD TABLE OF t_items22 WITH DEFAULT KEY.
 
     TYPES: BEGIN OF t_items32,
              sorted     TYPE abap_bool,
@@ -41,18 +41,18 @@ CLASS z2ui5_cl_demo_app_090 DEFINITION
              label      TYPE string,
              descending TYPE abap_bool,
            END OF t_items32.
-    TYPES: tt_items32 TYPE STANDARD TABLE OF t_items32 WITH DEFAULT KEY.
+    TYPES tt_items32 TYPE STANDARD TABLE OF t_items32 WITH DEFAULT KEY.
 
     TYPES: BEGIN OF t_items33,
              grouped TYPE abap_bool,
              name    TYPE string,
              label   TYPE string,
            END OF t_items33.
-    TYPES: tt_items33 TYPE STANDARD TABLE OF t_items33 WITH DEFAULT KEY.
+    TYPES tt_items33 TYPE STANDARD TABLE OF t_items33 WITH DEFAULT KEY.
 
-    DATA: mt_columns_p13n TYPE tt_items22.
-    DATA: mt_sort_p13n TYPE tt_items32.
-    DATA: mt_groups_p13n TYPE tt_items33.
+    DATA mt_columns_p13n TYPE tt_items22.
+    DATA mt_sort_p13n TYPE tt_items32.
+    DATA mt_groups_p13n TYPE tt_items33.
 
   PROTECTED SECTION.
 
@@ -135,20 +135,23 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
     DATA temp9 TYPE z2ui5_if_types=>ty_t_name_value.
     DATA temp10 LIKE LINE OF temp9.
 
-    client->_bind_edit( val = mt_columns_p13n custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ).
-    client->_bind_edit( val = mt_sort_p13n custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ).
-    client->_bind_edit( val = mt_groups_p13n custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( )  ).
+    client->_bind_edit( val           = mt_columns_p13n
+                        custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ).
+    client->_bind_edit( val           = mt_sort_p13n
+                        custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ).
+    client->_bind_edit( val           = mt_groups_p13n
+                        custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ).
 
     
-    page =  z2ui5_cl_xml_view=>factory( ).
+    page = z2ui5_cl_xml_view=>factory( ).
 
     
     temp11 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = page->shell( )->page(
         title          = 'abap2UI5 - P13N Dialog'
         navbuttonpress = client->_event( 'BACK' )
-        shownavbutton = temp11
-        class = 'sapUiContentPadding' ).
+        shownavbutton  = temp11
+        class          = 'sapUiContentPadding' ).
 
     page = page->vbox( ).
 
@@ -200,25 +203,33 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
     temp10-n = `title`.
     temp10-v = `Group`.
     INSERT temp10 INTO TABLE temp9.
-    page->_generic( name = `Popup` ns = `p13n`
+    page->_generic( name         = `Popup`
+                    ns           = `p13n`
                           t_prop = temp1
-                         )->_generic( name = `panels` ns = `p13n`
-                           )->_generic( name = `SelectionPanel` ns = `p13n`
+                         )->_generic( name = `panels`
+                                      ns   = `p13n`
+                           )->_generic( name   = `SelectionPanel`
+                                        ns     = `p13n`
                                         t_prop = temp3 )->get_parent(
-                          )->_generic( name = `SortPanel` ns = `p13n`
+                          )->_generic( name   = `SortPanel`
+                                       ns     = `p13n`
                                        t_prop = temp5
                                                     )->get_parent(
-                          )->_generic( name = `P13nFilterPanel` ns = ``
+                          )->_generic( name   = `P13nFilterPanel`
+                                       ns     = ``
                                        t_prop = temp7
                                                     )->get_parent(
-                         )->_generic( name = `GroupPanel` ns = `p13n`
+                         )->_generic( name   = `GroupPanel`
+                                      ns     = `p13n`
                                       t_prop = temp9
-                                      )->get_parent(  )->get_parent( )->get_parent(
+                                      )->get_parent( )->get_parent( )->get_parent(
+      )->get_parent( )->get_parent( ).
 
-                                    )->get_parent( )->get_parent( ).
-
-    page->button( text = `Open P13N Dialog` press = client->_event( 'P13N_OPEN' ) class = `sapUiTinyMarginBeginEnd`
-    )->button( text = `Open P13N.POPUP` press = `sap.z2ui5.setInitialData()` )->get_parent( )->get_parent( ).
+    page->button( text  = `Open P13N Dialog`
+                  press = client->_event( 'P13N_OPEN' )
+                  class = `sapUiTinyMarginBeginEnd`
+      )->button( text  = `Open P13N.POPUP`
+                 press = `sap.z2ui5.setInitialData()` )->get_parent( )->get_parent( ).
 
     client->view_display( page->stringify( ) ).
 
@@ -322,27 +333,24 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
     INSERT temp14 INTO TABLE temp13.
     
     p13n = p13n_dialog->_generic( name = `P13nDialog`
-    t_prop = temp3
-    )->_generic( name = `panels`
-     )->_generic( name = `P13nColumnsPanel`
-     t_prop = temp5
-     )->items(
+      t_prop                                 = temp3
+      )->_generic( name = `panels`
+      )->_generic( name = `P13nColumnsPanel`
+      t_prop            = temp5
+      )->items(
          )->_generic( name = `P13nItem`
-           t_prop = temp7 )->get_parent( )->get_parent(
-
-         )->_generic( name = `columnsItems`
+           t_prop          = temp7 )->get_parent( )->get_parent(
+      )->_generic( name = `columnsItems`
            )->_generic( name = `P13nColumnsItem`
-               t_prop = temp9 )->get_parent( )->get_parent( )->get_parent(
-
-     )->_generic( name = `P13nGroupPanel`
-           t_prop = temp11
-     )->items(
+               t_prop        = temp9 )->get_parent( )->get_parent( )->get_parent(
+      )->_generic( name = `P13nGroupPanel`
+           t_prop       = temp11
+      )->items(
       )->_generic( name = `P13nItem`
-           t_prop = temp1 )->get_parent( )->get_parent(
-
+           t_prop       = temp1 )->get_parent( )->get_parent(
       )->_generic( name = `groupItems`
         )->_generic( name = `P13nGroupItem`
-            t_prop = temp13 ).
+            t_prop        = temp13 ).
 
     client->popup_display( p13n->stringify( ) ).
 
@@ -398,18 +406,22 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
     temp12-n = `title`.
     temp12-v = `Group`.
     INSERT temp12 INTO TABLE temp11.
-    p13n_popup->_generic( name = `Popup` ns = `p13n`
+    p13n_popup->_generic( name       = `Popup`
+                          ns         = `p13n`
                               t_prop = temp5
-                             )->_generic( name = `panels` ns = `p13n`
-                               )->_generic( name = `SelectionPanel` ns = `p13n`
+                             )->_generic( name = `panels`
+                                          ns   = `p13n`
+                               )->_generic( name   = `SelectionPanel`
+                                            ns     = `p13n`
                                             t_prop = temp7 )->get_parent(
-                              )->_generic( name = `SortPanel` ns = `p13n`
+                              )->_generic( name   = `SortPanel`
+                                           ns     = `p13n`
                                            t_prop = temp9
                                                         )->get_parent(
-                             )->_generic( name = `GroupPanel` ns = `p13n`
+                             )->_generic( name   = `GroupPanel`
+                                          ns     = `p13n`
                                           t_prop = temp11
-                                          )->get_parent(  )->get_parent( )->get_parent(
-                                        ).
+                                          )->get_parent( )->get_parent( )->get_parent( ).
 
     client->view_display( p13n_popup->stringify( ) ).
 
@@ -443,7 +455,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
     temp8-columnkey = `supplierName`.
     temp8-text = `Supplier Name`.
     INSERT temp8 INTO TABLE temp7.
-    mt_columns =  temp7.
+    mt_columns = temp7.
     
     CLEAR temp9.
     

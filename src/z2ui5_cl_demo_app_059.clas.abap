@@ -173,9 +173,9 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
     
     temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page1 = view->shell( )->page( id = `page_main`
-            title          = 'abap2UI5 - Search Field with Backend Live Change'
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = temp1 ).
+            title                          = 'abap2UI5 - Search Field with Backend Live Change'
+            navbuttonpress                 = client->_event( 'BACK' )
+            shownavbutton                  = temp1 ).
 
     
     CLEAR temp4.
@@ -186,13 +186,13 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
     CLEAR temp5.
     INSERT `${$source>/value}` INTO TABLE temp5.
     
-    lo_box =  page1->vbox( )->text( `Search` )->search_field(
+    lo_box = page1->vbox( )->text( `Search` )->search_field(
          livechange = client->_event(
-            val = 'BUTTON_SEARCH'
-            t_arg = temp5
+            val    = 'BUTTON_SEARCH'
+            t_arg  = temp5
             s_ctrl = ls_cnt
             )
-         width  = `17.5rem` ).
+         width      = `17.5rem` ).
 
     
     tab = lo_box->table( client->_bind( mt_table ) ).

@@ -39,10 +39,9 @@ CLASS z2ui5_cl_demo_app_169 IMPLEMENTATION.
     
     page = view->shell(
         )->page(
-                title          = 'abap2UI5 - JSON Export ITAB'
-                navbuttonpress = client->_event( 'BACK' )
-                  shownavbutton = abap_true
-           ).
+                title           = 'abap2UI5 - JSON Export ITAB'
+                navbuttonpress  = client->_event( 'BACK' )
+                  shownavbutton = abap_true ).
 
     
     tab = page->table(
@@ -125,7 +124,7 @@ CLASS z2ui5_cl_demo_app_169 IMPLEMENTATION.
       INSERT temp2 INTO TABLE temp1.
       t_tab = temp1.
 
-      set_view(  ).
+      set_view( ).
 
     ENDIF.
 

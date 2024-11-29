@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_075 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_075 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     DATA mv_path TYPE string.
     DATA mv_value TYPE string.
@@ -14,7 +14,7 @@ CLASS Z2UI5_CL_DEMO_APP_075 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO Z2UI5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool.
 
     METHODS ui5_on_init.
@@ -69,7 +69,8 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
 
         
       CATCH cx_root INTO x.
-        client->message_box_display( text = x->get_text( ) type = `error` ).
+        client->message_box_display( text = x->get_text( )
+                                     type = `error` ).
     ENDTRY.
 
   ENDMETHOD.
@@ -84,7 +85,7 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
 
   METHOD ui5_view_init_display.
 
-      ui5_view_main_display( ).
+    ui5_view_main_display( ).
 
   ENDMETHOD.
 
@@ -102,15 +103,13 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
     page = view->shell( )->page(
             title          = 'abap2UI5 - Upload Files'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = temp1
-        ).
+            shownavbutton  = temp1 ).
 
     IF mv_file IS NOT INITIAL.
 
       page->code_editor(
           value    = client->_bind( mv_file )
-          editable = abap_false
-      ).
+          editable = abap_false ).
 
     ENDIF.
 
@@ -129,7 +128,7 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 

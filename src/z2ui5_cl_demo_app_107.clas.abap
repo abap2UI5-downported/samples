@@ -16,7 +16,7 @@ CLASS z2ui5_cl_demo_app_107 DEFINITION
       END OF ty_items .
 
     TYPES temp1_ca2cb7b652 TYPE TABLE OF ty_items WITH DEFAULT KEY.
-DATA:
+DATA
       mt_items TYPE temp1_ca2cb7b652 .
     DATA mv_file_raw TYPE string .
   PROTECTED SECTION.
@@ -105,7 +105,7 @@ CLASS Z2UI5_CL_DEMO_APP_107 IMPLEMENTATION.
     client->_bind_edit( mv_file_raw ).
 
     
-    view =  z2ui5_cl_xml_view=>factory( ).
+    view = z2ui5_cl_xml_view=>factory( ).
 
     
     
@@ -113,30 +113,31 @@ CLASS Z2UI5_CL_DEMO_APP_107 IMPLEMENTATION.
     page = view->shell( )->page(
         title          = 'abap2UI5 - P13N Dialog'
         navbuttonpress = client->_event( 'BACK' )
-        shownavbutton = temp1
-        class = 'sapUiContentPadding' ).
+        shownavbutton  = temp1
+        class          = 'sapUiContentPadding' ).
 
-    page = page->upload_set( instantupload = abap_true
-                             showicons = abap_true
-                             uploadenabled = abap_true
+    page = page->upload_set( instantupload      = abap_true
+                             showicons          = abap_true
+                             uploadenabled      = abap_true
                              terminationenabled = abap_true
 *                             filetypes = `txt,doc,png`
-                             maxfilenamelength = `30`
-                             maxfilesize = `200`
+                             maxfilenamelength  = `30`
+                             maxfilesize        = `200`
 *                             mediatypes = 'text/plain,application/msword,image/png'
-                             mode = `MultiSelect`
-                             items = client->_bind_edit( mt_items )
+                             mode               = `MultiSelect`
+                             items              = client->_bind_edit( mt_items )
 *                             afteritemadded = client->_event( val = 'AFTER' t_arg = VALUE #( ( `${$parameters>/}` ) ) )
-                             afteritemadded = `sap.z2ui5.fileGet($event,$controller)` "sap.z2ui5.updateData(${$parameters>/reason})
-                             uploadcompleted = `sap.z2ui5.fileGet($event,$controller)` "sap.z2ui5.updateData(${$parameters>/reason})
-                              )->_generic( name = `toolbar` ns = `upload`
+                             afteritemadded     = `sap.z2ui5.fileGet($event,$controller)` "sap.z2ui5.updateData(${$parameters>/reason})
+                             uploadcompleted    = `sap.z2ui5.fileGet($event,$controller)` "sap.z2ui5.updateData(${$parameters>/reason})
+                              )->_generic( name = `toolbar`
+                                           ns   = `upload`
                                 )->overflow_toolbar(
                                   )->toolbar_spacer(
                                   )->upload_set_toolbar_placeholder(
                               )->get_parent( )->get_parent( )->get_parent(
                               )->items( ns = `upload`
-                                )->upload_set_item( filename = `{FILENAME}`
-                                                    url = `{URL}`
+                                )->upload_set_item( filename  = `{FILENAME}`
+                                                    url       = `{URL}`
                                                     mediatype = `{MEDIATYPE}`
 *                                                    uploadState = `{UPLOADSTATE}`
                                                     ).

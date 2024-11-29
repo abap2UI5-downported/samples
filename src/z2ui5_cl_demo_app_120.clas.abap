@@ -36,8 +36,8 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
-       DATA view TYPE REF TO z2ui5_cl_xml_view.
-        DATA temp3 TYPE xsdboolean.
+      DATA view TYPE REF TO z2ui5_cl_xml_view.
+      DATA temp3 TYPE xsdboolean.
           DATA temp1 LIKE mt_spot.
           DATA temp2 LIKE LINE OF temp1.
         DATA temp4 TYPE xsdboolean.
@@ -45,15 +45,15 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-       
-       view = z2ui5_cl_xml_view=>factory( ).
-        
-        temp3 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
-        client->view_display( view->shell(
+      
+      view = z2ui5_cl_xml_view=>factory( ).
+      
+      temp3 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
+      client->view_display( view->shell(
               )->page(
                       title          = 'abap2UI5 - Device Capabilities'
                       navbuttonpress = client->_event( val = 'BACK' )
-                      shownavbutton = temp3
+                      shownavbutton  = temp3
                   )->_z2ui5( )->geolocation(
                                             finished         = client->_event( `GEOLOCATION_LOADED` )
                                             longitude        = client->_bind_edit( longitude )
@@ -62,7 +62,8 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
                                             altitudeaccuracy = client->_bind_edit( altitudeaccuracy )
                                             accuracy         = client->_bind_edit( accuracy )
                                             speed            = client->_bind_edit( speed )
-                  )->simple_form( title = 'Geolocation' editable = abap_true
+                  )->simple_form( title    = 'Geolocation'
+                                  editable = abap_true
                       )->content( 'form'
                           )->label( 'Longitude'
                           )->input( client->_bind_edit( longitude )
@@ -77,12 +78,11 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
                           )->label( `Speed`
                           )->input( client->_bind_edit( speed )
                           )->label( `MapContainer`
-                          )->button( text = `Display` press = client->_event( `MAP_CONTAINER_DISPLAY` )
+                          )->button( text  = `Display`
+                                     press = client->_event( `MAP_CONTAINER_DISPLAY` )
                )->stringify( ) ).
 
-*      client->view_display( z2ui5_cl_xml_view=>factory( client
-*        )->_z2ui5( )->timer( client->_event( `GEOLOCATION_LOADED` )
-*        )->_cc( )->geolocation( )->load_cc(  )->stringify( ) ).
+
 
       RETURN.
     ENDIF.
@@ -112,16 +112,17 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
               )->page(
                       title          = 'abap2UI5 - Device Capabilities'
                       navbuttonpress = client->_event( val = 'BACK' )
-                      shownavbutton = temp4
+                      shownavbutton  = temp4
                   )->_z2ui5( )->geolocation(
-                                            finished         = client->_event(  )
+                                            finished         = client->_event( )
                                             longitude        = client->_bind_edit( longitude )
                                             latitude         = client->_bind_edit( latitude )
                                             altitude         = client->_bind_edit( altitude )
                                             altitudeaccuracy = client->_bind_edit( altitudeaccuracy )
                                             accuracy         = client->_bind_edit( accuracy )
                                             speed            = client->_bind_edit( speed )
-                  )->simple_form( title = 'Geolocation' editable = abap_true
+                  )->simple_form( title    = 'Geolocation'
+                                  editable = abap_true
                       )->content( 'form'
                           )->label( 'Longitude'
                           )->input( client->_bind_edit( longitude )
@@ -136,9 +137,10 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
                           )->label( `Speed`
                           )->input( client->_bind_edit( speed )
                           )->label( `MapContainer`
-                          )->button( text = `Display` press = client->_event( `MAP_CONTAINER_DISPLAY` )
+                          )->button( text  = `Display`
+                                     press = client->_event( `MAP_CONTAINER_DISPLAY` )
                )->get_parent( )->get_parent(
-               )->map_container(  autoadjustheight = abap_true
+               )->map_container( autoadjustheight = abap_true
                     )->content( ns = `vk`
                         )->container_content(
                           title = `Analytic Map`
@@ -146,20 +148,20 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
                             )->content( ns = `vk`
                                 )->analytic_map(
                                   initialposition = `9.933573;50;0`
-                                  initialzoom = `6`
+                                  initialzoom     = `6`
                                 )->vos(
                                     )->spots( client->_bind( mt_spot )
                                     )->spot(
                                       position      = `{POS}`
                                       contentoffset = `{CONTENTOFFSET}`
-                                      type          =  `{TYPE}`
-                                      scale         =  `{SCALE}`
-                                      tooltip       =  `{TOOLTIP}`
+                                      type          = `{TYPE}`
+                                      scale         = `{SCALE}`
+                                      tooltip       = `{TOOLTIP}`
                )->stringify( ) ).
 
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
         RETURN.
     ENDCASE.
 

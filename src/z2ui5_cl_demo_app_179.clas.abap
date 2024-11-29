@@ -20,8 +20,8 @@ CLASS z2ui5_cl_demo_app_179 DEFINITION
         relationtype   TYPE string,
         shapetypestart TYPE string,
         shapetypeend   TYPE string,
-        StartTime      TYPE string,
-        EndTime        TYPE string,
+        starttime      TYPE string,
+        endtime        TYPE string,
       END OF ty_s_data.
     TYPES temp1_6cd5a9d875 TYPE STANDARD TABLE OF ty_s_data WITH DEFAULT KEY.
 DATA mt_data TYPE temp1_6cd5a9d875.
@@ -47,96 +47,96 @@ CLASS Z2UI5_CL_DEMO_APP_179 IMPLEMENTATION.
 
 
     DATA lv_mock TYPE string.
-    lv_mock = `[` && |\n|  &&
-                    `   {` && |\n|  &&
-                    `       "ObjectID": "rls-0-1",` && |\n|  &&
-                    `       "RelationID": "rls-0",` && |\n|  &&
-                    `       "ParentObjectID": "object-0-1-1",` && |\n|  &&
-                    `       "PredecTaskID": "object-0-1-1",` && |\n|  &&
-                    `       "SuccTaskID": "object-0-1-2",` && |\n|  &&
-                    `       "RelationType": "StartToFinish",` && |\n|  &&
-                    `       "shapeTypeStart":"VerticalRectangle",` && |\n|  &&
-                    `       "shapeTypeEnd":"Diamond",` && |\n|  &&
-                    `       "StartTime":"2018-11-01T09:00:00",` && |\n|  &&
-                    `       "EndTime":"2018-11-27T09:00:00"` && |\n|  &&
-                    `   },` && |\n|  &&
-                    |\n|  &&
-                    `   {` && |\n|  &&
-                    `       "ObjectID": "rls-1-1",` && |\n|  &&
-                    `       "RelationID": "rls-1",` && |\n|  &&
-                    `       "ParentObjectID": "object-0-2-2",` && |\n|  &&
-                    `       "PredecTaskID": "object-0-2-2",` && |\n|  &&
-                    `       "SuccTaskID": "object-0-2-3",` && |\n|  &&
-                    `       "RelationType": "FinishToFinish",` && |\n|  &&
-                    `       "shapeTypeStart":"Square",` && |\n|  &&
-                    `       "shapeTypeEnd":"Diamond",` && |\n|  &&
-                           `       "StartTime":"2018-11-01T09:00:00",` && |\n|  &&
-                    `       "EndTime":"2018-11-27T09:00:00"` && |\n|  &&
-                    `   },  ` && |\n|  &&
-                    |\n|  &&
-                    `   {` && |\n|  &&
-                    `       "ObjectID": "rls-2-1",` && |\n|  &&
-                    `       "RelationID": "rls-2",` && |\n|  &&
-                    `       "ParentObjectID": "object-0-2-1",` && |\n|  &&
-                    `       "PredecTaskID": "object-0-2-1",` && |\n|  &&
-                    `       "SuccTaskID": "object-0-2-4",` && |\n|  &&
-                    `       "RelationType": "StartToStart",` && |\n|  &&
-                    `       "enableCurvedEdge":true,` && |\n|  &&
-                           `       "StartTime":"2018-11-01T09:00:00",` && |\n|  &&
-                    `       "EndTime":"2018-11-27T09:00:00"` && |\n|  &&
-                    `   ` && |\n|  &&
-                    `   },` && |\n|  &&
-                    `   {` && |\n|  &&
-                    `       "ObjectID": "rls-3-1",` && |\n|  &&
-                    `       "RelationID": "rls-3",` && |\n|  &&
-                    `       "ParentObjectID": "object-0-2-1",` && |\n|  &&
-                    `       "PredecTaskID": "object-0-2-1",` && |\n|  &&
-                    `       "SuccTaskID": "object-0-2-3",` && |\n|  &&
-                    `       "RelationType": "FinishToFinish",` && |\n|  &&
-                    `       "shapeTypeStart":"Diamond",` && |\n|  &&
-                    `       "shapeTypeEnd":"Circle",` && |\n|  &&
-                           `       "StartTime":"2018-11-01T09:00:00",` && |\n|  &&
-                    `       "EndTime":"2018-11-27T09:00:00"` && |\n|  &&
-                    `   },` && |\n|  &&
-                    `   ` && |\n|  &&
-                    `   {` && |\n|  &&
-                    `       "ObjectID": "rls-4-1",` && |\n|  &&
-                    `       "RelationID": "rls-4",` && |\n|  &&
-                    `       "ParentObjectID": "object-0-1",` && |\n|  &&
-                    `       "PredecTaskID": "object-0-1",` && |\n|  &&
-                    `       "SuccTaskID": "object-0-2",` && |\n|  &&
-                    `       "RelationType": "StartToFinish",` && |\n|  &&
-                    `       "shapeTypeStart":"Circle",` && |\n|  &&
-                    `       "shapeTypeEnd":"Diamond",` && |\n|  &&
-                    `       "startShapeColor":"white",` && |\n|  &&
-                    `       "endShapeColor":"green",` && |\n|  &&
-                    `       "selectedStartShapeColor":"blue",` && |\n|  &&
-                    `       "selectedEndShapeColor":"yellow",` && |\n|  &&
-                    `       "enableCurvedEdge":true,` && |\n|  &&
-                           `       "StartTime":"2018-11-01T09:00:00",` && |\n|  &&
-                    `       "EndTime":"2018-11-27T09:00:00"` && |\n|  &&
-                    `   },` && |\n|  &&
-                    `   {` && |\n|  &&
-                    `       "ObjectID": "rls-5-1",` && |\n|  &&
-                    `       "RelationID": "rls-5",` && |\n|  &&
-                    `       "ParentObjectID": "object-0-2-4",` && |\n|  &&
-                    `       "PredecTaskID": "object-0-2-4",` && |\n|  &&
-                    `       "SuccTaskID": "object-0-2-5",` && |\n|  &&
-                    `       "RelationType": "FinishToStart",` && |\n|  &&
-                    `       "lShapeForTypeFS":false,` && |\n|  &&
-                           `       "StartTime":"2018-11-01T09:00:00",` && |\n|  &&
-                    `       "EndTime":"2018-11-27T09:00:00"` && |\n|  &&
-                    `   },` && |\n|  &&
-                    `   {` && |\n|  &&
-                    `       "ObjectID": "rls-6-1",` && |\n|  &&
-                    `       "RelationID": "rls-6",` && |\n|  &&
-                    `       "ParentObjectID": "object-0-3",` && |\n|  &&
-                    `       "PredecTaskID": "object-0-3",` && |\n|  &&
-                    `       "SuccTaskID": "object-0-3-1",` && |\n|  &&
-                    `       "RelationType": "FinishToStart",` && |\n|  &&
-                           `       "StartTime":"2018-11-01T09:00:00",` && |\n|  &&
-                    `       "EndTime":"2018-11-27T09:00:00"` && |\n|  &&
-                    `   }` && |\n|  &&
+    lv_mock = `[` && |\n| &&
+                    `   {` && |\n| &&
+                    `       "ObjectID": "rls-0-1",` && |\n| &&
+                    `       "RelationID": "rls-0",` && |\n| &&
+                    `       "ParentObjectID": "object-0-1-1",` && |\n| &&
+                    `       "PredecTaskID": "object-0-1-1",` && |\n| &&
+                    `       "SuccTaskID": "object-0-1-2",` && |\n| &&
+                    `       "RelationType": "StartToFinish",` && |\n| &&
+                    `       "shapeTypeStart":"VerticalRectangle",` && |\n| &&
+                    `       "shapeTypeEnd":"Diamond",` && |\n| &&
+                    `       "StartTime":"2018-11-01T09:00:00",` && |\n| &&
+                    `       "EndTime":"2018-11-27T09:00:00"` && |\n| &&
+                    `   },` && |\n| &&
+                    |\n| &&
+                    `   {` && |\n| &&
+                    `       "ObjectID": "rls-1-1",` && |\n| &&
+                    `       "RelationID": "rls-1",` && |\n| &&
+                    `       "ParentObjectID": "object-0-2-2",` && |\n| &&
+                    `       "PredecTaskID": "object-0-2-2",` && |\n| &&
+                    `       "SuccTaskID": "object-0-2-3",` && |\n| &&
+                    `       "RelationType": "FinishToFinish",` && |\n| &&
+                    `       "shapeTypeStart":"Square",` && |\n| &&
+                    `       "shapeTypeEnd":"Diamond",` && |\n| &&
+                           `       "StartTime":"2018-11-01T09:00:00",` && |\n| &&
+                    `       "EndTime":"2018-11-27T09:00:00"` && |\n| &&
+                    `   },  ` && |\n| &&
+                    |\n| &&
+                    `   {` && |\n| &&
+                    `       "ObjectID": "rls-2-1",` && |\n| &&
+                    `       "RelationID": "rls-2",` && |\n| &&
+                    `       "ParentObjectID": "object-0-2-1",` && |\n| &&
+                    `       "PredecTaskID": "object-0-2-1",` && |\n| &&
+                    `       "SuccTaskID": "object-0-2-4",` && |\n| &&
+                    `       "RelationType": "StartToStart",` && |\n| &&
+                    `       "enableCurvedEdge":true,` && |\n| &&
+                           `       "StartTime":"2018-11-01T09:00:00",` && |\n| &&
+                    `       "EndTime":"2018-11-27T09:00:00"` && |\n| &&
+                    `   ` && |\n| &&
+                    `   },` && |\n| &&
+                    `   {` && |\n| &&
+                    `       "ObjectID": "rls-3-1",` && |\n| &&
+                    `       "RelationID": "rls-3",` && |\n| &&
+                    `       "ParentObjectID": "object-0-2-1",` && |\n| &&
+                    `       "PredecTaskID": "object-0-2-1",` && |\n| &&
+                    `       "SuccTaskID": "object-0-2-3",` && |\n| &&
+                    `       "RelationType": "FinishToFinish",` && |\n| &&
+                    `       "shapeTypeStart":"Diamond",` && |\n| &&
+                    `       "shapeTypeEnd":"Circle",` && |\n| &&
+                           `       "StartTime":"2018-11-01T09:00:00",` && |\n| &&
+                    `       "EndTime":"2018-11-27T09:00:00"` && |\n| &&
+                    `   },` && |\n| &&
+                    `   ` && |\n| &&
+                    `   {` && |\n| &&
+                    `       "ObjectID": "rls-4-1",` && |\n| &&
+                    `       "RelationID": "rls-4",` && |\n| &&
+                    `       "ParentObjectID": "object-0-1",` && |\n| &&
+                    `       "PredecTaskID": "object-0-1",` && |\n| &&
+                    `       "SuccTaskID": "object-0-2",` && |\n| &&
+                    `       "RelationType": "StartToFinish",` && |\n| &&
+                    `       "shapeTypeStart":"Circle",` && |\n| &&
+                    `       "shapeTypeEnd":"Diamond",` && |\n| &&
+                    `       "startShapeColor":"white",` && |\n| &&
+                    `       "endShapeColor":"green",` && |\n| &&
+                    `       "selectedStartShapeColor":"blue",` && |\n| &&
+                    `       "selectedEndShapeColor":"yellow",` && |\n| &&
+                    `       "enableCurvedEdge":true,` && |\n| &&
+                           `       "StartTime":"2018-11-01T09:00:00",` && |\n| &&
+                    `       "EndTime":"2018-11-27T09:00:00"` && |\n| &&
+                    `   },` && |\n| &&
+                    `   {` && |\n| &&
+                    `       "ObjectID": "rls-5-1",` && |\n| &&
+                    `       "RelationID": "rls-5",` && |\n| &&
+                    `       "ParentObjectID": "object-0-2-4",` && |\n| &&
+                    `       "PredecTaskID": "object-0-2-4",` && |\n| &&
+                    `       "SuccTaskID": "object-0-2-5",` && |\n| &&
+                    `       "RelationType": "FinishToStart",` && |\n| &&
+                    `       "lShapeForTypeFS":false,` && |\n| &&
+                           `       "StartTime":"2018-11-01T09:00:00",` && |\n| &&
+                    `       "EndTime":"2018-11-27T09:00:00"` && |\n| &&
+                    `   },` && |\n| &&
+                    `   {` && |\n| &&
+                    `       "ObjectID": "rls-6-1",` && |\n| &&
+                    `       "RelationID": "rls-6",` && |\n| &&
+                    `       "ParentObjectID": "object-0-3",` && |\n| &&
+                    `       "PredecTaskID": "object-0-3",` && |\n| &&
+                    `       "SuccTaskID": "object-0-3-1",` && |\n| &&
+                    `       "RelationType": "FinishToStart",` && |\n| &&
+                           `       "StartTime":"2018-11-01T09:00:00",` && |\n| &&
+                    `       "EndTime":"2018-11-27T09:00:00"` && |\n| &&
+                    `   }` && |\n| &&
                     `]`.
 
     z2ui5_cl_util=>json_parse(
@@ -177,10 +177,10 @@ CLASS Z2UI5_CL_DEMO_APP_179 IMPLEMENTATION.
     
     temp2 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page = view->page( id = `page_main`
-            title          = 'abap2UI5 - Gantt'
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = temp2
-            class = 'sapUiContentPadding' ).
+            title               = 'abap2UI5 - Gantt'
+            navbuttonpress      = client->_event( 'BACK' )
+            shownavbutton       = temp2
+            class               = 'sapUiContentPadding' ).
 
     
     cont = page->scroll_container(
@@ -195,78 +195,66 @@ CLASS Z2UI5_CL_DEMO_APP_179 IMPLEMENTATION.
 
     
     tool = cont->container_toolbar(
-      EXPORTING
-        showsearchbutton          = abap_true
-        showdisplaytypebutton     =  abap_true
-        showlegendbutton          =  abap_true
-        showsettingbutton         =  abap_true
-        showtimezoomcontrol       =  abap_true
+      showsearchbutton        = abap_true
+        showdisplaytypebutton = abap_true
+        showlegendbutton      = abap_true
+        showsettingbutton     = abap_true
+        showtimezoomcontrol   = abap_true
 *        findbuttonpress           = client->_event( val = 'FIRE' )
 *    stepcountofslider         =
 *    zoomcontroltype           =
 *        zoomlevel                 = client->_bind_edit( zoomlevel )
 *  RECEIVING
 *    result                    =
-    ).
+      ).
 
 
     
-    gantt_container = cont->gantt_chart_container(   ).
+    gantt_container = cont->gantt_chart_container( ).
 
 *    gantt_charts
 
     
     gantt = gantt_container->gantt_chart_with_table(
-         id = `gantt`
-         shapeselectionmode = `Single`
-         isconnectordetailsvisible = abap_true
-          ).
+         id                        = `gantt`
+         shapeselectionmode        = `Single`
+         isconnectordetailsvisible = abap_true ).
 
     
-    table =  gantt->gantt_table( )->tree_table(
+    table = gantt->gantt_table( )->tree_table(
         rows = `{path: '` && client->_bind( val = mt_data path = abap_true ) &&
-         `',     parameters: {` && |\r\n|  &&
-         `           operationMode: 'Server',` && |\r\n|  &&
-         `           numberOfExpandedLevels: 2,` && |\r\n|  &&
-         `           treeAnnotationProperties: {` && |\r\n|  &&
-         `                 hierarchyNodeFor:                'OBJECTID',` && |\r\n|  &&
-         `                 hierarchyParentNodeFor:          'PARENTOBJECTID',` && |\r\n|  &&
-         `                 hierarchyLevelFor:               'HierarchyNodeLevel',` && |\r\n|  &&
-         `                 hierarchyDrillStateFor:          'DrillDownState',` && |\r\n|  &&
-         `                 hierarchyNodeDescendantCountFor: 'Magnitude'` && |\r\n|  &&
-         `             },` && |\r\n|  &&
-         `          expand: 'Relationships'` && |\r\n|  &&
-         `     }` && |\r\n|  &&
-         `}`
-        ).
+         `',     parameters: {` && |\r\n| &&
+         `           operationMode: 'Server',` && |\r\n| &&
+         `           numberOfExpandedLevels: 2,` && |\r\n| &&
+         `           treeAnnotationProperties: {` && |\r\n| &&
+         `                 hierarchyNodeFor:                'OBJECTID',` && |\r\n| &&
+         `                 hierarchyParentNodeFor:          'PARENTOBJECTID',` && |\r\n| &&
+         `                 hierarchyLevelFor:               'HierarchyNodeLevel',` && |\r\n| &&
+         `                 hierarchyDrillStateFor:          'DrillDownState',` && |\r\n| &&
+         `                 hierarchyNodeDescendantCountFor: 'Magnitude'` && |\r\n| &&
+         `             },` && |\r\n| &&
+         `          expand: 'Relationships'` && |\r\n| &&
+         `     }` && |\r\n| &&
+         `}` ).
 
 
-
-
-*    DATA(gantt_row_template) =   table->tree_columns(
-*           )->tree_column( label = 'Col 1' )->tree_template( )->text( text = `{TEXT}` )->get_parent( )->get_parent( )->get_parent(
-**            )->tree_column( label = 'Col 1' template = 'text' )->get_parent( )->get_parent(
-*         )->row_settings_template(
-*           ).
 
     
-    row_settings =  table->row_settings_template( )->gantt_row_settings( rowid = `{OBJECTID}`
+    row_settings = table->row_settings_template( )->gantt_row_settings( rowid = `{OBJECTID}`
 *                                  shapes1 = `{path: 'TASK', templateShareable:false}`
 *                                  shapes2 = `{path: 'SUBTASK', templateShareable:false}`
-                                  relationships = `{path:'Relationships', templateShareable: 'true'}`
-            ).
+                                  relationships                                     = `{path:'Relationships', templateShareable: 'true'}` ).
 
     
     shapes = row_settings->shapes1( ).
     shapes->base_rectangle(
-        shapeid                 =  `{OBJECTID}`
-        time                    =  `{= Helper.DateCreateObject(${STARTTIME}) }`
+        shapeid                 = `{OBJECTID}`
+        time                    = `{= Helper.DateCreateObject(${STARTTIME}) }`
         endtime                 = `{= Helper.DateCreateObject(${ENDTIME}) }`
         height                  = `19`
         title                   = `{OBJECTNAME}`
         connectable             = abap_true
-        horizontaltextalignment = `Start`
-    ).
+        horizontaltextalignment = `Start` ).
 
     
     relas = row_settings->relationships( ).
@@ -274,24 +262,23 @@ CLASS Z2UI5_CL_DEMO_APP_179 IMPLEMENTATION.
         shapeid     = `{RELATIONID}`
         type        = `{RELATIONTYPE}`
         successor   = `{SUCCTASKID}`
-        predecessor = `{PREDECTASKID}`
-    ).
+        predecessor = `{PREDECTASKID}` ).
 
 
     
     columns = table->ui_columns( ).
     
     column = columns->ui_column(
-         id                = 'OBJECTNAME' ).
+         id = 'OBJECTNAME' ).
 
     column->ui_custom_data( )->core_custom_data(
        key    = 'exportTableColumnConfig'
-        value  = '{"columnKey": "OBJECTNAME",' && |\r\n|  &&
-                 '    "leadingProperty":"OBJECTNAME",' && |\r\n|  &&
-                 '    "dataType": "string",' && |\r\n|  &&
-                 '    "hierarchyNodeLevel": "HierarchyNodeLevel",' && |\r\n|  &&
+        value = '{"columnKey": "OBJECTNAME",' && |\r\n| &&
+                 '    "leadingProperty":"OBJECTNAME",' && |\r\n| &&
+                 '    "dataType": "string",' && |\r\n| &&
+                 '    "hierarchyNodeLevel": "HierarchyNodeLevel",' && |\r\n| &&
                  '    "wrap": true}'
-    ).
+      ).
 
     column->text( text = `Object Name` ).
     column->tree_template( )->label( text = `{OBJECTNAME}` ).
@@ -299,9 +286,11 @@ CLASS Z2UI5_CL_DEMO_APP_179 IMPLEMENTATION.
     gantt->axis_time_strategy(
       )->proportion_zoom_strategy(
         )->total_horizon(
-          )->time_horizon( starttime = `20181101000000` endtime = `20181131000000` )->get_parent( )->get_parent(
+          )->time_horizon( starttime = `20181101000000`
+                           endtime   = `20181131000000` )->get_parent( )->get_parent(
         )->visible_horizon(
-          )->time_horizon( starttime = `20181101000000` endtime = `20181131000000` ).
+          )->time_horizon( starttime = `20181101000000`
+                           endtime   = `20181131000000` ).
 
     client->view_display( view->stringify( ) ).
 

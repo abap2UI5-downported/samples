@@ -55,8 +55,7 @@ CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
                 title          = `Main View`
                 id             = `test`
                 navbuttonpress = i_client->_event( 'BACK' )
-                shownavbutton = temp1
-      ).
+                shownavbutton  = temp1 ).
 
     i_client->view_display( lo_view->stringify( ) ).
 
@@ -109,18 +108,23 @@ CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
     lo_view_nested = z2ui5_cl_xml_view=>factory( ).
 
     lo_view_nested->shell( )->page( `Nested View`
-    )->table( items = i_client->_bind( mt_data )
+      )->table( items = i_client->_bind( mt_data )
       )->columns(
-        )->template_repeat( list = `{template>/MT_LAYOUT}` var = `LO`
-          )->column( mergeduplicates = `{LO>MERGE}` visible = `{LO>VISIBLE}` )->get_parent(
+        )->template_repeat( list = `{template>/MT_LAYOUT}`
+                            var  = `LO`
+          )->column( mergeduplicates = `{LO>MERGE}`
+                     visible         = `{LO>VISIBLE}` )->get_parent(
         )->get_parent( )->get_parent(
         )->items(
           )->column_list_item(
             )->cells(
-              )->template_repeat( list = `{template>/MT_LAYOUT}` var = `LO2`
+              )->template_repeat( list = `{template>/MT_LAYOUT}`
+                                  var  = `LO2`
                 )->object_identifier( text = `{= '{' + ${LO2>FNAME} + '}' }` ).
 
-    i_client->nest_view_display( val = lo_view_nested->stringify( ) id = `test` method_insert = 'addContent' ).
+    i_client->nest_view_display( val           = lo_view_nested->stringify( )
+                                 id            = `test`
+                                 method_insert = 'addContent' ).
 
   ENDMETHOD.
 

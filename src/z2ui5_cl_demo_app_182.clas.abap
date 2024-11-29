@@ -11,7 +11,7 @@ CLASS z2ui5_cl_demo_app_182 DEFINITION
              label TYPE i,
              value TYPE string,
            END OF t_attributes3.
-    TYPES: tt_attributes3 TYPE STANDARD TABLE OF t_attributes3 WITH DEFAULT KEY.
+    TYPES tt_attributes3 TYPE STANDARD TABLE OF t_attributes3 WITH DEFAULT KEY.
     TYPES: BEGIN OF t_nodes2,
              id         TYPE string,
              title      TYPE string,
@@ -28,8 +28,8 @@ CLASS z2ui5_cl_demo_app_182 DEFINITION
              from TYPE string,
              to   TYPE string,
            END OF t_lines4.
-    TYPES: tt_nodes2 TYPE STANDARD TABLE OF t_nodes2 WITH DEFAULT KEY.
-    TYPES: tt_lines4 TYPE STANDARD TABLE OF t_lines4 WITH DEFAULT KEY.
+    TYPES tt_nodes2 TYPE STANDARD TABLE OF t_nodes2 WITH DEFAULT KEY.
+    TYPES tt_lines4 TYPE STANDARD TABLE OF t_lines4 WITH DEFAULT KEY.
     TYPES: BEGIN OF t_json1,
              nodes TYPE tt_nodes2,
              lines TYPE tt_lines4,
@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_182 DEFINITION
     METHODS view_display .
     METHODS detail_popover
       IMPORTING
-        id TYPE string
+        id   TYPE string
         node TYPE t_nodes2.
   PROTECTED SECTION.
 
@@ -65,27 +65,34 @@ CLASS Z2UI5_CL_DEMO_APP_182 IMPLEMENTATION.
     
     qv = view->quick_view( placement = `Left`
               )->quick_view_page(
-                                  header = `Employee`
-                                  title  = node-title
+                                  header      = `Employee`
+                                  title       = node-title
                                   description = node-position
-                )->get( )->quick_view_page_avatar( )->avatar( src = node-src displayshape = `Square` )->get_parent(
+                )->get( )->quick_view_page_avatar( )->avatar( src          = node-src
+                                                              displayshape = `Square` )->get_parent(
                 )->quick_view_group( heading = `Contact Detail`
-                  )->quick_view_group_element( label = `Location` value = node-location )->get_parent(
-                  )->quick_view_group_element( label = `Mobile`   value = node-phone type = `phone` )->get_parent(
-                  )->quick_view_group_element( label = `Email`   value = node-email type = `email` emailsubject  = `Contact` && node-id ).
+                  )->quick_view_group_element( label = `Location`
+                                               value = node-location )->get_parent(
+                  )->quick_view_group_element( label = `Mobile`
+                                               value = node-phone
+                                               type  = `phone` )->get_parent(
+                  )->quick_view_group_element( label        = `Email`
+                                               value        = node-email
+                                               type         = `email`
+                                               emailsubject = `Contact` && node-id ).
 
     IF node-team IS NOT INITIAL.
       
       temp1 = node-team.
       qv = qv->get_parent( )->get_parent(
         )->quick_view_group( heading = `Team`
-           )->quick_view_group_element( label = `Size` value = temp1 ).
+           )->quick_view_group_element( label = `Size`
+                                        value = temp1 ).
     ENDIF.
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 
@@ -125,7 +132,8 @@ CLASS Z2UI5_CL_DEMO_APP_182 IMPLEMENTATION.
         IF sy-subrc <> 0.
           ASSERT 1 = 0.
         ENDIF.
-        detail_popover( id = temp2 node = ls_node ).
+        detail_popover( id   = temp2
+                        node = ls_node ).
 
       WHEN 'BACK'.
         client->nav_app_leave( ).
@@ -149,8 +157,7 @@ CLASS Z2UI5_CL_DEMO_APP_182 IMPLEMENTATION.
     page = view->page(
                     title          = 'abap2UI5 - Network Graph - Org Tree'
                     navbuttonpress = client->_event( val = 'BACK' )
-                    shownavbutton = temp1
-              ).
+                    shownavbutton  = temp1 ).
 
     
     CLEAR temp4.
@@ -158,28 +165,30 @@ CLASS Z2UI5_CL_DEMO_APP_182 IMPLEMENTATION.
     INSERT `${ID}` INTO TABLE temp4.
     
     graph = page->network_graph( enablewheelzoom = abap_false
-                                       orientation = `TopBottom`
-                                       nodes = client->_bind( mt_data-nodes )
-                                       lines = client->_bind( mt_data-lines )
-                                       layout = `Layered`
-                                       searchsuggest = `suggest`
-                                       search = `search`
-                                       id = `graph`
-                                     )->get( )->layout_algorithm( )->layered_layout( mergeedges = abap_true nodeplacement = `Simple` nodespacing = `40`
+                                       orientation     = `TopBottom`
+                                       nodes           = client->_bind( mt_data-nodes )
+                                       lines           = client->_bind( mt_data-lines )
+                                       layout          = `Layered`
+                                       searchsuggest   = `suggest`
+                                       search          = `search`
+                                       id              = `graph`
+                                     )->get( )->layout_algorithm( )->layered_layout( mergeedges    = abap_true
+                                                                                     nodeplacement = `Simple`
+                                                                                     nodespacing   = `40`
                                      )->get_parent(
                                      )->get_parent(
                                   )->nodes( ns = `networkgraph`
-                                    )->node( icon = `sap-icon://action-settings`
-                                             key  = `{ID}`
-                                             description  = `{TITLE}`
-                                             title  = `{TITLE}`
-                                             width  = `90`
-                                             collapsed  = `{COLLAPSED}`
-                                             attributes  = `{ATTRIBUTES}`
-                                             showactionlinksbutton  = abap_false
-                                             showdetailbutton  = abap_false
-                                             descriptionlinesize  = `0`
-                                             shape  = `Box`
+                                    )->node( icon                  = `sap-icon://action-settings`
+                                             key                   = `{ID}`
+                                             description           = `{TITLE}`
+                                             title                 = `{TITLE}`
+                                             width                 = `90`
+                                             collapsed             = `{COLLAPSED}`
+                                             attributes            = `{ATTRIBUTES}`
+                                             showactionlinksbutton = abap_false
+                                             showdetailbutton      = abap_false
+                                             descriptionlinesize   = `0`
+                                             shape                 = `Box`
 *                                            )->get( )->custom_data( ns = `networkgraph` )->core_custom_data( key = `supervisor` value = `{SUPERVISOR}`
 *                                                                                        )->core_custom_data( key = `team` value = `{TEAM}`
 *                                                                                        )->core_custom_data( key = `location` value = `{LOCATION}`
@@ -190,33 +199,32 @@ CLASS Z2UI5_CL_DEMO_APP_182 IMPLEMENTATION.
 *                                           )->get_parent(
 *                                           )->get( )->get_parent( )->get_parent( )->attributes( ns = `networkgraph`
                                            )->get( )->attributes( ns = `networkgraph`
-                                            )->element_attribute( label = `{LABEL}` value = `{VALUE}`
+                                            )->element_attribute( label = `{LABEL}`
+                                                                  value = `{VALUE}`
                                            )->get_parent(
                                            )->get_parent(
                                            )->get( )->get_parent( )->get_parent( )->action_buttons(
                                             )->action_button( "id = `{ID}`
                                                               position = `Left`
-                                                              title = `Detail`
-                                                              icon = `sap-icon://employee`
-                                                              press = client->_event( val = `DETAIL_POPOVER` t_arg = temp4 )
+                                                              title    = `Detail`
+                                                              icon     = `sap-icon://employee`
+                                                              press    = client->_event( val = `DETAIL_POPOVER` t_arg = temp4 )
                                            )->get_parent(
                                            )->get_parent(
-                                           )->get( )->get_parent( )->get_parent( )->_generic( ns = `networkgraph` name = `image`
-                                            )->node_image( src = `{SRC}`
-                                                           width = `80`
+                                           )->get( )->get_parent( )->get_parent( )->_generic( ns   = `networkgraph`
+                                                                                              name = `image`
+                                            )->node_image( src    = `{SRC}`
+                                                           width  = `80`
                                                            height = `100`
                                                           )->get_parent(
                                                        )->get_parent(
                                                 )->get_parent(
                                           )->get_parent(
                                           )->lines(
-                                            )->line( from = `{FROM}`
-                                                     to   = `{TO}`
+                                            )->line( from             = `{FROM}`
+                                                     to               = `{TO}`
                                                      arroworientation = `None`
-                                                     press = client->_event( `LINE_PRESS` )
-
-
-    ).
+                                                     press            = client->_event( `LINE_PRESS` ) ).
 
     client->view_display( view->stringify( ) ).
 

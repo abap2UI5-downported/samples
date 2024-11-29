@@ -30,9 +30,9 @@ CLASS z2ui5_cl_demo_app_116 DEFINITION
         prodh       TYPE string,
         nodes       TYPE STANDARD TABLE OF ty_prodh_node_level2 WITH DEFAULT KEY,
       END OF ty_prodh_node_level1 .
-    TYPES:
+    TYPES
       ty_prodh_nodes TYPE STANDARD TABLE OF ty_prodh_node_level1 WITH DEFAULT KEY .
-    TYPES:
+    TYPES
       ty_prin_nodes TYPE STANDARD TABLE OF ty_prodh_node_level2 WITH DEFAULT KEY.
 
     DATA prodh_nodes TYPE ty_prodh_nodes .
@@ -43,9 +43,9 @@ CLASS z2ui5_cl_demo_app_116 DEFINITION
     DATA mv_run_js TYPE abap_bool VALUE abap_false.
 
     METHODS ui5_display_view .
-    methods UI5_DISPLAY_POPOVER
-      importing
-        !ID type STRING .
+    METHODS ui5_display_popover
+      IMPORTING
+        !id TYPE string .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -92,11 +92,11 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  method ui5_display_popover.
+  METHOD ui5_display_popover.
     DATA lo_popover TYPE REF TO z2ui5_cl_xml_view.
-    lo_popover = Z2UI5_cl_xml_view=>factory_popup(  ).
+    lo_popover = z2ui5_cl_xml_view=>factory_popup( ).
     lo_popover->popover( placement = `Right`
-                         title = 'SS' "text-028 "`Stock - Details:`
+                         title     = 'SS' "text-028 "`Stock - Details:`
                                                          "&& '-' && gv_matnr  "contentwidth = `32%`
             )->footer(
              )->overflow_toolbar(
@@ -106,11 +106,11 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
                     press = client->_event( 'POPOVER_OK' )
                     type  = 'Emphasized'
            )->get_parent( )->get_parent(
-           )->text( 'TEST'
-                           ).
+           )->text( 'TEST' ).
 
-    client->popover_display( xml = lo_popover->stringify( )  by_id = id ).
-  endmethod.
+    client->popover_display( xml   = lo_popover->stringify( )
+                             by_id = id ).
+  ENDMETHOD.
 
 
   METHOD ui5_display_view.
@@ -125,53 +125,45 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
     DATA temp2 TYPE string_table.
     DATA cont TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory( ).
-*    view->_z2ui5( )->timer( checkactive = client->_bind_edit( mv_run_js ) finished = `setState();` ).
 
-*    DATA(page) = view->shell(
-*         )->page()
-*            title          = 'abap2UI5 - Tree - Open & Close Popup to see the control keeping expanded'
-*            navbuttonpress = client->_event( 'BACK' )
-*              shownavbutton = abap_true ).
-*
-*    client->view_display( page->button( text = 'Open Popup here...' press = client->_event( 'POPUP_TREE' ) )->stringify( ) ).
 
 
     
     page = view->object_page_layout(
             showtitleinheadercontent = abap_true
-            uppercaseanchorbar       =  abap_false
-        ).
+            uppercaseanchorbar       = abap_false ).
 
     
-    header_title = page->header_title(  )->object_page_dyn_header_title( ).
+    header_title = page->header_title( )->object_page_dyn_header_title( ).
     header_title->expanded_heading(
             )->hbox(
-                )->title( text = 'PriceList'
-    ) .
+                )->title( text = 'PriceList' ).
 
     
     header_content = page->header_content( ns = 'uxap').
     header_content->block_layout(
       )->block_layout_row(
-      )->block_layout_cell( backgroundcolorset = 'ColorSet10'
+      )->block_layout_cell( backgroundcolorset   = 'ColorSet10'
                             backgroundcolorshade = 'ShadeE'
       )->flex_box( justifycontent = 'SpaceBetween'
       )->hbox(
       )->vertical_layout( class = 'sapUiSmallMarginBeginEnd'
-          )->label( design = 'Bold' text = 'Something:'
+          )->label( design = 'Bold'
+                    text   = 'Something:'
       )->get_parent(
       )->vertical_layout( class = 'sapUiSmallMarginBeginEnd'
         )->text( text = 'Other'
       )->get_parent( )->get_parent(
       )->hbox( justifycontent = 'End'
         )->vertical_layout( class = 'sapUiSmallMarginBeginEnd'
-          )->label( design = 'Bold' text = 'User:'
-          )->label( design = 'Bold' text    = 'Date:'
+          )->label( design = 'Bold'
+                    text   = 'User:'
+          )->label( design = 'Bold'
+                    text   = 'Date:'
         )->get_parent(
       )->vertical_layout( class = 'sapUiSmallMarginBeginEnd'
         )->text( text = client->_bind( gv_user )
-        )->text( text = client->_bind( gv_date )
-    ).
+        )->text( text = client->_bind( gv_date ) ).
 
 
     
@@ -186,38 +178,39 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
     CLEAR temp2.
     INSERT `${PRODH}` INTO TABLE temp2.
     
-    cont = sections->object_page_section( titleuppercase = abap_false id = 'Sets' title = 'Sets'
+    cont = sections->object_page_section( titleuppercase = abap_false
+                                                id             = 'Sets'
+                                                title          = 'Sets'
         )->heading( ns = `uxap`
         )->get_parent(
         )->sub_sections(
-            )->object_page_sub_section( id = 'SETS' title = 'Sets'
-                )->scroll_container(  vertical = abap_true
+            )->object_page_sub_section( id    = 'SETS'
+                                        title = 'Sets'
+                )->scroll_container( vertical = abap_true
                  )->vbox(
-                      )->tree_table( id = 'treeTable'
-                         rows = `{path:'` && client->_bind( val = prodh_nodes path = abap_true ) && `', parameters: {arrayNames:['NODES']}}`
+                      )->tree_table( id  = 'treeTable'
+                         rows            = `{path:'` && client->_bind( val = prodh_nodes path = abap_true ) && `', parameters: {arrayNames:['NODES']}}`
                          toggleopenstate = `saveState()`
                          )->tree_columns(
                           )->tree_column( label = 'Label'
                           )->tree_template(
-                           )->text(   text = `{####}`
+                           )->text( text = `{####}`
                           )->get_parent( )->get_parent(
                           )->tree_column( label = 'PRODH'
                           )->tree_template(
-                           )->text(   text = `{PRODH}`
+                           )->text( text = `{PRODH}`
                           )->get_parent( )->get_parent(
                           )->tree_column( label = 'Counter'
                           )->tree_template(
-                           )->link(   text = `{COUNTER}`
-                                      press = client->_event( val = 'POPOVER' t_arg = temp1  )
-
-                          )->get_parent( )->get_parent(
+                           )->link( text    = `{COUNTER}`
+                                      press = client->_event( val = 'POPOVER' t_arg = temp1 )
+      )->get_parent( )->get_parent(
                           )->tree_column( label = 'ADD'
                           )->tree_template(
                            )->button( icon = 'sap-icon://add'
-                                 press = client->_event( val = 'ROW_ADD' t_arg = temp2 )
-                                 tooltip = 'ADD'
-                          )->get_parent( )->get_parent(
-       ).
+                                 press     = client->_event( val = 'ROW_ADD' t_arg = temp2 )
+                                 tooltip   = 'ADD'
+                          )->get_parent( )->get_parent( ).
     client->view_display( page->get_root( )->xml_get( ) ).
   ENDMETHOD.
 
@@ -276,7 +269,7 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
     temp4-nodes = temp7.
     INSERT temp4 INTO TABLE temp3.
     prodh_nodes =
-    temp3.
+      temp3.
 
     gv_user = sy-uname.
     gv_date = sy-datum.
@@ -284,9 +277,9 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+    DATA lt_event_arg TYPE string_table.
       DATA lv_save_state_js TYPE string.
       DATA lv_reset_state_js TYPE string.
-    DATA lt_event_arg TYPE string_table.
         DATA lv_open_by_id LIKE LINE OF lt_event_arg.
         DATA temp9 LIKE LINE OF lt_event_arg.
         DATA temp10 LIKE sy-tabix.
@@ -318,13 +311,15 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
                                 `};`.
 
       client->view_display( z2ui5_cl_xml_view=>factory(
-        )->_z2ui5( )->timer(  client->_event( `START` )
-          )->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_save_state_js )->get_parent(
-          )->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_reset_state_js
+        )->_z2ui5( )->timer( client->_event( `START` )
+          )->_generic( ns   = `html`
+                       name = `script` )->_cc_plain_xml( lv_save_state_js )->get_parent(
+          )->_generic( ns   = `html`
+                       name = `script` )->_cc_plain_xml( lv_reset_state_js
           )->stringify( ) ).
     ENDIF.
 
-    
+
     lt_event_arg = client->get( )-t_event_arg.
     CASE client->get( )-event.
 
@@ -339,7 +334,7 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
 
       WHEN 'CANCEL'.
         client->popup_destroy( ).
-      when 'POPOVER'.
+      WHEN 'POPOVER'.
         lt_event_arg = client->get( )-t_event_arg.
         
         

@@ -20,7 +20,7 @@ CLASS z2ui5_cl_demo_app_132 DEFINITION
     METHODS on_init.
     METHODS on_event.
 
-    METHODS Render_main.
+    METHODS render_main.
 
   PRIVATE SECTION.
     METHODS get_comp
@@ -30,7 +30,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
 
   METHOD get_comp.
-        DATA index TYPE int4.
+    DATA index TYPE int4.
             DATA typedesc TYPE REF TO cl_abap_typedescr.
             DATA temp1 TYPE REF TO cl_abap_structdescr.
             DATA structdesc LIKE temp1.
@@ -43,13 +43,13 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
         DATA component LIKE temp2.
     TRY.
 
-        
+
 
         TRY.
 
             
             cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = 'Z2UI5_T_UTIL_01'
-                                                 RECEIVING  p_descr_ref    = typedesc
+                                                 RECEIVING p_descr_ref     = typedesc
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
 
@@ -106,7 +106,7 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
 
   METHOD on_init.
 
-    Render_main( ).
+    render_main( ).
   ENDMETHOD.
 
   METHOD render_main.

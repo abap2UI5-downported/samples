@@ -32,19 +32,22 @@ CLASS z2ui5_cl_demo_app_024 IMPLEMENTATION.
     view->shell(
         )->page( title = 'abap2UI5 - flow logic - APP 01'
         navbuttonpress = client->_event( val = 'BACK' )
-        shownavbutton = temp1
+        shownavbutton  = temp1
        )->grid( 'L6 M12 S12' )->content( 'layout'
        )->simple_form( 'Controller' )->content( 'form'
-
+      )->label( 'Demo'
+         )->button( text  = 'call new app (first View)'
+                    press = client->_event( 'CALL_NEW_APP' )
          )->label( 'Demo'
-         )->button( text = 'call new app (first View)' press = client->_event( 'CALL_NEW_APP' )
+         )->button( text  = 'call new app (second View)'
+                    press = client->_event( 'CALL_NEW_APP_VIEW' )
          )->label( 'Demo'
-         )->button( text = 'call new app (second View)' press = client->_event( 'CALL_NEW_APP_VIEW' )
-         )->label( 'Demo'
-         )->button( text = 'call new app (set Event)' press = client->_event( 'CALL_NEW_APP_EVENT' )
+         )->button( text  = 'call new app (set Event)'
+                    press = client->_event( 'CALL_NEW_APP_EVENT' )
          )->label( 'Demo'
          )->input( client->_bind_edit( mv_input )
-         )->button( text = 'call new app (set data)' press = client->_event( 'CALL_NEW_APP_READ' )
+         )->button( text  = 'call new app (set data)'
+                    press = client->_event( 'CALL_NEW_APP_READ' )
               )->label( 'some data, you can read in the next app'
          )->input( client->_bind_edit( mv_input2 ) ).
 
@@ -55,8 +58,8 @@ CLASS z2ui5_cl_demo_app_024 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
         DATA temp1 TYPE REF TO z2ui5_cl_demo_app_025.
-        DATA lo_app TYPE REF TO Z2UI5_CL_DEMO_APP_025.
-        DATA lo_app_next TYPE REF TO Z2UI5_CL_DEMO_APP_025.
+        DATA lo_app TYPE REF TO z2ui5_cl_demo_app_025.
+        DATA lo_app_next TYPE REF TO z2ui5_cl_demo_app_025.
         DATA lo_prev_stack_app TYPE REF TO z2ui5_if_app.
             DATA temp2 TYPE REF TO z2ui5_cl_demo_app_025.
             DATA lo_called_app LIKE temp2.
@@ -88,7 +91,7 @@ CLASS z2ui5_cl_demo_app_024 IMPLEMENTATION.
       WHEN 'CALL_NEW_APP_EVENT'.
         CREATE OBJECT lo_app_next TYPE z2ui5_cl_demo_app_025.
         lo_app_next->mv_event_backend = 'NEW_APP_EVENT'.
-        client->nav_app_call( lo_app_next  ).
+        client->nav_app_call( lo_app_next ).
 
       WHEN 'BACK'.
         

@@ -114,29 +114,28 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
     page = lo_view->shell( )->page(
              title          = 'Feed Input'
              navbuttonpress = client->_event( 'BACK' )
-             shownavbutton = temp1
-            ).
+             shownavbutton  = temp1 ).
 
     
     fi = page->vbox(
-      )->feed_input( post = client->_event( val = 'POST' )
-                             growing = abap_true
-                             rows = `4`
+      )->feed_input( post                     = client->_event( val = 'POST' )
+                             growing          = abap_true
+                             rows             = `4`
                              icondensityaware = abap_false
-                             value = client->_bind_edit( mv_value )
-                             class = `sapUiSmallMarginTopBottom`
+                             value            = client->_bind_edit( mv_value )
+                             class            = `sapUiSmallMarginTopBottom`
       )->get_parent( )->get_parent(
       )->list(
-        items = client->_bind_edit( mt_feed )
+        items          = client->_bind_edit( mt_feed )
         showseparators = `Inner`
           )->feed_list_item(
-            sender = `{AUTHOR}`
-            senderpress   = client->_event( 'SENDER_PRESS' )
-            iconpress   = client->_event( 'ICON_PRESS' )
-            icondensityaware   = abap_false
-            showicon = abap_false
-            info = `Reply`
-            text = `{TEXT}`
+            sender                   = `{AUTHOR}`
+            senderpress              = client->_event( 'SENDER_PRESS' )
+            iconpress                = client->_event( 'ICON_PRESS' )
+            icondensityaware         = abap_false
+            showicon                 = abap_false
+            info                     = `Reply`
+            text                     = `{TEXT}`
             convertlinkstoanchortags = `All` ).
 
     client->view_display( lo_view->stringify( ) ).

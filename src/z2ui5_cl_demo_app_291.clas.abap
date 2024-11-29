@@ -47,9 +47,9 @@ CLASS z2ui5_cl_demo_app_291 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `button_hint_id`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'CLICK_HINT_ICON' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'CLICK_HINT_ICON' ) ).
 
     page->header_content(
        )->link(
@@ -61,39 +61,33 @@ CLASS z2ui5_cl_demo_app_291 IMPLEMENTATION.
            class = `sapUiContentPadding`
            width = `100%`
            )->content( ns = `layout`
-
-              )->message_strip(
-                  text = client->_bind( lv_default )
+      )->message_strip(
+                  text                = client->_bind( lv_default )
                   enableformattedtext = abap_true
-                  showicon = abap_true
-                  showclosebutton = abap_true
-                  class = `sapUiMediumMarginBottom`
-
-              )->message_strip(
-                  text = client->_bind( lv_error )
-                  type = `Error`
+                  showicon            = abap_true
+                  showclosebutton     = abap_true
+                  class               = `sapUiMediumMarginBottom`
+      )->message_strip(
+                  text                = client->_bind( lv_error )
+                  type                = `Error`
                   enableformattedtext = abap_true
-                  showicon = abap_true
-                  showclosebutton = abap_true
-                  class = `sapUiMediumMarginBottom`
-
-              )->message_strip(
-                  text = client->_bind( lv_warning )
-                  type = `Warning`
+                  showicon            = abap_true
+                  showclosebutton     = abap_true
+                  class               = `sapUiMediumMarginBottom`
+      )->message_strip(
+                  text                = client->_bind( lv_warning )
+                  type                = `Warning`
                   enableformattedtext = abap_true
-                  showicon = abap_true
-                  showclosebutton = abap_true
-                  class = `sapUiMediumMarginBottom`
-
-                )->message_strip(
-                  text = client->_bind( lv_success )
-                  type = `Success`
+                  showicon            = abap_true
+                  showclosebutton     = abap_true
+                  class               = `sapUiMediumMarginBottom`
+      )->message_strip(
+                  text                = client->_bind( lv_success )
+                  type                = `Success`
                   enableformattedtext = abap_true
-                  showicon = abap_true
-                  showclosebutton = abap_true
-                  class = `sapUiMediumMarginBottom`
-
-          ).
+                  showicon            = abap_true
+                  showclosebutton     = abap_true
+                  class               = `sapUiMediumMarginBottom` ).
 
     client->view_display( page->stringify( ) ).
 
@@ -116,15 +110,15 @@ CLASS z2ui5_cl_demo_app_291 IMPLEMENTATION.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `A sample MessageStrip that shows status messages with additional formatting.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 

@@ -1,12 +1,12 @@
-class z2ui5_cl_demo_app_253 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_253 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces Z2UI5_IF_APP .
+    INTERFACES z2ui5_if_app .
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
+    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -29,7 +29,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_253 IMPLEMENTATION.
 
 
-  METHOD DISPLAY_VIEW.
+  METHOD display_view.
 
     DATA css TYPE string.
     DATA view TYPE REF TO z2ui5_cl_xml_view.
@@ -46,7 +46,8 @@ CLASS z2ui5_cl_demo_app_253 IMPLEMENTATION.
 
     
     view = z2ui5_cl_xml_view=>factory( ).
-    view->_generic( name = `style` ns = `html` )->_cc_plain_xml( css )->get_parent( ).
+    view->_generic( name = `style`
+                    ns   = `html` )->_cc_plain_xml( css )->get_parent( ).
 
     
     
@@ -59,9 +60,9 @@ CLASS z2ui5_cl_demo_app_253 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `hint_icon`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'POPOVER' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'POPOVER' ) ).
 
     page->header_content(
        )->link(
@@ -70,14 +71,15 @@ CLASS z2ui5_cl_demo_app_253 IMPLEMENTATION.
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.FlexBox/sample/sap.m.sample.FlexBoxCols' ).
 
     
-    layout = page->vertical_layout( class = `sapUiContentPadding equalColumns` width = `100%`
+    layout = page->vertical_layout( class = `sapUiContentPadding equalColumns`
+                                          width = `100%`
                           )->flex_box( class = `columns`
                               )->text( text = `Although they have different amounts of text, both columns are of equal height.` )->get(
                                   )->layout_data(
-                                      )->flex_item_data( growfactor = `1`
-                                                         basesize = `0`
+                                      )->flex_item_data( growfactor       = `1`
+                                                         basesize         = `0`
                                                          backgrounddesign = `Solid`
-                                                         styleclass = `sapUiTinyMargin` )->get_parent( )->get_parent(
+                                                         styleclass       = `sapUiTinyMargin` )->get_parent( )->get_parent(
                               )->text( text = `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, ` &&
                                               `sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
                                               `At vero eos et accusam et justo hey nonny no duo dolores et ea rebum. ` &&
@@ -86,18 +88,17 @@ CLASS z2ui5_cl_demo_app_253 IMPLEMENTATION.
                                               `sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. ` &&
                                               `Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.` )->get(
                                   )->layout_data(
-                                      )->flex_item_data( growfactor = `1`
-                                                         basesize = `0`
+                                      )->flex_item_data( growfactor       = `1`
+                                                         basesize         = `0`
                                                          backgrounddesign = `Solid`
-                                                         styleclass = `sapUiTinyMargin` )->get_parent(
-                   ).
+                                                         styleclass       = `sapUiTinyMargin` )->get_parent( ).
 
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD ON_EVENT.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -109,24 +110,24 @@ CLASS z2ui5_cl_demo_app_253 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_DISPLAY_POPOVER.
+  METHOD z2ui5_display_popover.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `You can create balanced areas with Flex Box, such as these columns with equal height regardless of content.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 

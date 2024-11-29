@@ -30,11 +30,11 @@ CLASS z2ui5_cl_demo_app_211 DEFINITION
 
     METHODS on_init.
     METHODS on_event.
-    METHODS render_Main.
+    METHODS render_main.
 
 
 
-    METHODS Render_sub_app.
+    METHODS render_sub_app.
 
   PRIVATE SECTION.
 
@@ -105,7 +105,7 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
     
     lo_items = page->icon_tab_bar( class       = 'sapUiResponsiveContentPadding'
-                                         selectedKey = client->_bind_edit( mv_selectedkey )
+                                         selectedkey = client->_bind_edit( mv_selectedkey )
                                          select      = client->_event( val = 'ONSELECTICONTABBAR' )
                                                        )->items( ).
 
@@ -140,21 +140,21 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
       on_init( ).
 
-      render_Main( ).
+      render_main( ).
 
     ENDIF.
 
     on_event( ).
 
-    Render_sub_app( ).
+    render_sub_app( ).
   ENDMETHOD.
 
-  METHOD Render_sub_app.
+  METHOD render_sub_app.
 
     DATA t002 TYPE REF TO z2ui5_cl_demo_app_211=>ty_s_t002.
             FIELD-SYMBOLS <view> TYPE any.
-   FIELD-SYMBOLS <view_display> TYPE any.
-   FIELD-SYMBOLS <view_update> TYPE any.
+    FIELD-SYMBOLS <view_display> TYPE any.
+    FIELD-SYMBOLS <view_update> TYPE any.
     READ TABLE mt_t002 REFERENCE INTO t002
          WITH KEY id = mv_selectedkey.
 
@@ -175,7 +175,7 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
             CALL METHOD mo_app->('SET_APP_DATA')
               EXPORTING table = t002->table.
 
-            render_Main( ).
+            render_main( ).
 
             
             ASSIGN mo_app->('MO_PARENT_VIEW') TO <view>.
@@ -192,16 +192,16 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
     ENDCASE.
 
-   
-   ASSIGN mo_app->('MV_VIEW_DISPLAY') TO <view_display>.
+    
+    ASSIGN mo_app->('MV_VIEW_DISPLAY') TO <view_display>.
 
     IF <view_display> = abap_true.
       <view_display> = abap_false.
       client->view_display( mo_main_page->stringify( ) ).
     ENDIF.
 
-   
-   ASSIGN mo_app->('MV_VIEW_MODEL_UPDATE') TO <view_update>.
+    
+    ASSIGN mo_app->('MV_VIEW_MODEL_UPDATE') TO <view_update>.
 
     IF <view_update> = abap_true.
       <view_update> = abap_false.

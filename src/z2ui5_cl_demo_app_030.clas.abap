@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_030 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_030 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_row,
@@ -25,9 +25,9 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_030 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
-          DATA temp1 LIKE t_tab.
-          DATA temp2 LIKE LINE OF temp1.
+  METHOD z2ui5_if_app~main.
+      DATA temp1 LIKE t_tab.
+      DATA temp2 LIKE LINE OF temp1.
         DATA lv_dummy TYPE c LENGTH 68.
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
@@ -37,110 +37,110 @@ CLASS Z2UI5_CL_DEMO_APP_030 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-          
-          CLEAR temp1.
-          
-          temp2-title = 'Peter'.
-          temp2-info = 'completed'.
-          temp2-descr = 'this is a description'.
-          temp2-icon = 'sap-icon://account'.
-          INSERT temp2 INTO TABLE temp1.
-          temp2-title = 'Peter'.
-          temp2-info = 'incompleted'.
-          temp2-descr = 'this is a description'.
-          temp2-icon = 'sap-icon://account'.
-          INSERT temp2 INTO TABLE temp1.
-          temp2-title = 'Peter'.
-          temp2-info = 'working'.
-          temp2-descr = 'this is a description'.
-          temp2-icon = 'sap-icon://account'.
-          INSERT temp2 INTO TABLE temp1.
-          temp2-title = 'Peter'.
-          temp2-info = 'working'.
-          temp2-descr = 'this is a description'.
-          temp2-icon = 'sap-icon://account'.
-          INSERT temp2 INTO TABLE temp1.
-          temp2-title = 'Peter'.
-          temp2-info = 'completed'.
-          temp2-descr = 'this is a description'.
-          temp2-icon = 'sap-icon://account'.
-          INSERT temp2 INTO TABLE temp1.
-          temp2-title = 'Peter'.
-          temp2-info = 'completed'.
-          temp2-descr = 'this is a description'.
-          temp2-icon = 'sap-icon://account'.
-          INSERT temp2 INTO TABLE temp1.
-          temp2-title = 'Peter'.
-          temp2-info = 'completed'.
-          temp2-descr = 'this is a description'.
-          temp2-icon = 'sap-icon://account'.
-          INSERT temp2 INTO TABLE temp1.
-          temp2-title = 'Peter'.
-          temp2-info = 'completed'.
-          temp2-descr = 'this is a description'.
-          temp2-icon = 'sap-icon://account'.
-          INSERT temp2 INTO TABLE temp1.
-          temp2-title = 'Peter'.
-          temp2-info = 'completed'.
-          temp2-descr = 'this is a description'.
-          temp2-icon = 'sap-icon://account'.
-          INSERT temp2 INTO TABLE temp1.
-          temp2-title = 'Peter'.
-          temp2-info = 'completed'.
-          temp2-descr = 'this is a description'.
-          temp2-icon = 'sap-icon://account'.
-          INSERT temp2 INTO TABLE temp1.
-          temp2-title = 'Peter'.
-          temp2-info = 'completed'.
-          temp2-descr = 'this is a description'.
-          temp2-icon = 'sap-icon://account'.
-          INSERT temp2 INTO TABLE temp1.
-          temp2-title = 'Peter'.
-          temp2-info = 'completed'.
-          temp2-descr = 'this is a description'.
-          temp2-icon = 'sap-icon://account'.
-          INSERT temp2 INTO TABLE temp1.
-          temp2-title = 'Peter'.
-          temp2-info = 'completed'.
-          temp2-descr = 'this is a description'.
-          temp2-icon = 'sap-icon://account'.
-          INSERT temp2 INTO TABLE temp1.
-          temp2-title = 'Peter'.
-          temp2-info = 'completed'.
-          temp2-descr = 'this is a description'.
-          temp2-icon = 'sap-icon://account'.
-          INSERT temp2 INTO TABLE temp1.
-          temp2-title = 'Peter'.
-          temp2-info = 'completed'.
-          temp2-descr = 'this is a description'.
-          temp2-icon = 'sap-icon://account'.
-          INSERT temp2 INTO TABLE temp1.
-          temp2-title = 'Peter'.
-          temp2-info = 'completed'.
-          temp2-descr = 'this is a description'.
-          temp2-icon = 'sap-icon://account'.
-          INSERT temp2 INTO TABLE temp1.
-          temp2-title = 'Peter'.
-          temp2-info = 'completed'.
-          temp2-descr = 'this is a description'.
-          temp2-icon = 'sap-icon://account'.
-          INSERT temp2 INTO TABLE temp1.
-          temp2-title = 'Peter'.
-          temp2-info = 'completed'.
-          temp2-descr = 'this is a description'.
-          temp2-icon = 'sap-icon://account'.
-          INSERT temp2 INTO TABLE temp1.
-          temp2-title = 'Peter'.
-          temp2-info = 'completed'.
-          temp2-descr = 'this is a description'.
-          temp2-icon = 'sap-icon://account'.
-          INSERT temp2 INTO TABLE temp1.
-          temp2-title = 'Peter'.
-          temp2-info = 'completed'.
-          temp2-descr = 'this is a description'.
-          temp2-icon = 'sap-icon://account'.
-          INSERT temp2 INTO TABLE temp1.
-          t_tab = temp1.
+      
+      CLEAR temp1.
+      
+      temp2-title = 'Peter'.
+      temp2-info = 'completed'.
+      temp2-descr = 'this is a description'.
+      temp2-icon = 'sap-icon://account'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = 'Peter'.
+      temp2-info = 'incompleted'.
+      temp2-descr = 'this is a description'.
+      temp2-icon = 'sap-icon://account'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = 'Peter'.
+      temp2-info = 'working'.
+      temp2-descr = 'this is a description'.
+      temp2-icon = 'sap-icon://account'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = 'Peter'.
+      temp2-info = 'working'.
+      temp2-descr = 'this is a description'.
+      temp2-icon = 'sap-icon://account'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = 'Peter'.
+      temp2-info = 'completed'.
+      temp2-descr = 'this is a description'.
+      temp2-icon = 'sap-icon://account'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = 'Peter'.
+      temp2-info = 'completed'.
+      temp2-descr = 'this is a description'.
+      temp2-icon = 'sap-icon://account'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = 'Peter'.
+      temp2-info = 'completed'.
+      temp2-descr = 'this is a description'.
+      temp2-icon = 'sap-icon://account'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = 'Peter'.
+      temp2-info = 'completed'.
+      temp2-descr = 'this is a description'.
+      temp2-icon = 'sap-icon://account'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = 'Peter'.
+      temp2-info = 'completed'.
+      temp2-descr = 'this is a description'.
+      temp2-icon = 'sap-icon://account'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = 'Peter'.
+      temp2-info = 'completed'.
+      temp2-descr = 'this is a description'.
+      temp2-icon = 'sap-icon://account'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = 'Peter'.
+      temp2-info = 'completed'.
+      temp2-descr = 'this is a description'.
+      temp2-icon = 'sap-icon://account'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = 'Peter'.
+      temp2-info = 'completed'.
+      temp2-descr = 'this is a description'.
+      temp2-icon = 'sap-icon://account'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = 'Peter'.
+      temp2-info = 'completed'.
+      temp2-descr = 'this is a description'.
+      temp2-icon = 'sap-icon://account'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = 'Peter'.
+      temp2-info = 'completed'.
+      temp2-descr = 'this is a description'.
+      temp2-icon = 'sap-icon://account'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = 'Peter'.
+      temp2-info = 'completed'.
+      temp2-descr = 'this is a description'.
+      temp2-icon = 'sap-icon://account'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = 'Peter'.
+      temp2-info = 'completed'.
+      temp2-descr = 'this is a description'.
+      temp2-icon = 'sap-icon://account'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = 'Peter'.
+      temp2-info = 'completed'.
+      temp2-descr = 'this is a description'.
+      temp2-icon = 'sap-icon://account'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = 'Peter'.
+      temp2-info = 'completed'.
+      temp2-descr = 'this is a description'.
+      temp2-icon = 'sap-icon://account'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = 'Peter'.
+      temp2-info = 'completed'.
+      temp2-descr = 'this is a description'.
+      temp2-icon = 'sap-icon://account'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = 'Peter'.
+      temp2-info = 'completed'.
+      temp2-descr = 'this is a description'.
+      temp2-icon = 'sap-icon://account'.
+      INSERT temp2 INTO TABLE temp1.
+      t_tab = temp1.
 
     ENDIF.
 
@@ -170,7 +170,7 @@ CLASS Z2UI5_CL_DEMO_APP_030 IMPLEMENTATION.
         showfooter = abap_true
        "  headerExpanded = abap_true
       "   toggleHeaderOnTitleClick = client->_event( 'ON_TITLE' )
-     ).
+      ).
 
 
     
@@ -196,38 +196,47 @@ CLASS Z2UI5_CL_DEMO_APP_030 IMPLEMENTATION.
              type    = 'Emphasized'
              tooltip = 'pull-down'
          )->overflow_toolbar_button(
-             icon = `sap-icon://show`
-             text = 'show state'
+             icon    = `sap-icon://show`
+             text    = 'show state'
              tooltip = 'show'
          )->button(
             " icon = `sap-icon://edit`
-             text = 'Go Back'
-             press = client->_event( 'BACK' )
-         ).
+             text  = 'Go Back'
+             press = client->_event( 'BACK' ) ).
 
     header_title->navigation_actions(
-            )->button( icon = 'sap-icon://full-screen' type  = 'Transparent'
-            )->button( icon = 'sap-icon://exit-full-screen' type  = 'Transparent'
-            )->button( icon = 'sap-icon://decline' type  = 'Transparent'
-    ).
+            )->button( icon = 'sap-icon://full-screen'
+                       type = 'Transparent'
+            )->button( icon = 'sap-icon://exit-full-screen'
+                       type = 'Transparent'
+            )->button( icon = 'sap-icon://decline'
+                       type = 'Transparent' ).
 
-     page->header( )->dynamic_page_header(  pinnable = abap_true
+    page->header( )->dynamic_page_header( pinnable = abap_true
         )->horizontal_layout(
             )->vertical_layout(
-                   )->object_attribute( title = 'Location' text = 'Warehouse A'
-                   )->object_attribute( title = 'Halway' text = '23L'
-                   )->object_attribute( title = 'Rack' text = '34'
+                   )->object_attribute( title = 'Location'
+                                        text  = 'Warehouse A'
+                   )->object_attribute( title = 'Halway'
+                                        text  = '23L'
+                   )->object_attribute( title = 'Rack'
+                                        text  = '34'
              )->get_parent(
                )->vertical_layout(
-                    )->object_attribute( title = 'Location' text = 'Warehouse A'
-                    )->object_attribute( title = 'Halway' text = '23L'
-                    )->object_attribute( title = 'Rack' text = '34'
+                    )->object_attribute( title = 'Location'
+                                         text  = 'Warehouse A'
+                    )->object_attribute( title = 'Halway'
+                                         text  = '23L'
+                    )->object_attribute( title = 'Rack'
+                                         text  = '34'
              )->get_parent(
               )->vertical_layout(
-                   )->object_attribute( title = 'Location' text = 'Warehouse A'
-                   )->object_attribute( title = 'Halway' text = '23L'
-                   )->object_attribute( title = 'Rack' text = '34'
-             ).
+                   )->object_attribute( title = 'Location'
+                                        text  = 'Warehouse A'
+                   )->object_attribute( title = 'Halway'
+                                        text  = '23L'
+                   )->object_attribute( title = 'Rack'
+                                        text  = '34' ).
 
 
     
@@ -243,7 +252,7 @@ CLASS Z2UI5_CL_DEMO_APP_030 IMPLEMENTATION.
              info        = '{INFO}' ).
 
 
-        page->footer( ns = `f` )->overflow_toolbar(
+    page->footer( ns = `f` )->overflow_toolbar(
              )->overflow_toolbar_button(
                  icon    = `sap-icon://edit`
                  text    = 'edit header'
@@ -253,8 +262,7 @@ CLASS Z2UI5_CL_DEMO_APP_030 IMPLEMENTATION.
                  icon    = `sap-icon://pull-down`
                  text    = 'show section'
                  type    = 'Emphasized'
-                 tooltip = 'pull-down'
-                 ).
+                 tooltip = 'pull-down' ).
 
     client->view_display( page->stringify( ) ).
 

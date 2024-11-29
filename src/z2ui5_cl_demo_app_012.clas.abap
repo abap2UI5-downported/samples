@@ -1,10 +1,10 @@
-CLASS Z2UI5_CL_DEMO_APP_012 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_012 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
-    DATA client TYPE REF TO Z2UI5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
 
     DATA mv_check_popup TYPE abap_bool.
     METHODS ui5_popup_decide.
@@ -23,7 +23,7 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
   METHOD ui5_popup_decide.
 
     DATA popup TYPE REF TO z2ui5_cl_xml_view.
-    popup  = Z2UI5_cl_xml_view=>factory_popup( ).
+    popup  = z2ui5_cl_xml_view=>factory_popup( ).
     popup->dialog( 'Popup - Decide'
             )->vbox(
                 )->text( 'this is a popup to decide, you have to make a decision now...'
@@ -45,7 +45,7 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
   METHOD ui5_popup_info_frontend_close.
 
     DATA popup TYPE REF TO z2ui5_cl_xml_view.
-    popup  = Z2UI5_cl_xml_view=>factory_popup( ).
+    popup  = z2ui5_cl_xml_view=>factory_popup( ).
     popup->dialog( 'Popup - Info'
             )->vbox(
                 )->text( 'this is an information, press close to go back to the main view without a server roundtrip'
@@ -74,8 +74,7 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
     page = lo_main->page(
             title          = 'abap2UI5 - Popups'
             navbuttonpress = client->_event( val = 'BACK' )
-            shownavbutton = temp1
-            ).
+            shownavbutton  = temp1 ).
 
     
     grid = page->grid( 'L7 M12 S12' )->content( 'layout'
@@ -113,7 +112,7 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
       DATA temp1 TYPE REF TO z2ui5_cl_demo_app_020.
       DATA app LIKE temp1.
 
@@ -161,7 +160,7 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
       WHEN 'BUTTON_POPUP_05'.
         mv_check_popup = abap_true.
         client->view_destroy( ).
-        client->nav_app_call( Z2UI5_CL_DEMO_APP_020=>factory(
+        client->nav_app_call( z2ui5_cl_demo_app_020=>factory(
           i_text          = '(new app )this is a popup to decide, the text is send from the previous app and the answer will be send back'
           i_cancel_text   = 'Cancel '
           i_cancel_event  = 'POPUP_DECIDE_CANCEL'
@@ -171,7 +170,7 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
 
       WHEN 'BUTTON_POPUP_06'.
         mv_check_popup = abap_true.
-        client->nav_app_call( Z2UI5_CL_DEMO_APP_020=>factory(
+        client->nav_app_call( z2ui5_cl_demo_app_020=>factory(
           i_text          = '(new app )this is a popup to decide, the text is send from the previous app and the answer will be send back'
           i_cancel_text   = 'Cancel'
           i_cancel_event  = 'POPUP_DECIDE_CANCEL'

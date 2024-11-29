@@ -47,9 +47,9 @@ CLASS z2ui5_cl_demo_app_290 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `button_hint_id`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'CLICK_HINT_ICON' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'CLICK_HINT_ICON' ) ).
 
     page->header_content(
        )->link(
@@ -72,14 +72,14 @@ CLASS z2ui5_cl_demo_app_290 IMPLEMENTATION.
     page->list(
            headertext = `Products`
            )->object_list_item(
-                 title = `Gladiator MX`
-                 type = `Active`
-                 press = client->_event( val = `onListItemPress` t_arg = temp1 )
-                 number = `87.50`
+                 title      = `Gladiator MX`
+                 type       = `Active`
+                 press      = client->_event( val = `onListItemPress` t_arg = temp1 )
+                 number     = `87.50`
                  numberunit = `EUR`
                )->first_status(
                    )->object_status(
-                       text = `Available`
+                       text  = `Available`
                        state = `Success`
                    )->get_parent(
                )->get_parent(
@@ -91,14 +91,14 @@ CLASS z2ui5_cl_demo_app_290 IMPLEMENTATION.
                )->get_parent(
            )->get_parent(
            )->object_list_item(
-                 title = `Hurricane GX`
-                 type = `Active`
-                 press = client->_event( val = `onListItemPress` t_arg = temp2 )
-                 number = `235`
+                 title      = `Hurricane GX`
+                 type       = `Active`
+                 press      = client->_event( val = `onListItemPress` t_arg = temp2 )
+                 number     = `235`
                  numberunit = `EUR`
                )->first_status(
                    )->object_status(
-                       text = `Out of stock`
+                       text  = `Out of stock`
                        state = `Warning`
                    )->get_parent(
                 )->get_parent(
@@ -110,14 +110,14 @@ CLASS z2ui5_cl_demo_app_290 IMPLEMENTATION.
                )->get_parent(
            )->get_parent(
            )->object_list_item(
-                 title = `Power Projector 4713`
-                 type = `Active`
-                 press = client->_event( val = `onListItemPress` t_arg = temp3 )
-                 number = `135`
+                 title      = `Power Projector 4713`
+                 type       = `Active`
+                 press      = client->_event( val = `onListItemPress` t_arg = temp3 )
+                 number     = `135`
                  numberunit = `EUR`
                )->first_status(
                    )->object_status(
-                       text = `Discontinued`
+                       text  = `Discontinued`
                        state = `Error`
                    )->get_parent(
                 )->get_parent(
@@ -130,10 +130,10 @@ CLASS z2ui5_cl_demo_app_290 IMPLEMENTATION.
                )->get_parent(
            )->get_parent(
            )->object_list_item(
-                 title = `Webcam`
-                 type = `Active`
-                 press = client->_event( val = `onListItemPress` t_arg = temp4 )
-                 number = `15`
+                 title      = `Webcam`
+                 type       = `Active`
+                 press      = client->_event( val = `onListItemPress` t_arg = temp4 )
+                 number     = `15`
                  numberunit = `EUR`
                )->first_status(
                    )->object_status(
@@ -145,8 +145,7 @@ CLASS z2ui5_cl_demo_app_290 IMPLEMENTATION.
                )->markers(
                    )->object_marker( type = `Unsaved` )->get_parent(
                )->get_parent(
-           )->get_parent(
-          ).
+           )->get_parent( ).
 
     client->view_display( page->stringify( ) ).
 
@@ -172,15 +171,15 @@ CLASS z2ui5_cl_demo_app_290 IMPLEMENTATION.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     view = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `This sample shows the different states of an Object List Item, which can be set using the markers aggregation.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 

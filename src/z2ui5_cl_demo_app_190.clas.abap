@@ -11,7 +11,7 @@ CLASS z2ui5_cl_demo_app_190 DEFINITION
     DATA mv_table        TYPE string.
     DATA mt_table        TYPE REF TO data.
     DATA mt_table_tmp    TYPE REF TO data.
-*    DATA ms_table_row    TYPE REF TO data.
+
     DATA mt_comp         TYPE abap_component_tab.
     DATA ms_fixval       TYPE REF TO data.
 
@@ -58,8 +58,8 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD render_main.
-      DATA page TYPE REF TO z2ui5_cl_xml_view.
     FIELD-SYMBOLS <tab> TYPE data.
+      DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA table TYPE REF TO z2ui5_cl_xml_view.
     DATA columns TYPE REF TO z2ui5_cl_xml_view.
     DATA comp LIKE LINE OF mt_comp.
@@ -72,7 +72,7 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
       page = mo_parent_view->get( `Page` ).
     ENDIF.
 
-    
+
     ASSIGN mt_table->* TO <tab>.
 
     
@@ -157,9 +157,9 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
                                                            p_table_kind = cl_abap_tabledescr=>tablekind_std ).
 
         CREATE DATA mt_table     TYPE HANDLE new_table_desc.
-*        CREATE DATA mt_table_del TYPE HANDLE new_table_desc.
+
         CREATE DATA mt_table_tmp TYPE HANDLE new_table_desc.
-*        CREATE DATA ms_table_row TYPE HANDLE new_struct_desc.
+
 
         ASSIGN mt_table->* TO <table>.
 
@@ -218,21 +218,11 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
 
     CREATE DATA ms_fixval TYPE HANDLE structdescr.
 
-*    LOOP AT mt_comp REFERENCE INTO dfies.
-*
-*      ASSIGN ms_fixval->* TO <s_fixval>.
-*      ASSIGN COMPONENT dfies->name OF STRUCTURE <s_fixval> TO FIELD-SYMBOL(<fixval>).
-*
-*      IF <fixval> IS NOT ASSIGNED.
-*        CONTINUE.
-*      ENDIF.
-*
-*
-*    ENDLOOP.
+
   ENDMETHOD.
 
   METHOD get_comp.
-        DATA index TYPE int4.
+    DATA index TYPE int4.
             DATA typedesc TYPE REF TO cl_abap_typedescr.
             DATA temp4 TYPE REF TO cl_abap_structdescr.
             DATA structdesc LIKE temp4.
@@ -244,13 +234,13 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
         DATA component LIKE temp5.
     TRY.
 
-        
+
 
         TRY.
 
             
             cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = mv_table
-                                                 RECEIVING  p_descr_ref    = typedesc
+                                                 RECEIVING p_descr_ref     = typedesc
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
 

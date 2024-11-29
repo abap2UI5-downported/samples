@@ -50,14 +50,14 @@ CLASS z2ui5_cl_demo_app_193 IMPLEMENTATION.
 
     FIELD-SYMBOLS <head> TYPE data.
     FIELD-SYMBOLS <pos> TYPE data.
-    ASSIGN mt_kopf->*  TO <head>.
+    ASSIGN mt_kopf->* TO <head>.
     IF sy-subrc = 0.
       mt_kopf_xml = z2ui5_cl_util=>xml_srtti_stringify( <head> ).
       CLEAR mt_kopf.
     ENDIF.
 
     
-    ASSIGN mt_pos->*  TO <pos>.
+    ASSIGN mt_pos->* TO <pos>.
     IF sy-subrc = 0.
       mt_pos_xml = z2ui5_cl_util=>xml_srtti_stringify( <pos> ).
       CLEAR mt_pos.

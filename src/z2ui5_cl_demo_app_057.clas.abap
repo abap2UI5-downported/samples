@@ -16,7 +16,7 @@ CLASS z2ui5_cl_demo_app_057 DEFINITION
         storage_location TYPE string,
         quantity         TYPE i,
       END OF ty_s_tab .
-    TYPES:
+    TYPES
       ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH DEFAULT KEY .
 
     DATA mt_table TYPE ty_t_table .
@@ -126,11 +126,10 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
 
     
     temp3 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
-    view = view->page( id = `page_main`
+    view = view->page( id    = `page_main`
               title          = 'abap2UI5 - List Report Features'
               navbuttonpress = client->_event( 'BACK' )
-              shownavbutton = temp3
-           ).
+              shownavbutton  = temp3 ).
 
     IF mv_check_download = abap_true.
       mv_check_download = abap_false.
@@ -151,28 +150,32 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
       temp2-n = `hidden`.
       temp2-v = `hidden`.
       INSERT temp2 INTO TABLE temp1.
-      view->_generic( ns = `html` name = `iframe` t_prop = temp1 ).
+      view->_generic( ns     = `html`
+                      name   = `iframe`
+                      t_prop = temp1 ).
 
     ENDIF.
 
     
-    page = view->dynamic_page( headerexpanded = abap_true  headerpinned = abap_true ).
+    page = view->dynamic_page( headerexpanded = abap_true
+                                     headerpinned   = abap_true ).
 
     
-    header_title = page->title( ns = 'f'  )->get( )->dynamic_page_title( ).
+    header_title = page->title( ns = 'f' )->get( )->dynamic_page_title( ).
     header_title->heading( ns = 'f' )->hbox( )->title( `Download CSV` ).
     header_title->expanded_content( 'f' ).
     header_title->snapped_content( ns = 'f' ).
 
     
     lo_box = page->header( )->dynamic_page_header( pinnable = abap_true
-         )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignitems = `Start` ).
+         )->flex_box( alignitems     = `Start`
+                      justifycontent = `SpaceBetween` )->flex_box( alignitems = `Start` ).
 
 
     lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
-        text = `Go`
+        text  = `Go`
         press = client->_event( `BUTTON_START` )
-        type = `Emphasized` ).
+        type  = `Emphasized` ).
 
     
     cont = page->content( ns = 'f' ).
@@ -184,9 +187,8 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
             )->toolbar(
                 )->toolbar_spacer(
                 )->button(
-                    icon = 'sap-icon://download'
-                    press = client->_event( 'BUTTON_DOWNLOAD' )
-                ).
+                    icon  = 'sap-icon://download'
+                    press = client->_event( 'BUTTON_DOWNLOAD' ) ).
 
     
     lo_columns = tab->columns( ).

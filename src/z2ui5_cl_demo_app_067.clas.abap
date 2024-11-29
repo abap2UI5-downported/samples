@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_067 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_067 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     DATA amount   TYPE p LENGTH 14 DECIMALS 3.
     DATA currency TYPE string.
@@ -18,7 +18,7 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_067 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
     DATA temp1 TYPE xsdboolean.
 
     IF check_initialized = abap_false.
@@ -31,7 +31,7 @@ CLASS Z2UI5_CL_DEMO_APP_067 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDCASE.
 
     
@@ -40,31 +40,50 @@ CLASS Z2UI5_CL_DEMO_APP_067 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Currency Format'
                 navbuttonpress = client->_event( 'BACK' )
-                shownavbutton = temp1
-                )->simple_form( title = 'Currency' editable = abap_true
+                shownavbutton  = temp1
+                )->simple_form( title    = 'Currency'
+                                editable = abap_true
                 )->content( 'form'
                     )->title( 'Input'
                     )->label( 'Documentation'
-                    )->link(  text = 'https://sapui5.hana.ondemand.com/#/entity/sap.ui.model.type.Currency' href = 'https://sapui5.hana.ondemand.com/#/entity/sap.ui.model.type.Currency'
+                    )->link( text = 'https://sapui5.hana.ondemand.com/#/entity/sap.ui.model.type.Currency'
+                             href = 'https://sapui5.hana.ondemand.com/#/entity/sap.ui.model.type.Currency'
                     )->label( 'One field'
-                    )->input( `{ parts: [ '` && client->_bind_edit( val = amount path = abap_true ) && `', '` && client->_bind_edit( val = currency path = abap_true ) && `'],  type: 'sap.ui.model.type.Currency' }`
+                    )->input( `{ parts: [ '` && client->_bind_edit( val  = amount
+                                                                    path = abap_true ) && `', '` && client->_bind_edit( val  = currency
+                                                                                                                        path = abap_true ) && `'],  type: 'sap.ui.model.type.Currency' }`
                     )->label( 'Two field'
-                    )->input( `{ parts: [ '` && client->_bind_edit( val = amount path = abap_true ) && `', '` && client->_bind_edit( val = currency path = abap_true ) && `'],  type: 'sap.ui.model.type.Currency' , formatOptions: {showMeasure: false}  }`
-                    )->input( `{ parts: [ '` && client->_bind_edit( val = amount path = abap_true ) && `', '` && client->_bind_edit( val = currency path = abap_true ) && `'],  type: 'sap.ui.model.type.Currency' , formatOptions: {showNumber: false} }`
+                    )->input( `{ parts: [ '` && client->_bind_edit( val  = amount
+                                                                    path = abap_true ) && `', '` && client->_bind_edit( val  = currency
+                                                                                                                        path = abap_true ) && `'],  type: 'sap.ui.model.type.Currency' , formatOptions: {showMeasure: false}  }`
+                    )->input( `{ parts: [ '` && client->_bind_edit( val  = amount
+                                                                    path = abap_true ) && `', '` && client->_bind_edit( val  = currency
+                                                                                                                        path = abap_true ) && `'],  type: 'sap.ui.model.type.Currency' , formatOptions: {showNumber: false} }`
                     )->label( 'Default'
-                    )->text(  `{ parts: [ '` && client->_bind_edit( val = amount path = abap_true ) && `', '` && client->_bind_edit( val = currency path = abap_true ) && `'],  type: 'sap.ui.model.type.Currency' }`
+                    )->text( `{ parts: [ '` && client->_bind_edit( val  = amount
+                                                                   path = abap_true ) && `', '` && client->_bind_edit( val  = currency
+                                                                                                                       path = abap_true ) && `'],  type: 'sap.ui.model.type.Currency' }`
                     )->label( 'preserveDecimals:false'
-                    )->text(  `{ parts: [ '` && client->_bind_edit( val = amount path = abap_true ) && `', '` && client->_bind_edit( val = currency path = abap_true ) &&
+                    )->text( `{ parts: [ '` && client->_bind_edit( val  = amount
+                                                                   path = abap_true ) && `', '` && client->_bind_edit( val  = currency
+                                                                                                                       path = abap_true ) &&
                                 `'],  type: 'sap.ui.model.type.Currency' , formatOptions: { preserveDecimals : false } }`
                     )->label( 'currencyCode:false'
-                    )->text(  `{ parts: [ '` && client->_bind_edit( val = amount path = abap_true ) && `', '` && client->_bind_edit( val = currency path = abap_true ) &&
+                    )->text( `{ parts: [ '` && client->_bind_edit( val  = amount
+                                                                   path = abap_true ) && `', '` && client->_bind_edit( val  = currency
+                                                                                                                       path = abap_true ) &&
                                     `'],  type: 'sap.ui.model.type.Currency' , formatOptions: { currencyCode : false } }`
                     )->label( `style:'short'`
-                    )->text(  `{ parts: [ '` && client->_bind_edit( val = amount path = abap_true ) && `', '` && client->_bind_edit( val = currency path = abap_true ) && `'],  type: 'sap.ui.model.type.Currency' , formatOptions: { style : 'short' } }`
+                    )->text( `{ parts: [ '` && client->_bind_edit( val  = amount
+                                                                   path = abap_true ) && `', '` && client->_bind_edit( val  = currency
+                                                                                                                       path = abap_true ) && `'],  type: 'sap.ui.model.type.Currency' , formatOptions: { style : 'short' } }`
                     )->label( `style:'long'`
-                    )->text(  `{ parts: [ '` && client->_bind_edit( val = amount path = abap_true ) && `', '` && client->_bind_edit( val = currency path = abap_true ) && `'],  type: 'sap.ui.model.type.Currency' , formatOptions: {   style : 'long' } }`
+                    )->text( `{ parts: [ '` && client->_bind_edit( val  = amount
+                                                                   path = abap_true ) && `', '` && client->_bind_edit( val  = currency
+                                                                                                                       path = abap_true ) && `'],  type: 'sap.ui.model.type.Currency' , formatOptions: {   style : 'long' } }`
                     )->label( 'event'
-                    )->button( text  = 'send' press = client->_event( 'BUTTON' )
+                    )->button( text  = 'send'
+                               press = client->_event( 'BUTTON' )
                )->stringify( ) ).
 
 
