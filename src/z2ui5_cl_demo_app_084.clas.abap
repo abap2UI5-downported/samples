@@ -115,7 +115,7 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
                                      actions          = temp1
                                      emphasizedaction = `First Button`
                                      onclose          = `callMessageToast()`
-                                     details          = `<h3>these are details</h3>`).
+                                     details          = `<h3>these are details</h3>` ).
       WHEN 'BUTTON_MCONFIRM'.
         client->message_box_display( type = 'confirm'
                                      text = 'Confirm MessageBox' ).
