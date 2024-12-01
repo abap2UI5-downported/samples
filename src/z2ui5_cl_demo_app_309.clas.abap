@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_180 DEFINITION
+CLASS z2ui5_cl_demo_app_309 DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
@@ -22,21 +22,17 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_180 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_309 IMPLEMENTATION.
 
 
   METHOD on_event.
-        DATA temp1 TYPE string_table.
 
     CASE client->get( )-event.
 
-      WHEN 'CALL_EF'.
-        mv_url = `https://www.google.com`.
-        client->view_model_update( ).
-        
-        CLEAR temp1.
-        INSERT mv_url INTO TABLE temp1.
-        client->follow_up_action( val = client->_event_client( val = client->cs_event-open_new_tab t_arg = temp1 ) ).
+      WHEN 'CUSTOM_JS_FROM_EB'.
+
+*        client->follow_up_action( val = `sap.z2ui5.afterBE()` ).
+        client->follow_up_action( `alert("afterBE triggered !!");` ).
 
       WHEN 'BACK'.
         client->nav_app_leave( ).
@@ -53,6 +49,9 @@ CLASS Z2UI5_CL_DEMO_APP_180 IMPLEMENTATION.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
     DATA temp1 TYPE xsdboolean.
     view = z2ui5_cl_xml_view=>factory( ).
+    view->_generic( name = `script`
+                    ns   = `html` )->_cc_plain_xml( `sap.z2ui5.afterBE = () => { alert("afterBE triggered !!"); }` ).
+
     
     
     temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
@@ -62,10 +61,9 @@ CLASS Z2UI5_CL_DEMO_APP_180 IMPLEMENTATION.
         navbuttonpress = client->_event( 'BACK' )
         shownavbutton  = temp1 ).
     page = page->vbox( ).
-    page->button( text  = `call frontend event from backend event`
-                  press = client->_event( `CALL_EF` ) ).
-    page->label( text = `MV_URL was set AFTER backend event and model update to:` ).
-    page->label( text = client->_bind_edit( mv_url ) ).
+    page->get_parent( )->hbox( class = `sapUiSmallMargin` ).
+    page->button( text  = `call custom JS from EB`
+                  press = client->_event( 'CUSTOM_JS_FROM_EB' ) ).
 
     client->view_display( view->stringify( ) ).
 
@@ -78,7 +76,9 @@ CLASS Z2UI5_CL_DEMO_APP_180 IMPLEMENTATION.
 
     IF mv_initialized = abap_false.
       mv_initialized = abap_true.
+
       view_display( ).
+
     ENDIF.
 
     on_event( ).

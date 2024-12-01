@@ -16,7 +16,7 @@ CLASS z2ui5_cl_demo_app_059 DEFINITION PUBLIC.
 
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH DEFAULT KEY.
 
-    DATA mv_search_value TYPE string.
+*    DATA mv_search_value TYPE string.
     DATA mt_table TYPE ty_t_table.
 
   PROTECTED SECTION.
@@ -25,7 +25,6 @@ CLASS z2ui5_cl_demo_app_059 DEFINITION PUBLIC.
     DATA check_initialized TYPE abap_bool.
 
     METHODS z2ui5_on_event.
-    METHODS z2ui5_set_search.
     METHODS z2ui5_set_data.
     METHODS z2ui5_view_display.
 
@@ -61,7 +60,12 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
 
       WHEN 'BUTTON_SEARCH'.
         z2ui5_set_data( ).
-        z2ui5_set_search( ).
+        z2ui5_cl_util=>itab_filter_by_val(
+            EXPORTING
+                val = client->get_event_arg( 1 )
+            CHANGING
+                tab = mt_table ).
+
         client->view_model_update( ).
 
       WHEN 'BACK'.
@@ -119,50 +123,13 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_search.
-    DATA temp3 LIKE LINE OF mt_table.
-    DATA lr_row LIKE REF TO temp3.
-      DATA lv_row TYPE string.
-      DATA lv_index TYPE i.
-        FIELD-SYMBOLS <field> TYPE any.
-
-    IF client->get_event_arg( 1 ) IS INITIAL.
-      RETURN.
-    ENDIF.
-
-    
-    
-    LOOP AT mt_table REFERENCE INTO lr_row.
-      
-      lv_row = ``.
-      
-      lv_index = 1.
-      DO.
-        
-        ASSIGN COMPONENT lv_index OF STRUCTURE lr_row->* TO <field>.
-        IF sy-subrc <> 0.
-          EXIT.
-        ENDIF.
-        lv_row = lv_row && <field>.
-        lv_index = lv_index + 1.
-      ENDDO.
-
-      IF lv_row NS mv_search_value.
-        DELETE mt_table.
-      ENDIF.
-    ENDLOOP.
-
-  ENDMETHOD.
-
-
   METHOD z2ui5_view_display.
 
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA page1 TYPE REF TO z2ui5_cl_xml_view.
-    DATA temp1 TYPE xsdboolean.
-    DATA temp4 TYPE z2ui5_if_types=>ty_s_event_control.
-    DATA ls_cnt LIKE temp4.
-    DATA temp5 TYPE string_table.
+    DATA temp2 TYPE xsdboolean.
+    DATA temp3 TYPE string_table.
+    DATA temp1 TYPE z2ui5_if_types=>ty_s_event_control.
     DATA lo_box TYPE REF TO z2ui5_cl_xml_view.
     DATA tab TYPE REF TO z2ui5_cl_xml_view.
     DATA lo_columns TYPE REF TO z2ui5_cl_xml_view.
@@ -171,32 +138,27 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
 
     
     
-    temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
+    temp2 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page1 = view->shell( )->page( id = `page_main`
             title                          = 'abap2UI5 - Search Field with Backend Live Change'
             navbuttonpress                 = client->_event( 'BACK' )
-            shownavbutton                  = temp1 ).
+            shownavbutton                  = temp2 ).
 
     
-    CLEAR temp4.
-    temp4-check_allow_multi_req = abap_true.
+    CLEAR temp3.
+    INSERT `${$source>/value}` INTO TABLE temp3.
     
-    ls_cnt = temp4.
+    CLEAR temp1.
+    temp1-check_allow_multi_req = abap_true.
     
-    CLEAR temp5.
-    INSERT `${$source>/value}` INTO TABLE temp5.
-    
-    lo_box = page1->vbox( )->text( `Search` )->search_field(
-         livechange = client->_event(
+    lo_box = page1->vbox( )->text( `Search`
+        )->search_field(  width  = `17.5rem` livechange = client->_event(
             val    = 'BUTTON_SEARCH'
-            t_arg  = temp5
-            s_ctrl = ls_cnt
-            )
-         width      = `17.5rem` ).
+            t_arg  = temp3
+            s_ctrl = temp1 )  ).
 
     
     tab = lo_box->table( client->_bind( mt_table ) ).
-
     
     lo_columns = tab->columns( ).
     lo_columns->column( )->text( text = `Product` ).
