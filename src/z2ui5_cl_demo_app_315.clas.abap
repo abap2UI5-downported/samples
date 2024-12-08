@@ -3,22 +3,6 @@ CLASS z2ui5_cl_demo_app_315 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-
-    TYPES:
-      BEGIN OF ty_row,
-        count      TYPE i,
-        value      TYPE string,
-        descr      TYPE string,
-        icon       TYPE string,
-        info       TYPE string,
-        checkbox   TYPE abap_bool,
-        percentage TYPE p LENGTH 5 DECIMALS 2,
-        valuecolor TYPE string,
-      END OF ty_row.
-    TYPES temp1_efe6596a3f TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY.
-DATA t_tab TYPE temp1_efe6596a3f.
-
-    data mv_val type string.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
