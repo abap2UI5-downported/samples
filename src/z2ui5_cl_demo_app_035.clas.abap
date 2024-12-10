@@ -10,12 +10,13 @@ CLASS z2ui5_cl_demo_app_035 DEFINITION PUBLIC.
     DATA check_initialized TYPE abap_bool.
 
     DATA client            TYPE REF TO z2ui5_if_client.
-
+    DATA: lt_types TYPE z2ui5_if_types=>ty_t_name_value.
     METHODS view_display.
 
   PROTECTED SECTION.
 
   PRIVATE SECTION.
+
 ENDCLASS.
 
 
@@ -27,7 +28,6 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
     DATA temp6 TYPE xsdboolean.
     DATA temp TYPE REF TO z2ui5_cl_xml_view.
     DATA temp1 TYPE z2ui5_if_types=>ty_t_name_value.
-    DATA lt_types LIKE temp1.
     DATA temp2 TYPE z2ui5_if_types=>ty_t_name_value.
     DATA temp5 TYPE string_table.
     DATA row LIKE LINE OF temp5.
@@ -52,7 +52,6 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
 
     
     CLEAR temp1.
-    
     lt_types = temp1.
     
     CLEAR temp2.
@@ -65,11 +64,11 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
       temp4-v = shift_right( shift_left( row ) ).
       INSERT temp4 INTO TABLE temp2.
     ENDLOOP.
-    lt_types = temp2.
+    LT_TYPES = temp2.
 
     
     temp3 = temp->input( value = client->_bind_edit( mv_type )
-                   suggestionitems   = client->_bind_local( lt_types )
+                   suggestionitems   = client->_bind_local( LT_TYPES )
                     )->get( ).
 
     temp3->suggestion_items(
@@ -80,8 +79,8 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
                     press           = client->_event( 'DB_LOAD' )
                     icon            = 'sap-icon://download-from-cloud' ).
 
-    page->code_editor( type     = mv_type
-                       editable = mv_check_editable
+    page->code_editor( type     = client->_bind_edit( mv_type )
+                       editable = client->_bind( mv_check_editable )
                        value    = client->_bind( mv_editor ) ).
 
     
@@ -146,6 +145,8 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
         
         temp8 = boolc( mv_check_editable = abap_false ).
         mv_check_editable = temp8.
+        client->view_model_update( ).
+
       WHEN 'CLEAR'.
         mv_editor = ``.
       WHEN 'BACK'.
