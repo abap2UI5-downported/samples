@@ -16,6 +16,7 @@ CLASS z2ui5_cl_demo_app_319 DEFINITION PUBLIC.
         value1    TYPE string,
         value2    TYPE string,
         keyField  TYPE string,
+        tokenText TYPE string,
       END OF t_range,
       t_ranges TYPE STANDARD TABLE OF t_range WITH DEFAULT KEY.
     DATA:
@@ -67,7 +68,7 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
 
     l_page->smart_multi_input(
       id                = 'ProductTypeMultiInput'
-*      value             = '{ProductType}'
+*     value             = '{ProductType}'
       value             = '{CurrencyCode}'
       entityset         = 'Booking'
       supportranges     = 'true'
@@ -83,12 +84,21 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD on_event.
+        DATA temp1 TYPE z2ui5_cl_demo_app_319=>t_range.
             DATA lx_ajson TYPE REF TO z2ui5_cx_ajson_error.
 
     CASE m_client->get( )-event.
       WHEN 'BACK'.
         m_client->nav_app_leave( ).
       WHEN 'PRODTYPE_CHANGED'.
+        
+        CLEAR temp1.
+        temp1-operation = 'EQ'.
+        temp1-value1 = 'EUR'.
+        temp1-keyField = 'CurrencyCode'.
+        temp1-tokenText = 'Euro (auto added line)'.
+        INSERT temp1 INTO TABLE m_selection-product_type-ranges.
+        m_client->view_model_update( ).
         TRY.
             m_client->message_box_display(
               text  = z2ui5_cl_ajson=>new( )->set( iv_path = '/' iv_val = m_selection-product_type-ranges )->stringify( )
