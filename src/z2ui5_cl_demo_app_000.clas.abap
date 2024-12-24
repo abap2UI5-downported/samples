@@ -87,7 +87,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
             )->toolbar_spacer(
             )->link( text   = 'Install with abapGit from GitHub'
                      target = '_blank'
-                     href   = 'https://github.com/oblomov-dev/abap2ui5'
+                     href   = 'https://github.com/abap2UI5/samples'
         )->get_parent( ).
 
     IF client->get( )-check_launchpad_active = abap_true.
@@ -2009,6 +2009,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         panel->generic_tile( header    = 'App State'
                          subheader = ``
                          press     = client->_event( 'z2ui5_cl_demo_app_321' )
+                         mode      = 'LineMode'
+                         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+ ).
+
+        panel->generic_tile( header    = 'Share Button'
+                         subheader = ``
+                         press     = client->_event( 'z2ui5_cl_demo_app_323' )
                          mode      = 'LineMode'
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
  ).
