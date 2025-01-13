@@ -31,7 +31,7 @@ CLASS Z2UI5_CL_DEMO_APP_093 IMPLEMENTATION.
       view = z2ui5_cl_xml_view=>factory( ).
 
       view->_generic( ns   = `html`
-                      name = `script`)->_cc_plain_xml( `sap.z2ui5.myFunction();`).
+                      name = `script`)->_cc_plain_xml( `sap.z2ui5.myFunction();` ).
 
       
       temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
