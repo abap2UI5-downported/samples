@@ -35,10 +35,7 @@ DATA mt_suggestion TYPE temp1_1f6edbe174.
 
     TYPES ty_t_combo TYPE STANDARD TABLE OF s_combobox WITH DEFAULT KEY.
 
-
-
     DATA check_initialized TYPE abap_bool.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
